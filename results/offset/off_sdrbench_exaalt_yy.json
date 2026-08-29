@@ -1,8 +1,8 @@
 {
-  "experiment_id": "off_silesia_xml",
+  "experiment_id": "off_sdrbench_exaalt_yy",
   "phase": "offset",
-  "dataset_id": "silesia_xml@slice262144",
-  "dataset_sha256": "f2bbde07c2061c09fa41e4d4998c07847fbcc23d4ab166ca105a7f66ac8cd37b",
+  "dataset_id": "sdrbench_exaalt2869440_yy.f32@slice262144",
+  "dataset_sha256": "faa41a228bd98532d74417ab24464a9dd7009ecdbc2d7c6c35e22d75f22b77b6",
   "dataset_bytes": 262144,
   "seed": null,
   "config": {
@@ -40,103 +40,103 @@
     }
   },
   "codec_kind": "GF2",
-  "n_relations": 1,
-  "n_independent": 7,
-  "recovered_bits": 262144,
+  "n_relations": 29,
+  "n_independent": 227,
+  "recovered_bits": 237568,
   "accounting": {
-    "payload_bits": 1835008,
-    "relation_description_bits": 15,
+    "payload_bits": 1859584,
+    "relation_description_bits": 6868,
     "header_bits": 216,
-    "framing_bits": 1,
+    "framing_bits": 4,
     "crc_bits": 32,
     "leftover_bits": 32,
     "other_sideinfo_bits": 0,
-    "total_bits": 1835304,
-    "total_bytes": 229413
+    "total_bits": 1866736,
+    "total_bytes": 233342
   },
-  "total_encoded_bytes": 229413,
+  "total_encoded_bytes": 233342,
   "roundtrip_ok": true,
-  "encode_seconds": 39.621969500003615,
-  "decode_seconds": 0.011510000011185184,
-  "discovery_seconds": 39.621969500003615,
+  "encode_seconds": 74.67857750001713,
+  "decode_seconds": 0.1997261999931652,
+  "discovery_seconds": 74.67857750001713,
   "baselines": [
     {
       "name": "gzip9",
-      "bytes": 16115,
-      "seconds": 0.01212390000000596,
+      "bytes": 220881,
+      "seconds": 0.01808320000418462,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
-      "bytes": 16103,
-      "seconds": 0.01427659997716546,
+      "bytes": 220869,
+      "seconds": 0.02131589999771677,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
-      "bytes": 11559,
-      "seconds": 0.036738499999046326,
+      "bytes": 187128,
+      "seconds": 0.06311460002325475,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
-      "bytes": 13060,
-      "seconds": 0.08393019999493845,
+      "bytes": 187944,
+      "seconds": 0.16198139998596162,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
-      "bytes": 12994,
-      "seconds": 0.20649860001867637,
+      "bytes": 205318,
+      "seconds": 0.15511749999132007,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
-      "bytes": 11799,
-      "seconds": 0.41115289999288507,
+      "bytes": 217730,
+      "seconds": 1.7994950000138488,
       "available": true,
       "notes": ""
     }
   ],
   "composition": {
     "gzip9": {
-      "bytes": 35710,
-      "seconds": 0.006187599996337667,
+      "bytes": 232700,
+      "seconds": 0.0171449999907054,
       "available": true,
       "notes": ""
     },
     "zlib9": {
-      "bytes": 35698,
-      "seconds": 0.008520900009898469,
+      "bytes": 232688,
+      "seconds": 0.02056760000414215,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
-      "bytes": 29853,
-      "seconds": 0.01991399997496046,
+      "bytes": 231418,
+      "seconds": 0.0655368999869097,
       "available": true,
       "notes": ""
     },
     "xz9": {
-      "bytes": 28924,
-      "seconds": 0.06911229999968782,
+      "bytes": 232900,
+      "seconds": 0.14096109999809414,
       "available": true,
       "notes": ""
     },
     "zstd19": {
-      "bytes": 29993,
-      "seconds": 0.12924749997910112,
+      "bytes": 232539,
+      "seconds": 0.05525629999465309,
       "available": true,
       "notes": ""
     },
     "brotli11": {
-      "bytes": 29240,
-      "seconds": 0.3709231000102591,
+      "bytes": 233347,
+      "seconds": 0.4917016999970656,
       "available": true,
       "notes": ""
     }
@@ -152,11 +152,11 @@
     "all_ok": true,
     "n_codecs_checked": 6
   },
-  "notes": "zip silesia.zip:xml prefix 262144 | detector=bit_offset_search",
+  "notes": "sdrbench exaalt-2869440:SDRBENCH-EXAALT-2869440/yy.f32 (11477760 B, dtype <f4) | detector=bit_offset_search",
   "hypothesis": "Trying every bit phase offset per width. If the phase-0 negative were a framing artifact, some offset would cross the 0.05 threshold.",
-  "verdict": "raw_gap-217854 comp_gap-17365",
-  "utc_timestamp": "2026-08-29T16:34:28.132079+00:00",
-  "git_commit": "be911f511649eec57995c12094abdf2d0452a575-dirty",
+  "verdict": "raw_gap-46214 comp_gap-44290",
+  "utc_timestamp": "2026-08-29T16:42:42.316093+00:00",
+  "git_commit": "616cd307ad5358f2a532693ec3f4661ac4eabe1d-dirty",
   "command": "experiments/offset/run.py --mode slice",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
@@ -166,8 +166,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T16:34:28.188667+00:00",
-    "git_commit": "be911f511649eec57995c12094abdf2d0452a575-dirty",
+    "utc_timestamp": "2026-08-29T16:42:42.384217+00:00",
+    "git_commit": "616cd307ad5358f2a532693ec3f4661ac4eabe1d-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

@@ -1,8 +1,8 @@
 {
-  "experiment_id": "off_silesia_xml",
+  "experiment_id": "off_silesia_reymont",
   "phase": "offset",
-  "dataset_id": "silesia_xml@slice262144",
-  "dataset_sha256": "f2bbde07c2061c09fa41e4d4998c07847fbcc23d4ab166ca105a7f66ac8cd37b",
+  "dataset_id": "silesia_reymont@slice262144",
+  "dataset_sha256": "63949f06bead1d6e40964427389b88df91aaf71e8f908e2e40fb968db3d8f682",
   "dataset_bytes": 262144,
   "seed": null,
   "config": {
@@ -56,87 +56,87 @@
   },
   "total_encoded_bytes": 229413,
   "roundtrip_ok": true,
-  "encode_seconds": 39.621969500003615,
-  "decode_seconds": 0.011510000011185184,
-  "discovery_seconds": 39.621969500003615,
+  "encode_seconds": 45.74137890001293,
+  "decode_seconds": 0.011551800009328872,
+  "discovery_seconds": 45.74137890001293,
   "baselines": [
     {
       "name": "gzip9",
-      "bytes": 16115,
-      "seconds": 0.01212390000000596,
+      "bytes": 72353,
+      "seconds": 0.04954139998881146,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
-      "bytes": 16103,
-      "seconds": 0.01427659997716546,
+      "bytes": 72341,
+      "seconds": 0.044693400006508455,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
-      "bytes": 11559,
-      "seconds": 0.036738499999046326,
+      "bytes": 53158,
+      "seconds": 0.017030300019541755,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
-      "bytes": 13060,
-      "seconds": 0.08393019999493845,
+      "bytes": 62048,
+      "seconds": 0.09957479999866337,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
-      "bytes": 12994,
-      "seconds": 0.20649860001867637,
+      "bytes": 63402,
+      "seconds": 0.12361719997716136,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
-      "bytes": 11799,
-      "seconds": 0.41115289999288507,
+      "bytes": 62041,
+      "seconds": 0.47174860001541674,
       "available": true,
       "notes": ""
     }
   ],
   "composition": {
     "gzip9": {
-      "bytes": 35710,
-      "seconds": 0.006187599996337667,
+      "bytes": 112606,
+      "seconds": 0.012758800003211945,
       "available": true,
       "notes": ""
     },
     "zlib9": {
-      "bytes": 35698,
-      "seconds": 0.008520900009898469,
+      "bytes": 112594,
+      "seconds": 0.013123400014592335,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
-      "bytes": 29853,
-      "seconds": 0.01991399997496046,
+      "bytes": 78146,
+      "seconds": 0.01753199999802746,
       "available": true,
       "notes": ""
     },
     "xz9": {
-      "bytes": 28924,
-      "seconds": 0.06911229999968782,
+      "bytes": 93984,
+      "seconds": 0.0854101000004448,
       "available": true,
       "notes": ""
     },
     "zstd19": {
-      "bytes": 29993,
-      "seconds": 0.12924749997910112,
+      "bytes": 97283,
+      "seconds": 0.06790919997729361,
       "available": true,
       "notes": ""
     },
     "brotli11": {
-      "bytes": 29240,
-      "seconds": 0.3709231000102591,
+      "bytes": 95089,
+      "seconds": 0.49519970000255853,
       "available": true,
       "notes": ""
     }
@@ -152,11 +152,11 @@
     "all_ok": true,
     "n_codecs_checked": 6
   },
-  "notes": "zip silesia.zip:xml prefix 262144 | detector=bit_offset_search",
+  "notes": "zip silesia.zip:reymont prefix 262144 | detector=bit_offset_search",
   "hypothesis": "Trying every bit phase offset per width. If the phase-0 negative were a framing artifact, some offset would cross the 0.05 threshold.",
-  "verdict": "raw_gap-217854 comp_gap-17365",
-  "utc_timestamp": "2026-08-29T16:34:28.132079+00:00",
-  "git_commit": "be911f511649eec57995c12094abdf2d0452a575-dirty",
+  "verdict": "raw_gap-176255 comp_gap-24988",
+  "utc_timestamp": "2026-08-29T16:30:39.465468+00:00",
+  "git_commit": "a9d7d820f6817f2d4bb3a814007328e87f3d6927-dirty",
   "command": "experiments/offset/run.py --mode slice",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
@@ -166,8 +166,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T16:34:28.188667+00:00",
-    "git_commit": "be911f511649eec57995c12094abdf2d0452a575-dirty",
+    "utc_timestamp": "2026-08-29T16:30:39.517142+00:00",
+    "git_commit": "a9d7d820f6817f2d4bb3a814007328e87f3d6927-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",
