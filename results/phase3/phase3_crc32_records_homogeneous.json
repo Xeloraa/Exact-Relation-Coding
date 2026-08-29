@@ -1,0 +1,146 @@
+{
+  "experiment_id": "phase3_crc32_records_homogeneous",
+  "phase": "phase3",
+  "dataset_id": "crc32_n4096_p4_s777",
+  "dataset_sha256": "de72357e2f35c2a6da28156eecb043bd8b2a1fc14b3d6207217464e6f9c6803e",
+  "dataset_bytes": 32768,
+  "seed": 777,
+  "config": {
+    "codec": "gf2",
+    "n_cols": 64,
+    "payload_len": 4,
+    "label": "format_awareness_CRC32",
+    "homogeneous_rank": 33,
+    "affine_ones_rank": 33,
+    "affine_ones_relations": 32
+  },
+  "codec_kind": "GF2",
+  "n_relations": 31,
+  "n_independent": 33,
+  "recovered_bits": 126976,
+  "accounting": {
+    "payload_bits": 135168,
+    "relation_description_bits": 1087,
+    "header_bits": 208,
+    "framing_bits": 1,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 136528,
+    "total_bytes": 17066
+  },
+  "total_encoded_bytes": 17066,
+  "roundtrip_ok": true,
+  "encode_seconds": 1.0822833999991417,
+  "decode_seconds": 0.5820807999989484,
+  "discovery_seconds": 1.0822833999991417,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 32796,
+      "seconds": 0.005322599987266585,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 32784,
+      "seconds": 0.006978699995670468,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 33266,
+      "seconds": 0.02068919999874197,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 32828,
+      "seconds": 0.2795841000042856,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 32778,
+      "seconds": 0.032757699984358624,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 32772,
+      "seconds": 0.13984779999009334,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 17094,
+      "seconds": 0.0009579999896232039,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 17082,
+      "seconds": 0.0008941999985836446,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 17530,
+      "seconds": 0.04932379999081604,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 17128,
+      "seconds": 0.23371279999264516,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 17076,
+      "seconds": 0.01753170002484694,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 17070,
+      "seconds": 0.2484835000068415,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "LABEL: CRC / format-aware checksum; not claimed as novel if it works",
+  "hypothesis": "IEEE CRC32 is affine over GF(2). Homogeneous discovery may miss it. Any win is a known checksum, not a new corpus phenomenon.",
+  "verdict": "raw_gap+15706 comp_gap+15702",
+  "utc_timestamp": "2026-08-29T08:59:07.959000+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase3/crc_trap.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:59:09.960775+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

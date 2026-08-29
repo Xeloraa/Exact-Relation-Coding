@@ -1,0 +1,143 @@
+{
+  "experiment_id": "phase2_blind_gf2_n8192_k24_p24_s101",
+  "phase": "phase2",
+  "dataset_id": "gf2_n8192_k24_p24_s101",
+  "dataset_sha256": "5c1eae058a59cd6525d1ae7fc629ecf8e46c5ea40a092d29426d5a10894409db",
+  "dataset_bytes": 49152,
+  "seed": 101,
+  "config": {
+    "codec": "gf2",
+    "n_cols": 48,
+    "dense": false,
+    "blind": true
+  },
+  "codec_kind": "GF2",
+  "n_relations": 24,
+  "n_independent": 24,
+  "recovered_bits": 196608,
+  "accounting": {
+    "payload_bits": 196608,
+    "relation_description_bits": 624,
+    "header_bits": 208,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 197504,
+    "total_bytes": 24688
+  },
+  "total_encoded_bytes": 24688,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.5057521999988239,
+  "decode_seconds": 0.24620839999988675,
+  "discovery_seconds": 0.5057521999988239,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 49185,
+      "seconds": 0.0035136000078637153,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 49173,
+      "seconds": 0.0020616000110749155,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 49707,
+      "seconds": 0.013694799999939278,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 49212,
+      "seconds": 0.07633029998396523,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 49162,
+      "seconds": 0.07376549998298287,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 49156,
+      "seconds": 0.09395579999545589,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 24716,
+      "seconds": 0.0016160999948624521,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 24704,
+      "seconds": 0.0010583999974187464,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 25165,
+      "seconds": 0.005826100008562207,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 24748,
+      "seconds": 0.05127130000619218,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 24698,
+      "seconds": 0.04475599998841062,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 24692,
+      "seconds": 0.16341509998892434,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "gf2",
+  "hypothesis": "Sparse planted parities are found by rank/nullspace without being named.",
+  "verdict": "raw_gap+24468 comp_gap+24464",
+  "utc_timestamp": "2026-08-29T08:50:30.369446+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase2/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:50:31.011584+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

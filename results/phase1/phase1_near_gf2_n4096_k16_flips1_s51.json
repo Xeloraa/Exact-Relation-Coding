@@ -1,0 +1,142 @@
+{
+  "experiment_id": "phase1_near_gf2_n4096_k16_flips1_s51",
+  "phase": "phase1",
+  "dataset_id": "near_gf2_n4096_k16_flips1_s51",
+  "dataset_sha256": "ac02159c631b4bc3e463a21f7dba494dcd6f3bef15b12b4ad3ad0b21c6a10c7e",
+  "dataset_bytes": 8704,
+  "seed": 51,
+  "config": {
+    "codec": "gf2",
+    "n_cols": 17,
+    "n_flips": 1
+  },
+  "codec_kind": "GF2",
+  "n_relations": 0,
+  "n_independent": 17,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 69632,
+    "relation_description_bits": 17,
+    "header_bits": 208,
+    "framing_bits": 7,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 69928,
+    "total_bytes": 8741
+  },
+  "total_encoded_bytes": 8741,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.29558529998757876,
+  "decode_seconds": 0.10325119999470189,
+  "discovery_seconds": 0.29558529998757876,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 8727,
+      "seconds": 0.0002164000179618597,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 8715,
+      "seconds": 0.0001269000058528036,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 9187,
+      "seconds": 0.0021948000066913664,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 8764,
+      "seconds": 0.04755069999373518,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 8714,
+      "seconds": 0.005606300022918731,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 8708,
+      "seconds": 0.04474310000659898,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 8764,
+      "seconds": 0.002107000007526949,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 8752,
+      "seconds": 0.0024012999783735722,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 9227,
+      "seconds": 0.0029984000138938427,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 8804,
+      "seconds": 0.05322619999060407,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 8751,
+      "seconds": 0.005822999984957278,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 8745,
+      "seconds": 0.10869369999272749,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "gf2",
+  "hypothesis": "A single corrupted parity bit makes the exact global relation false; no free column.",
+  "verdict": "raw_gap-33 comp_gap-37",
+  "utc_timestamp": "2026-08-29T08:48:21.215078+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase1/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:48:21.428402+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}
