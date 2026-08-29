@@ -83,24 +83,24 @@ Two surfaces, handled explicitly:
    control `G_pct` ≈ 0.48; `control_nonaligned_period` finds a planted code once
    its width is tried).
 
-## 5. What a negative result establishes — the claim layers
+## 5. What a negative result establishes — the RQ layers
 
-A NEGATIVE is not "the idea failed". It is a precise statement per layer, read
-from the ledger:
+A NEGATIVE is not "the idea failed". It is a precise statement per research
+question (paper §3), read mechanically from the ledger:
 
-| layer | question | metric | typical natural-corpus finding |
+| RQ | question | ledger predicate | typical natural-corpus finding |
 | --- | --- | --- | --- |
-| L1 structure exists | does the file satisfy an exact GF(2)/affine relation at a tried width? | `n_relations ≥ 1` before never-worse | often yes (constant bit-planes, ASCII high bit) |
-| L2 discoverable | is it found and verified on every row? | `verify_basis` / `verify_affine_basis` pass | yes when L1 holds (verified, or the codec raises) |
-| L3 reduces representation (raw) | is `\|D(x)\| < passthrough` and `< raw_best`? | `container < raw+18` and `raw_gap > 0` | **no** on natural corpora — description + container overhead exceeds the recovered bits |
-| L4 survives metadata | after counting header/relation/CRC/framing, still smaller? | same as L3 (accounting is inside `\|D(x)\|`) | **no** |
-| L5 survives composition | `G_abs > 0` vs the strongest stock compressor on `D(x)` | `composition_gap_bytes > 0` | **no**, usually large-negative |
-| L6 survives strong baselines | does a context mixer close the planted gap? | paq(raw) vs paq(D(x)) | (planted only) **no** — paq8l/paq8px do not absorb it |
+| **A** structure exists | exact GF(2)/affine relation at a tried width **or bit phase**? | `n_relations ≥ 1` before never-worse | often yes (constant bit-planes, ASCII high bit); sometimes no (binaries → passthrough) |
+| **B** discoverable & represented | verified on every row; well-formed accounted container? | `verify_basis` passes; `finalize()` invariant holds; independent decoder agrees | yes whenever A holds |
+| **C** reduces total cost (pre-composition) | `\|D(x)\| < passthrough` and `< raw_best`? | `raw_gap_bytes > 0` | **no** on every natural file — description + header + framing + CRC exceed the recovered bits |
+| **D** survives strong downstream compressor | `G_abs > 0`? | `composition_gap_bytes > 0` | **no**, usually large-negative |
+| **E** occurs naturally at meaningful scale | any non-prior-art file ≥ threshold? | `G_pct ≥ 0.05 ∧ G_abs ≥ 1024 ∧ ¬passthrough` | **no** — 0 of all natural files (8 whole + 12 slices + 6 float fields + telemetry + offset extension) |
+| *(planted only)* | does a context mixer close the planted gap? | paq(raw) vs paq(D(x)) | **no** — paq8l / paq8px v216 do not absorb it |
 
-For the tested natural corpora the result is: **L1–L2 frequently yes, L3
-onward no.** That is the scientifically useful content — the redundancy the
-detector finds is real but trivial, and is already captured by stock
-compressors given the raw layout.
+For the tested natural corpora: **A/B frequently yes, C onward no.** That is the
+scientifically useful content — the redundancy the detector finds is real but
+trivial, and is already captured by stock compressors given the raw layout. The
+bit-phase-offset extension does not move any file across C or D.
 
 ## 6. Power / sensitivity
 
