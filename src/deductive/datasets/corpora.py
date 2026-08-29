@@ -7,11 +7,13 @@ automated tests (source snippets, JSON, CSV, logs).
 
 from __future__ import annotations
 
+import hashlib
 import io
 import json
 import sqlite3
 import struct
 import sys
+import tarfile
 import tempfile
 import zipfile
 import zlib
@@ -109,6 +111,19 @@ Silesia (dumps not committed):
 CTU-13 NetFlow (tabular / FD control; format-awareness trap):
   public research dataset; treat derived-column wins as known FD elimination
   unless the same mechanism wins on non-tabular bytes.
+
+SDRBench scientific float arrays (docs/preregistration.md corpus `sdrbench/*`):
+  from deductive.datasets.corpora import try_download_sdrbench_bundle
+  try_download_sdrbench_bundle("exaalt-2869440")   # ~62 MB, six 11.48 MB f32 fields
+  # host: g-d0cd3f.fd635.8443.data.globus.org/raw-data/ (plain HTTPS GET, Range OK)
+  # larger bundles (cesm-atm, hurricane-isabel, nyx, miranda) exceed the
+  # default max_mb guard; raise max_mb on the heavy-sweep machine.
+  # cite: Zhao et al., SDRBench, 2021.
+
+UCI Individual Household Electric Power Consumption (corpus `uci_household_power`):
+  from deductive.datasets.corpora import try_download_uci_household_power
+  try_download_uci_household_power()   # ~20 MB zip, ~127 MB text, 2,075,259 rows
+  # cite: Hebrail & Berard, UCI ML Repository #235.
 
 Place downloads under data/downloads/ (gitignored) and point experiments
 at those paths.
@@ -355,6 +370,256 @@ def try_download_silesia_member(member: str, timeout: int = 90) -> str:
     except Exception as exc:  # noqa: BLE001
         tmp.unlink(missing_ok=True)
         return f"download failed: {type(exc).__name__}: {exc}"
+
+
+def load_silesia_member_whole(member: str) -> tuple[bytes | None, str]:
+    """Load a whole Silesia member (no prefix). Never commits the dump.
+
+    The caller is responsible for deciding whether the running machine can
+    process the full size; see docs/environment_constraints.md.
+    """
+    data, note = load_silesia_member_prefix(member, n_bytes=1 << 62)
+    return data, note.replace("prefix", "whole")
+
+
+# --- Corpus manifest: pin every corpus by SHA-256 on first sight -----------
+
+def _manifest_path() -> Path:
+    return _repo_root() / "results" / "corpus_manifest.json"
+
+
+def _load_manifest() -> dict:
+    p = _manifest_path()
+    if p.is_file():
+        return json.loads(p.read_text(encoding="utf-8"))
+    return {}
+
+
+def pin_or_verify(dataset_id: str, data: bytes, *, source: str = "", extra: dict | None = None) -> str:
+    """Record SHA-256/size for `dataset_id` on first sight; abort on mismatch.
+
+    Returns the pinned SHA-256. A later run that produces different bytes for
+    the same id raises RuntimeError instead of silently proceeding.
+    """
+    digest = hashlib.sha256(data).hexdigest()
+    man = _load_manifest()
+    rec = man.get(dataset_id)
+    if rec is not None:
+        if rec.get("sha256") != digest or rec.get("bytes") != len(data):
+            raise RuntimeError(
+                f"corpus mismatch for {dataset_id}: manifest {rec.get('sha256')} "
+                f"({rec.get('bytes')} B) vs current {digest} ({len(data)} B). "
+                f"Refusing to proceed on changed corpus bytes."
+            )
+        return digest
+    man[dataset_id] = {
+        "sha256": digest,
+        "bytes": len(data),
+        "source": source,
+        **(extra or {}),
+    }
+    p = _manifest_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(dict(sorted(man.items())), indent=2) + "\n", encoding="utf-8")
+    return digest
+
+
+# --- SDRBench scientific floating-point arrays ----------------------------
+#
+# SDRBench (https://sdrbench.github.io) distributes each dataset as a tar.gz of
+# raw little-endian IEEE-754 arrays. The download host serves plain HTTPS GET
+# with byte ranges. Bytes are NOT committed. Cite: Zhao et al., "SDRBench:
+# Scientific Data Reduction Benchmark for Lossy Compressors", 2021.
+
+SDRBENCH_HOST = "https://g-d0cd3f.fd635.8443.data.globus.org/raw-data/"
+
+# Small-to-moderate bundles. Sizes are approximate compressed download sizes.
+# `exaalt-2869440` is the campaign's primary scientific corpus: six 11.48 MB
+# little-endian float32 arrays (MD position x/y/z and velocity x/y/z of a
+# 2,869,440-atom simulation). ~62 MB download.
+SDRBENCH_BUNDLES = {
+    "exaalt-2869440": SDRBENCH_HOST + "EXAALT/SDRBENCH-EXAALT-2869440.tar.gz",
+    "exaalt-copper": SDRBENCH_HOST + "EXAALT/SDRBENCH-EXAALT-copper.tar.gz",
+    "cesm-atm-cleared-1800x3600": SDRBENCH_HOST + "CESM-ATM/SDRBENCH-CESM-ATM-cleared-1800x3600.tar.gz",
+    "qmcpack": SDRBENCH_HOST + "QMCPACK/SDRBENCH-QMCPack.tar.gz",
+    "hurricane-isabel-cloudf": SDRBENCH_HOST + "Hurricane-ISABEL/SDRBENCH-Hurricane-ISABEL-CLOUDf.tar.gz",
+}
+
+
+def _download_resumable(url: str, dest: Path, *, max_mb: int, timeout: int, tries: int = 6) -> str:
+    """GET `url` to `dest` with Range-resume and a Content-Length completeness
+    check. Returns a status string; leaves `dest` in place only if the byte
+    count matches the server's reported total."""
+    import urllib.request
+
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    part = dest.with_suffix(".part")
+    total: int | None = None
+    for attempt in range(1, tries + 1):
+        have = part.stat().st_size if part.is_file() else 0
+        headers = {"User-Agent": "curl/8"}
+        if have:
+            headers["Range"] = f"bytes={have}-"
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=timeout) as r:
+                if total is None:
+                    cr = r.headers.get("Content-Range")
+                    if cr and "/" in cr:
+                        total = int(cr.rsplit("/", 1)[1])
+                    elif r.headers.get("Content-Length") is not None:
+                        total = have + int(r.headers["Content-Length"])
+                if total is not None and total > max_mb * 1_000_000:
+                    part.unlink(missing_ok=True)
+                    return f"skipped: {dest.name} is {total/1e6:.0f} MB > max_mb={max_mb}; defer to a bigger machine"
+                with part.open("ab" if have else "wb") as f:
+                    while True:
+                        chunk = r.read(1 << 19)
+                        if not chunk:
+                            break
+                        f.write(chunk)
+            got = part.stat().st_size
+            if total is None or got == total:
+                part.replace(dest)
+                return f"downloaded {got} bytes" + ("" if total else " (no length header; integrity unverified)")
+        except Exception as exc:  # noqa: BLE001
+            last = f"{type(exc).__name__}: {exc}"
+            continue
+        last = f"short read {got}/{total}"
+    part_size = part.stat().st_size if part.is_file() else 0
+    return f"download failed after {tries} attempts ({last}); partial {part_size} B kept as .part"
+
+
+def try_download_sdrbench_bundle(bundle: str, *, max_mb: int = 120, timeout: int = 300) -> str:
+    """Best-effort, resumable, integrity-checked download of one SDRBench tar.gz.
+
+    Refuses if the server-reported size exceeds `max_mb`. On success the tar.gz
+    is verified by fully iterating its members.
+    """
+    if bundle not in SDRBENCH_BUNDLES:
+        return f"unknown bundle {bundle!r}; known: {sorted(SDRBENCH_BUNDLES)}"
+    dest = downloads_dir() / "sdrbench" / f"{bundle}.tar.gz"
+    if dest.is_file() and dest.stat().st_size > 1000:
+        return f"already have {dest.name} ({dest.stat().st_size} bytes)"
+    status = _download_resumable(SDRBENCH_BUNDLES[bundle], dest, max_mb=max_mb, timeout=timeout)
+    if not dest.is_file():
+        return status
+    try:
+        with tarfile.open(dest, "r:gz") as tf:
+            n = sum(1 for m in tf if m.isfile())
+    except Exception as exc:  # noqa: BLE001
+        dest.rename(dest.with_suffix(".corrupt"))
+        return f"{status}; but tar is corrupt ({type(exc).__name__}); moved to .corrupt"
+    return f"{status}; tar OK, {n} files"
+
+
+def load_sdrbench_field(
+    bundle: str, member: str | None = None, *, dtype: str = "<f4"
+) -> tuple[bytes | None, str]:
+    """Return the raw bytes of one float array from a downloaded SDRBench bundle.
+
+    `member` selects a file inside the tar; None picks the largest regular file.
+    The bytes are returned verbatim (already a packed little-endian array); the
+    experiment treats them as an opaque byte string. `dtype` is recorded only.
+    """
+    dest = downloads_dir() / "sdrbench" / f"{bundle}.tar.gz"
+    if not dest.is_file():
+        return None, f"sdrbench bundle {bundle} not present under data/downloads/sdrbench/"
+    try:
+        with tarfile.open(dest, "r:gz") as tf:
+            members = [m for m in tf.getmembers() if m.isfile()]
+            if not members:
+                return None, f"{bundle}: no regular files in tar"
+            if member is not None:
+                pick = next((m for m in members if m.name.endswith(member)), None)
+                if pick is None:
+                    return None, f"{bundle}: member {member!r} not found; have {[m.name for m in members][:8]}"
+            else:
+                pick = max(members, key=lambda m: m.size)
+            with tf.extractfile(pick) as fh:
+                data = fh.read()
+        return data, f"sdrbench {bundle}:{pick.name} ({len(data)} B, dtype {dtype})"
+    except Exception as exc:  # noqa: BLE001
+        return None, f"sdrbench extract failed: {type(exc).__name__}: {exc}"
+
+
+# --- UCI Individual Household Electric Power Consumption -----------------
+#
+# UCI ML Repository #235. Telemetry / columnar. ';'-separated text, ~2,075,259
+# rows x 9 fields, minute resolution 2006-12 .. 2010-11. Documented approximate
+# relation: Global_active_power*1000/60 ~= Sub_metering_1 + _2 + _3 + remainder.
+# Bytes are NOT committed. Cite: Hebrail & Berard, UCI ML Repository.
+
+UCI_HHPOWER_URL = (
+    "https://archive.ics.uci.edu/static/public/235/"
+    "individual+household+electric+power+consumption.zip"
+)
+
+
+def try_download_uci_household_power(timeout: int = 300) -> str:
+    import urllib.request
+
+    dst_dir = downloads_dir() / "uci_household_power"
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    dest = dst_dir / "household_power_consumption.zip"
+    if dest.is_file() and dest.stat().st_size > 1_000_000:
+        return f"already have {dest.name} ({dest.stat().st_size} bytes)"
+    try:
+        req = urllib.request.Request(UCI_HHPOWER_URL, headers={"User-Agent": "curl/8"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            dest.write_bytes(resp.read())
+        return f"downloaded {dest.stat().st_size} bytes"
+    except Exception as exc:  # noqa: BLE001
+        return f"download failed: {type(exc).__name__}: {exc}"
+
+
+def load_uci_household_power_text(n_bytes: int | None = None) -> tuple[bytes | None, str]:
+    """Raw text bytes of household_power_consumption.txt (optionally a prefix)."""
+    dest = downloads_dir() / "uci_household_power" / "household_power_consumption.zip"
+    if not dest.is_file():
+        return None, "uci household power zip not present under data/downloads/uci_household_power/"
+    try:
+        with zipfile.ZipFile(dest) as zf:
+            name = next((n for n in zf.namelist() if n.endswith(".txt")), None)
+            if name is None:
+                return None, f"no .txt in {dest.name}: {zf.namelist()}"
+            with zf.open(name) as fh:
+                data = fh.read() if n_bytes is None else fh.read(n_bytes)
+        tag = "whole" if n_bytes is None else f"prefix {len(data)}"
+        return data, f"uci household power {name} ({tag}, {len(data)} B)"
+    except Exception as exc:  # noqa: BLE001
+        return None, f"uci household power read failed: {type(exc).__name__}: {exc}"
+
+
+def load_uci_household_power_columns(max_rows: int | None = None) -> tuple[object | None, str]:
+    """Parsed numeric matrix (float64) of the 7 measurement columns.
+
+    Rows with missing values ('?') are dropped. Returns an (n_rows, 7) numpy
+    array in column order: Global_active_power, Global_reactive_power, Voltage,
+    Global_intensity, Sub_metering_1, Sub_metering_2, Sub_metering_3.
+    """
+    import numpy as np
+
+    raw, note = load_uci_household_power_text(None)
+    if raw is None:
+        return None, note
+    lines = raw.decode("ascii", "replace").splitlines()
+    header = lines[0].split(";")
+    cols = [
+        "Global_active_power", "Global_reactive_power", "Voltage", "Global_intensity",
+        "Sub_metering_1", "Sub_metering_2", "Sub_metering_3",
+    ]
+    idx = [header.index(c) for c in cols]
+    out = []
+    for ln in lines[1: (1 + max_rows) if max_rows else None]:
+        parts = ln.split(";")
+        if len(parts) < max(idx) + 1 or any(parts[i] == "?" or parts[i] == "" for i in idx):
+            continue
+        try:
+            out.append([float(parts[i]) for i in idx])
+        except ValueError:
+            continue
+    arr = np.asarray(out, dtype=np.float64)
+    return arr, f"uci household power parsed {arr.shape} float64 (cols={cols})"
 
 
 def load_silesia_member_prefix(member: str, n_bytes: int = 512_000) -> tuple[bytes | None, str]:
