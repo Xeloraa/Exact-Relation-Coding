@@ -53,11 +53,15 @@ never presented as whole-file results.
 - **This machine, foreground, longer budget:** works up to ~10 MiB per Silesia
   member (`xml` 5.3 MB → 1m54s; `mr`/`osdb` 10 MB → ~4 min). **Done for 8 of 12
   Silesia members** (`dickens, xml, ooffice, reymont, sao, x-ray, mr, osdb`).
-- **A cloud routine (claude.ai RemoteTrigger):** the create API needs a
-  `job_config`/`session_request` schema that is not documented to this session;
-  and a claude.ai code container's RAM is not guaranteed to exceed this box's.
-  Not pursued — poor expected value against an already-decided NEGATIVE
-  conclusion and an unknown container spec.
+- **A cloud routine (claude.ai RemoteTrigger):** four create attempts, each
+  rejected by an undocumented nested schema (`session_request` / `job_config`
+  → requires a `ccr`-shaped object not exposed to this session). Abandoned:
+  further blind schema-guessing bills the user per request, and a claude.ai
+  code container's RAM is not guaranteed to exceed this box's anyway. A user
+  with a ≥ 32 GiB machine runs the identical sweep via
+  `python scripts/reproduce.py --mode whole` (or
+  `python experiments/natural/run.py --mode whole --only silesia_mozilla`, one
+  file at a time). No code, threshold, or corpus change is needed.
 - **Remaining gap:** `samba` (21 MB), `nci` (34 MB), `webster` (41 MB),
   `mozilla` (51 MB); `enwik8` whole (100 MB); the 6 SDRBench fields whole
   (11.5 MB each); UCI whole (127 MB). These need a machine with > 8 GiB RAM
