@@ -159,6 +159,111 @@ def extract_pivot_bits(matrix: np.ndarray, basis: GF2ColumnBasis) -> np.ndarray:
     return np.column_stack([bit[:, p] for p in basis.pivot_indices])
 
 
+@dataclass(frozen=True)
+class GF2AffineBasis:
+    """Homogeneous basis of [A | 1]. The ones column is not transmitted.
+
+    Payload columns are `real_pivot_indices`. If `ones_is_pivot`, the decoder
+    synthesizes an all-ones column and treats it as an extra virtual pivot.
+    Coefficients have width n_payload_pivots + int(ones_is_pivot).
+    """
+
+    n_rows: int
+    n_cols: int
+    real_pivot_indices: tuple[int, ...]
+    free_indices: tuple[int, ...]
+    ones_is_pivot: bool
+    coefficients: np.ndarray
+
+    @property
+    def n_payload_pivots(self) -> int:
+        return len(self.real_pivot_indices)
+
+    @property
+    def n_relations(self) -> int:
+        return len(self.free_indices)
+
+    @property
+    def coeff_width(self) -> int:
+        return self.n_payload_pivots + int(self.ones_is_pivot)
+
+    def recovered_bits(self) -> int:
+        return self.n_rows * self.n_relations
+
+
+def affine_column_basis(matrix: np.ndarray) -> GF2AffineBasis:
+    """Leftmost basis of [A | 1] over GF(2), mapped back to original columns."""
+    bit = (matrix.astype(np.uint8, copy=False) & 1).copy()
+    n_rows, n_cols = bit.shape
+    ones = np.ones((n_rows, 1), dtype=np.uint8)
+    # Ones first so the leftmost basis keeps the implicit column as a pivot
+    # when it is independent, and original affine-dependent columns become free.
+    aug = np.concatenate([ones, bit], axis=1)
+    basis = column_basis(aug)
+    ones_idx = 0
+    ones_is_pivot = ones_idx in basis.pivot_indices
+    real_pivots = tuple(p - 1 for p in basis.pivot_indices if p != ones_idx)
+    original_free = tuple(j for j in range(n_cols) if j not in real_pivots)
+    pivot_list = list(basis.pivot_indices)
+    virtual_src = [pivot_list.index(p + 1) for p in real_pivots]
+    if ones_is_pivot:
+        virtual_src.append(pivot_list.index(ones_idx))
+    free_pos = {f: i for i, f in enumerate(basis.free_indices)}
+    coeffs = np.zeros((len(original_free), len(virtual_src)), dtype=np.uint8)
+    for oi, j in enumerate(original_free):
+        aug_j = j + 1
+        if aug_j not in free_pos:
+            raise RuntimeError("original column expected free in augmented basis")
+        src = basis.coefficients[free_pos[aug_j]]
+        for vi, pk in enumerate(virtual_src):
+            coeffs[oi, vi] = src[pk]
+    aff = GF2AffineBasis(
+        n_rows=n_rows,
+        n_cols=n_cols,
+        real_pivot_indices=real_pivots,
+        free_indices=original_free,
+        ones_is_pivot=ones_is_pivot,
+        coefficients=coeffs,
+    )
+    if not verify_affine_basis(bit, aff):
+        raise RuntimeError("affine GF(2) basis failed verification")
+    return aff
+
+
+def reconstruct_affine(
+    n_rows: int,
+    n_cols: int,
+    payload_bits: np.ndarray,
+    aff: GF2AffineBasis,
+) -> np.ndarray:
+    out = np.zeros((n_rows, n_cols), dtype=np.uint8)
+    for j, p in enumerate(aff.real_pivot_indices):
+        out[:, p] = payload_bits[:, j] & 1
+    ones = np.ones(n_rows, dtype=np.uint8)
+    width = aff.coeff_width
+    for i, f in enumerate(aff.free_indices):
+        acc = np.zeros(n_rows, dtype=np.uint8)
+        for j, p in enumerate(aff.real_pivot_indices):
+            if aff.coefficients[i, j]:
+                acc ^= out[:, p]
+        if aff.ones_is_pivot and width and aff.coefficients[i, width - 1]:
+            acc ^= ones
+        out[:, f] = acc
+    return out
+
+
+def verify_affine_basis(matrix: np.ndarray, aff: GF2AffineBasis) -> bool:
+    bit = matrix.astype(np.uint8, copy=False) & 1
+    if bit.shape != (aff.n_rows, aff.n_cols):
+        return False
+    if aff.n_payload_pivots == 0:
+        payload = np.zeros((aff.n_rows, 0), dtype=np.uint8)
+    else:
+        payload = np.column_stack([bit[:, p] for p in aff.real_pivot_indices])
+    rec = reconstruct_affine(aff.n_rows, aff.n_cols, payload, aff)
+    return bool(np.array_equal(rec, bit))
+
+
 def relation_description_bits(basis: GF2ColumnBasis) -> int:
     """Bits required to encode the basis under the canonical v1 layout.
 

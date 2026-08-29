@@ -53,21 +53,38 @@ def main() -> int:
             "codec": "gf2",
             "n_cols": n_cols,
             "payload_len": payload_len,
+            "affine": False,
             "label": "format_awareness_CRC32",
         },
-        encode_fn=lambda: encode_gf2_matrix(matrix, original=data, leftover=leftover),
+        encode_fn=lambda: encode_gf2_matrix(matrix, original=data, leftover=leftover, affine=False),
         hypothesis=(
-            "IEEE CRC32 is affine over GF(2). Homogeneous discovery may miss it. "
+            "IEEE CRC32 is affine over GF(2). Homogeneous discovery may miss one bit. "
             "Any win is a known checksum, not a new corpus phenomenon."
         ),
         notes="LABEL: CRC / format-aware checksum; not claimed as novel if it works",
     )
     persist(rec, "phase3")
     print_record(rec)
-    rec.config["homogeneous_rank"] = basis.rank
-    rec.config["affine_ones_rank"] = abasis.rank
-    rec.config["affine_ones_relations"] = abasis.n_relations
-    persist(rec, "phase3")
+
+    rec_a = run_codec_experiment(
+        phase="phase3",
+        experiment_id="phase3_crc32_records_affine",
+        dataset_id=f"crc32_n{n_records}_p{payload_len}_s{seed}",
+        data=data,
+        seed=seed,
+        config={
+            "codec": "gf2_affine",
+            "n_cols": n_cols,
+            "payload_len": payload_len,
+            "affine": True,
+            "label": "format_awareness_CRC32",
+        },
+        encode_fn=lambda: encode_gf2_matrix(matrix, original=data, leftover=leftover, affine=True),
+        hypothesis="Affine GF(2) (implicit ones column) should recover all 32 CRC bits. Still a checksum.",
+        notes="LABEL: CRC affine; not claimed as novel",
+    )
+    persist(rec_a, "phase3")
+    print_record(rec_a)
     return 0
 
 

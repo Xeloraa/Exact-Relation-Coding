@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from deductive.relations.gf2 import column_basis, reconstruct, verify_basis
+from deductive.relations.gf2 import affine_column_basis, column_basis, reconstruct, verify_basis
 
 
 def test_planted_parity_rank():
@@ -68,3 +68,16 @@ def test_wide_and_narrow(n_cols):
     basis = column_basis(m)
     assert verify_basis(m, basis)
     assert basis.rank <= min(m.shape)
+
+
+def test_affine_recovers_constant_offset():
+    rng = np.random.default_rng(4)
+    info = rng.integers(0, 2, size=(80, 5), dtype=np.uint8)
+    parity = np.bitwise_xor.reduce(info, axis=1) ^ 1
+    matrix = np.concatenate([info, parity.reshape(-1, 1)], axis=1)
+    lin = column_basis(matrix)
+    aff = affine_column_basis(matrix)
+    assert lin.n_relations == 0
+    assert aff.n_relations == 1
+    assert aff.ones_is_pivot
+

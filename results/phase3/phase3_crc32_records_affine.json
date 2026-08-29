@@ -1,123 +1,123 @@
 {
-  "experiment_id": "phase3_crc32_records_homogeneous",
+  "experiment_id": "phase3_crc32_records_affine",
   "phase": "phase3",
   "dataset_id": "crc32_n4096_p4_s777",
   "dataset_sha256": "de72357e2f35c2a6da28156eecb043bd8b2a1fc14b3d6207217464e6f9c6803e",
   "dataset_bytes": 32768,
   "seed": 777,
   "config": {
-    "codec": "gf2",
+    "codec": "gf2_affine",
     "n_cols": 64,
     "payload_len": 4,
-    "affine": false,
+    "affine": true,
     "label": "format_awareness_CRC32"
   },
   "codec_kind": "GF2",
-  "n_relations": 31,
-  "n_independent": 33,
-  "recovered_bits": 126976,
+  "n_relations": 32,
+  "n_independent": 32,
+  "recovered_bits": 131072,
   "accounting": {
-    "payload_bits": 135168,
-    "relation_description_bits": 1087,
+    "payload_bits": 131072,
+    "relation_description_bits": 1120,
     "header_bits": 216,
-    "framing_bits": 1,
+    "framing_bits": 0,
     "crc_bits": 32,
     "leftover_bits": 32,
     "other_sideinfo_bits": 0,
-    "total_bits": 136536,
-    "total_bytes": 17067
+    "total_bits": 132472,
+    "total_bytes": 16559
   },
-  "total_encoded_bytes": 17067,
+  "total_encoded_bytes": 16559,
   "roundtrip_ok": true,
-  "encode_seconds": 0.1860434999980498,
-  "decode_seconds": 0.09766729999682866,
-  "discovery_seconds": 0.1860434999980498,
+  "encode_seconds": 0.3229921000020113,
+  "decode_seconds": 0.09334059999673627,
+  "discovery_seconds": 0.3229921000020113,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 32796,
-      "seconds": 0.0021118999866303056,
+      "seconds": 0.001139599975431338,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 32784,
-      "seconds": 0.0007830999966245145,
+      "seconds": 0.0007759000000078231,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 33266,
-      "seconds": 0.0050731000083032995,
+      "seconds": 0.005998400010867044,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 32828,
-      "seconds": 0.030672699998831376,
+      "seconds": 0.027069300005678087,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 32778,
-      "seconds": 0.0035985999857075512,
+      "seconds": 0.007618600007845089,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 32772,
-      "seconds": 0.018029300001217052,
+      "seconds": 0.01661190000595525,
       "available": true,
       "notes": ""
     }
   ],
   "composition": {
     "gzip9": {
-      "bytes": 17095,
-      "seconds": 0.0006741999823134392,
+      "bytes": 16587,
+      "seconds": 0.0004591000033542514,
       "available": true,
       "notes": ""
     },
     "zlib9": {
-      "bytes": 17083,
-      "seconds": 0.0004939999780617654,
+      "bytes": 16575,
+      "seconds": 0.00033260000054724514,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
-      "bytes": 17519,
-      "seconds": 0.004706900013843551,
+      "bytes": 17042,
+      "seconds": 0.0034497999877203256,
       "available": true,
       "notes": ""
     },
     "xz9": {
-      "bytes": 17128,
-      "seconds": 0.023411999980453402,
+      "bytes": 16620,
+      "seconds": 0.02596060000360012,
       "available": true,
       "notes": ""
     },
     "zstd19": {
-      "bytes": 17077,
-      "seconds": 0.002578900021035224,
+      "bytes": 16569,
+      "seconds": 0.003998599975602701,
       "available": true,
       "notes": ""
     },
     "brotli11": {
-      "bytes": 17071,
-      "seconds": 0.05852819999563508,
+      "bytes": 16563,
+      "seconds": 0.0480880000104662,
       "available": true,
       "notes": ""
     }
   },
-  "notes": "LABEL: CRC / format-aware checksum; not claimed as novel if it works",
-  "hypothesis": "IEEE CRC32 is affine over GF(2). Homogeneous discovery may miss one bit. Any win is a known checksum, not a new corpus phenomenon.",
-  "verdict": "raw_gap+15705 comp_gap+15701",
-  "utc_timestamp": "2026-08-29T09:43:18.295012+00:00",
+  "notes": "LABEL: CRC affine; not claimed as novel",
+  "hypothesis": "Affine GF(2) (implicit ones column) should recover all 32 CRC bits. Still a checksum.",
+  "verdict": "raw_gap+16213 comp_gap+16209",
+  "utc_timestamp": "2026-08-29T09:43:19.279693+00:00",
   "git_commit": "e4b3962d6e23df0db267f990f753bc00dca536fa-dirty",
   "command": "experiments/phase3/crc_trap.py",
   "machine": {
@@ -128,7 +128,7 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T09:43:18.537960+00:00",
+    "utc_timestamp": "2026-08-29T09:43:19.413232+00:00",
     "git_commit": "e4b3962d6e23df0db267f990f753bc00dca536fa-dirty",
     "package_versions": {
       "python": "3.13.6",

@@ -37,10 +37,10 @@ Tiny SQLite/JSON/C fixtures demonstrate a general corpus gap.
 ### Hypothesis 7
 Per-record CRC32 is a GF(2) (affine) relation that gzip/xz will not invert.
 
-**Result: confirmed, labeled format-aware checksum.** Homogeneous rank 33/64, 31 relations, composed gap +15702 on 32 KiB. Affine+ones diagnostic: 32 relations. Not novelty.
+**Result: confirmed, labeled format-aware checksum.** Homogeneous 31 relations, DEDC 17067, composed gap +15701. Affine GF(2) (ones column first) 32 relations, DEDC 16559, composed gap +16209. Not novelty.
 
 ### Decision
-Do not kill. Synthetic mechanism is real. General-text gap is not. CRC and FD wins are real and pre-occupied. Continue only with experiments that distinguish “planted linear code / FD table / checksum” from “arbitrary bytes.” Next: affine GF(2) flag; local enwik8 if available; never commit copyrighted dumps.
+Do not kill. Synthetic mechanism is real. General-text gap is not. CRC and FD wins are real and pre-occupied. Affine GF(2) is implemented and still a checksum when it hits CRC32. Continue only with experiments that distinguish “planted linear code / FD table / checksum” from “arbitrary bytes.” Next: local enwik8 if available; never commit copyrighted dumps.
 
 ### Accounting
 Every JSON file includes payload, relation description, header, framing, CRC, leftover. Round-trip required. Never-worse passthrough when GF(2) is not strictly smaller.

@@ -110,12 +110,10 @@ Affine 32k SHA-256: `bccec2f031a0794a41def665582cb5ae8cf96fb59b15e4173d81bf56b51
 
 | view | rank | relations | DEDC | best_stat | composed_gap |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| homogeneous GF(2) | 33/64 | 31 | 17066 | 32772 | **+15702** |
-| affine (extra column of ones, diagnostic only) | 33/65 | 32 | (not encoded) |  |  |
+| homogeneous GF(2) | 33/64 | 31 | 17067 | 32772 | **+15701** |
+| affine GF(2) (implicit ones) | 32 payload cols | 32 | 16559 | 32772 | **+16209** |
 
-gzip/zstd/xz/brotli all stay at ~raw size: the CRC bits look random. Deduction recovers 31/32 CRC bits as exact linear combinations. The missing bit is the affine offset of IEEE CRC32 (`init`/`xorout` 0xFFFFFFFF). **Label: known checksum, not a general-corpus discovery.** A later affine-GF(2) mode (implicit ones column + 1 flag bit) should pick up the last bit; that would still be CRC engineering.
-
-Do not cite this as evidence that Deductive Coding is novel on “real files.” It is evidence that strong general compressors often do not invert CRC, which format-aware tools already know.
+gzip/zstd/xz/brotli all stay at ~raw size: the CRC bits look random. Homogeneous deduction recovers 31/32 CRC bits; affine GF(2) recovers all 32. **Label: known checksum, not a general-corpus discovery.** Do not cite this as novelty on “real files.”
 
 ## Deduction-gap definitions (applied)
 
@@ -132,6 +130,5 @@ On affine tables: raw negative, composed positive (prior art).
 
 ## Next experiments (ordered by how much they change the conclusion)
 
-1. Affine GF(2) (implicit ones column) to pick up IEEE CRC offsets — still a checksum.
-2. Local enwik8 and a binary/object file, not committed.
-3. Whether packing independent bits before xz changes anything (it should not, on planted GF(2), because those bits are already nearly incompressible).
+1. Local enwik8 and a binary/object file, not committed.
+2. Whether packing independent bits before xz changes anything (it should not, on planted GF(2), because those bits are already nearly incompressible).

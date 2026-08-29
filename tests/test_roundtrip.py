@@ -68,3 +68,17 @@ def test_affine_fd_roundtrip():
     enc = encode_tabular_affine(table)
     assert decode(enc.data) == ds.data
     assert enc.n_relations == 1
+
+
+def test_gf2_affine_offset_roundtrip():
+    rng = np.random.default_rng(11)
+    info = rng.integers(0, 2, size=(256, 8), dtype=np.uint8)
+    parity = np.bitwise_xor.reduce(info, axis=1) ^ 1
+    matrix = np.concatenate([info, parity.reshape(-1, 1)], axis=1)
+    enc = encode_gf2_matrix(matrix, affine=True)
+    rec = decode(enc.data)
+    from deductive.codecs.gf2_codec import bits_from_bytes
+
+    bits = bits_from_bytes(rec)
+    assert np.array_equal(bits[: matrix.size].reshape(matrix.shape), matrix)
+    assert enc.n_relations == 1
