@@ -77,7 +77,7 @@ xz/brotli on packed independent bits beats the accounted GF(2) container.
 ### Hypothesis 14
 Silesia prefixes have a GF(2) composed gap.
 
-**Result: falsified.** Eight 512000-byte prefixes, all `roundtrip_ok`. Every composed gap is negative.
+**Result: falsified.** All twelve 512000-byte prefixes, all `roundtrip_ok`. Every composed gap is negative.
 
 - dickens: GF2, 1 relation, composed −114679.
 - xml: GF2, 1 relation, composed −24245.
@@ -87,16 +87,25 @@ Silesia prefixes have a GF(2) composed gap.
 - mr: passthrough, composed −78 (header).
 - nci: GF2, 1 relation (ASCII plane), DEDC 448037 vs bz2 29853, composed −17833.
 - sao: passthrough, composed −20 (header).
+- osdb: passthrough, composed −67 (header).
+- reymont: GF2, 1 relation, DEDC 448037 vs bz2 98623, composed −38291.
+- samba: passthrough, composed −133 (header).
+- webster: GF2, 1 relation, DEDC 448037 vs bz2 110460, composed −59085.
 
 Negative composed gaps are falsification, not a near-miss. Do not claim novelty. Dumps not committed.
 
 ### Hypothesis 15
 paq8l absorbs planted GF(2) XOR, so the gzip/xz gap is a weak-baseline artifact.
 
-**Result: rejected at paq8l -3** on 10 KiB (seed 902). paq(raw)=10299 vs DEDC 5291 vs paq(DEDC)=5331. Mixer-relative gap +4968, same order as gzip/xz +4949. Not paq8px and not `-8`.
+**Result: rejected at paq8l -3** on 10 KiB (seed 902). paq(raw)=10299 vs DEDC 5291 vs paq(DEDC)=5331. Mixer-relative gap +4968, same order as gzip/xz +4949.
+
+### Hypothesis 16
+paq8l `-8` (~1.6 GB) absorbs the same planted XOR.
+
+**Result: rejected.** paq(raw)=10321 vs DEDC 5291 vs paq(DEDC)=5347. Mixer-relative gap +4974. Higher memory does not invert the parity bits. Not paq8px or cmix.
 
 ### Decision
-Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. paq8l `-3` does not absorb it. Never commit dumps.
+Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. paq8l `-3` and `-8` do not absorb it. All twelve Silesia prefixes lose on composition. Never commit dumps.
 
 ### Accounting
 Every JSON file includes payload, relation description, header, framing, CRC, leftover. Round-trip required. Never-worse passthrough when GF(2) is not strictly smaller.

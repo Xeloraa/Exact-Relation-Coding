@@ -266,11 +266,23 @@ SILESIA_ZIP_URLS = (
     "https://github.com/DataCompression/corpus-collection/raw/main/Silesia-Corpus/silesia.zip",
 )
 
+SILESIA_MEMBERS = (
+    "dickens",
+    "mozilla",
+    "mr",
+    "nci",
+    "ooffice",
+    "osdb",
+    "reymont",
+    "samba",
+    "sao",
+    "webster",
+    "x-ray",
+    "xml",
+)
 SILESIA_MEMBER_URLS = {
-    "dickens": "https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/dickens",
-    "xml": "https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/xml",
-    "x-ray": "https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/x-ray",
-    "ooffice": "https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/ooffice",
+    name: f"https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/{name}.zip"
+    for name in SILESIA_MEMBERS
 }
 
 
@@ -300,24 +312,45 @@ def try_download_silesia_zip(timeout: int = 180) -> str:
     return f"download failed: {last}"
 
 
+def _silesia_entry_name(zf: zipfile.ZipFile, member: str) -> str | None:
+    files = [name for name in zf.namelist() if not name.endswith("/")]
+    for name in files:
+        base = name.rstrip("/").split("/")[-1]
+        if base == member:
+            return name
+    if len(files) == 1:
+        return files[0]
+    return None
+
+
 def try_download_silesia_member(member: str, timeout: int = 90) -> str:
-    """Fetch one Silesia file if the zip is unavailable. Not committed."""
+    """Fetch one Silesia file (GitHub stores each as a zip). Not committed."""
     import urllib.request
 
     if member not in SILESIA_MEMBER_URLS:
         return f"unknown member {member}"
     dest = downloads_dir() / member
     if dest.is_file() and dest.stat().st_size > 100_000:
-        return f"already have {dest.name} ({dest.stat().st_size} bytes)"
+        with dest.open("rb") as f:
+            magic = f.read(2)
+        if magic != b"PK":
+            return f"already have {dest.name} ({dest.stat().st_size} bytes)"
     url = SILESIA_MEMBER_URLS[member]
-    tmp = dest.with_suffix(dest.suffix + ".part")
+    tmp = dest.with_suffix(".zip.part")
     try:
         with urllib.request.urlopen(url, timeout=timeout) as resp:
             tmp.write_bytes(resp.read())
         if tmp.stat().st_size < 1000:
             tmp.unlink(missing_ok=True)
             return f"download failed: {url} too small"
-        tmp.replace(dest)
+        with zipfile.ZipFile(tmp) as zf:
+            target = _silesia_entry_name(zf, member)
+            if target is None:
+                tmp.unlink(missing_ok=True)
+                return f"download failed: {member} not in member zip"
+            with zf.open(target) as src:
+                dest.write_bytes(src.read())
+        tmp.unlink(missing_ok=True)
         return f"downloaded {dest.stat().st_size} bytes ({member})"
     except Exception as exc:  # noqa: BLE001
         tmp.unlink(missing_ok=True)
@@ -328,22 +361,32 @@ def load_silesia_member_prefix(member: str, n_bytes: int = 512_000) -> tuple[byt
     """Load a prefix of one Silesia file. Never commits the dump."""
     root = downloads_dir()
     for path in (root / member, root / "silesia" / member):
-        if path.is_file():
-            data = path.read_bytes()[:n_bytes]
-            return data, f"local {path.name} prefix {len(data)}"
-    zpath = root / "silesia.zip"
-    if zpath.is_file():
+        if not path.is_file():
+            continue
+        with path.open("rb") as f:
+            magic = f.read(2)
+        if magic == b"PK":
+            with zipfile.ZipFile(path) as zf:
+                target = _silesia_entry_name(zf, member)
+                if target is None:
+                    continue
+                with zf.open(target) as src:
+                    data = src.read(n_bytes)
+            return data, f"local zip {path.name}:{target} prefix {len(data)}"
+        with path.open("rb") as f:
+            data = f.read(n_bytes)
+        return data, f"local {path.name} prefix {len(data)}"
+    for zpath in (root / f"{member}.zip", root / "silesia.zip"):
+        if not zpath.is_file():
+            continue
         with zipfile.ZipFile(zpath) as zf:
-            target = None
-            for name in zf.namelist():
-                base = name.rstrip("/").split("/")[-1]
-                if base == member and not name.endswith("/"):
-                    target = name
-                    break
+            target = _silesia_entry_name(zf, member)
             if target is None:
-                return None, f"{member} not in silesia.zip"
-            with zf.open(target) as f:
-                data = f.read(n_bytes)
-            return data, f"zip {zpath.name}:{target} prefix {len(data)}"
+                if zpath.name == "silesia.zip":
+                    return None, f"{member} not in silesia.zip"
+                continue
+            with zf.open(target) as src:
+                data = src.read(n_bytes)
+        return data, f"zip {zpath.name}:{target} prefix {len(data)}"
     return None, "silesia not present under data/downloads/"
 

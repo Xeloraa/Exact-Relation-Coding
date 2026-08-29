@@ -5,6 +5,8 @@ from __future__ import annotations
 from deductive.codecs import decode, encode_passthrough
 from deductive.codecs.gf2_codec import encode_bytes_best_gf2
 from deductive.datasets.corpora import (
+    SILESIA_MEMBERS,
+    SILESIA_MEMBER_URLS,
     load_silesia_member_prefix,
     make_csv_fd,
     make_png,
@@ -67,3 +69,10 @@ def test_load_silesia_unknown_member_is_none():
     data, note = load_silesia_member_prefix("__not_a_silesia_file__", n_bytes=8)
     assert data is None
     assert isinstance(note, str) and note
+
+
+def test_silesia_member_list_is_twelve():
+    assert len(SILESIA_MEMBERS) == 12
+    assert set(SILESIA_MEMBERS) == set(SILESIA_MEMBER_URLS)
+    for name in ("osdb", "reymont", "samba", "webster", "dickens", "xml"):
+        assert name in SILESIA_MEMBERS

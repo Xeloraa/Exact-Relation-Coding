@@ -1,7 +1,8 @@
 """Phase 4: Silesia prefixes (dumps not committed).
 
-Public compression corpus mix: English text, XML, 16-bit medical, Windows DLL.
-General GF(2) on byte prefixes; not a format parser. Dumps stay gitignored.
+Public compression corpus mix: novels, XML, HTML, source, PDF, medical 16-bit,
+DLL/executables, database, star catalog. General GF(2) on byte prefixes; not a
+format parser. Dumps stay gitignored.
 """
 
 from __future__ import annotations
@@ -33,6 +34,10 @@ MEMBERS = (
     ("mr", "3-D MRI image, DICOM"),
     ("nci", "chemical database, text"),
     ("sao", "star catalog, binary"),
+    ("osdb", "sample database"),
+    ("reymont", "Polish PDF (Chlopi)"),
+    ("samba", "source code tar"),
+    ("webster", "HTML dictionary"),
 )
 PREFIX = 512_000
 HYPOTHESIS = (

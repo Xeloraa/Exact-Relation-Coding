@@ -1,0 +1,144 @@
+{
+  "experiment_id": "phase4_silesia_samba_p512000",
+  "phase": "phase4_silesia",
+  "dataset_id": "silesia_samba_prefix_512000",
+  "dataset_sha256": "6e9b57c7fadb54664bcd829e1e412f95d143cc31740c17b692142149979b1f29",
+  "dataset_bytes": 512000,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "category": "silesia",
+    "member": "samba",
+    "n_bytes": 512000,
+    "label": "public_corpus_prefix"
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 4096000,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 4096000,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 4096144,
+    "total_bytes": 512018
+  },
+  "total_encoded_bytes": 512018,
+  "roundtrip_ok": true,
+  "encode_seconds": 11.261334200011333,
+  "decode_seconds": 0.8402971999894362,
+  "discovery_seconds": 11.261334200011333,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 227999,
+      "seconds": 0.0624062999850139,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 227987,
+      "seconds": 0.06720570000470616,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 223213,
+      "seconds": 0.10190129998954944,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 210892,
+      "seconds": 0.5306751999887638,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 214927,
+      "seconds": 0.43817189999390393,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 206199,
+      "seconds": 2.4134653999935836,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 228013,
+      "seconds": 0.0652729999856092,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 228001,
+      "seconds": 0.07520190000650473,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 223254,
+      "seconds": 0.1070235000224784,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 210960,
+      "seconds": 0.3546537999936845,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 215029,
+      "seconds": 0.46700579999014735,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 206332,
+      "seconds": 2.846548500005156,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "source code tar; zip silesia.zip:samba prefix 512000; dump not committed",
+  "hypothesis": "Silesia prefixes are ordinary bytes, not planted linear codes. Composed GF(2) gap vs xz/brotli is expected negative.",
+  "verdict": "raw_gap-305819 no_deduction header_perturbation-133",
+  "utc_timestamp": "2026-08-29T11:52:32.530951+00:00",
+  "git_commit": "3029ca42afa94a00d5b62447b6f43afbe729f7bb-dirty",
+  "command": "experiments/phase4/silesia.py osdb reymont samba webster",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T11:52:32.818332+00:00",
+    "git_commit": "3029ca42afa94a00d5b62447b6f43afbe729f7bb-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}
