@@ -287,8 +287,14 @@ are never presented as whole-file results** and live in a separate phase
 | `sdrbench_exaalt2869440_{vx,vy,vz,xx,yy,zz}.f32` | SDRBench EXAALT bundle, little-endian float32, 2 869 440 values each | Globus HTTPS `g-d0cd3f…/raw-data/EXAALT/…`, tar-verified | pinned per field | 11 477 760 each | yes — EXAALT chosen over CESM/Hurricane/NYX only because those are 0.5–20 GB (size, not results) |
 | `uci_household_power_text` | UCI ML Repository #235 | `archive.ics.uci.edu/static/public/235/…zip` | pinned | ~1.27×10^8 | yes; its "documented relation" is *approximate* (positive un-metered residual) → also a real-data corrupted-structure case |
 
+**Run status.** Whole: `silesia_{dickens,xml,ooffice,reymont,sao,x-ray,mr,osdb}`
+(8/12, all ≤ 10.2 MB). ≥ 256 KiB prefix (labelled `natural_slice`): all 12
+Silesia + `enwik8` + the 6 SDRBench fields + `uci_household_power_text`. Not
+run whole (need > 8 GiB, `docs/environment_constraints.md`):
+`silesia_{samba,nci,webster,mozilla}`, whole enwik8 / SDRBench / UCI.
 Deferred/excluded corpora (with reasons) are logged in `docs/protocol.md` §4.
-No corpus has been dropped for being unfavourable.
+No corpus has been dropped for being unfavourable; the 4 unrun Silesia members
+are the largest, not the most inconvenient.
 
 ## 13. Baselines
 
@@ -448,6 +454,8 @@ scientifically useful content, not "the idea failed".
 | numbers hand-typed into the paper | tables generated from the ledger; `check_paper_numbers.py` fails on staleness or a bad `src:` marker |
 | "deductive coding" name collision | renamed **Exact-Relation Coding** (`docs/naming.md`) |
 | stale background process wrote a record | detected in audit; record discarded and re-run; correction logged (`docs/audit.md` C1) |
+| the negative is a bit-phase / framing artifact | bounded phase-offset extension (§8.4) run on every natural file — 0 crossings, no file beats phase-0 by > header noise |
+| the *decoded* output after the compressor could differ | independent (shared-nothing) decoder run through the full `compress → decompress → decode` chain (`verify_composed`), in CI and per-case |
 
 ## 20. Prior art
 
@@ -483,23 +491,38 @@ consistent: exact-structure pre-passing helps where exact structure is abundant
 and the recipe language is expressive; it does not help where the tested
 structure is trivial and the recipe is a fixed-width linear basis.
 
-**Standing verdict:** controls and mechanism complete and passing; whole-file
-natural sweep partial → **INCONCLUSIVE by the pre-registration**
-(`docs/preregistration.md` §4). The most likely completed outcome, on the
-partial evidence, is **B — a scoped negative-results paper** with the single
-named follow-up (a non-axis-aligned detector); a positive would require a file
-clearing 5 % and independent reproduction.
+**Standing verdict.** By the letter of `docs/preregistration.md` §4 the outcome
+is **INCONCLUSIVE for the full pre-registered list**, because 4 of 12 Silesia
+members and whole enwik8 / SDRBench / UCI were not runnable on the available
+8 GiB hardware. For the coverage actually achieved — 8/12 Silesia whole
+(including the largest that fits, 10 MB), all 12 members + an enwik8 prefix +
+6 SDRBench float32 fields + UCI telemetry as ≥ 256 KiB prefixes, and the bounded
+bit-phase-offset extension — the result is a **clean, layered NEGATIVE**:
+structure exists and is discoverable (RQ-A/B) on many files, and on **none** of
+them does it reduce the representation (RQ-C), let alone survive composition
+(RQ-D); no file approaches the 5 % threshold (RQ-E); and the offset extension
+does not change this. The validity gates (positive/null/corruption/prior-art
+controls) all pass. The single remaining gap is compute for the 4 largest
+Silesia members and the whole scientific/telemetry files.
 
 ## 22. Conclusion
 
-We built a rigorously accounted, independently verified, pre-registered test of
-whether blind axis-aligned exact-relation discovery helps lossless compression
-after composition. The mechanism works exactly as designed on planted linear
-codes and is not absorbed by the strongest mixers we could run. On the natural
-data measured so far it fails at the "reduces representation" layer and every
-layer after it, finding only redundancy stock compressors already capture. The
-whole-file sweep must complete on adequate hardware before the pre-registered
-hypothesis verdict is issued.
+We built a rigorously accounted, independently verified (end-to-end, through
+the downstream compressor, with a shared-nothing decoder), pre-registered test
+of whether blind axis-aligned exact-relation discovery — extended once, bounded,
+to every bit phase — helps lossless compression after composition. The
+mechanism works exactly as designed on planted linear codes, scales, and is not
+absorbed by the strongest context-mixing compressors we could run. On natural
+data — 8 whole Silesia members, 12 Silesia + enwik8 + 6 SDRBench fields + UCI
+telemetry as prefixes, and the offset extension — it fails at the "reduces
+representation" layer and every layer after, finding only redundancy stock
+compressors already capture from the raw byte order. The general mechanism is
+not novel; the contribution is the scoped, pre-registered, independently
+verified evaluation and the methodology. Completing the whole-file run for the
+4 largest Silesia members and the whole scientific/telemetry files on a
+≥ 32 GiB machine, plus cmix on the planted control, is the one revision that
+would let the pre-registered verdict move from INCONCLUSIVE-for-the-full-list to
+NEGATIVE-for-the-full-list.
 
 ## 23. Reproducibility statement
 
@@ -524,20 +547,25 @@ hypothesis verdict is issued.
 
 ```bash
 python -m pip install -e ".[dev]"
-python -m pytest -q                              # 90+ tests incl. equivalence, properties, independent verify
+python -m pytest -q                              # 620+ tests: equivalence, properties, independent verify (+composed)
 python verification/independent_verify.py --self-test
 
-# controls (fast; any machine)
-python experiments/controls/run.py               # exit 0 == all gates pass
+# controls (fast; any machine) -- exit 0 == all gates pass
+python experiments/controls/run.py
 
 # natural corpora
-python experiments/natural/run.py --mode slice   # dev-machine provenance only
-python experiments/natural/run.py --mode whole   # >= 32 GiB machine; the pre-registered answer
-python experiments/natural/run.py --mode whole --only silesia_xml   # one corpus at a time
+python experiments/natural/run.py --mode slice            # dev-machine provenance (256 KiB prefixes)
+python experiments/natural/run.py --mode whole            # >= 32 GiB machine; the pre-registered answer
+python experiments/natural/run.py --mode whole --only silesia_xml   # one corpus at a time (8 GiB ok up to ~10 MB)
 
-# ledger + paper tables + checks
+# detector-scope extension (kill criterion S7.2): bit-phase-offset search
+python experiments/offset/run.py --mode slice
+python experiments/offset/run.py --mode whole
+
+# ledger + tables + figures + checks (nothing hand-typed)
 python scripts/build_ledger.py
 python scripts/regen_tables.py
+python scripts/make_figures.py
 python scripts/check_paper_numbers.py
 python verification/independent_verify.py --ledger results/ledger.json
 

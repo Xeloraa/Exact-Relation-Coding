@@ -109,12 +109,17 @@ def main(argv: list[str] | None = None) -> int:
     steps.append(_run([sys.executable, str(ROOT / "experiments" / "natural" / "run.py"),
                        "--mode", args.mode, "--slice-bytes", str(args.slice_bytes)], f"natural ({args.mode})"))
 
+    steps.append(_run([sys.executable, str(ROOT / "experiments" / "offset" / "run.py"),
+                       "--mode", args.mode, "--slice-bytes", str(args.slice_bytes)],
+                      f"offset extension ({args.mode})"))
+
     if not args.skip_phases:
         for phase in ("phase0", "phase1", "phase2", "phase3", "phase4"):
             steps.append(_run([sys.executable, str(ROOT / "experiments" / phase / "run.py")], phase))
 
     steps.append(_run([sys.executable, str(ROOT / "scripts" / "build_ledger.py")], "build ledger"))
     steps.append(_run([sys.executable, str(ROOT / "scripts" / "regen_tables.py")], "regen paper tables"))
+    steps.append(_run([sys.executable, str(ROOT / "scripts" / "make_figures.py")], "make figures"))
     steps.append(_run([sys.executable, str(ROOT / "scripts" / "check_paper_numbers.py")], "check paper numbers"))
     steps.append(_run([sys.executable, str(ROOT / "verification" / "independent_verify.py"),
                        "--ledger", str(ROOT / "results" / "ledger.json")], "independent verify ledger"))
