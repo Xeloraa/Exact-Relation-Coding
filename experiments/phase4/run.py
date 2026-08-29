@@ -20,6 +20,7 @@ SCRIPTS = (
     "silesia.py",
     "pack_pivots.py",
     "paq_probe.py",
+    "paq8px_probe.py",
 )
 
 

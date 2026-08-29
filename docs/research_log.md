@@ -102,10 +102,15 @@ paq8l absorbs planted GF(2) XOR, so the gzip/xz gap is a weak-baseline artifact.
 ### Hypothesis 16
 paq8l `-8` (~1.6 GB) absorbs the same planted XOR.
 
-**Result: rejected.** paq(raw)=10321 vs DEDC 5291 vs paq(DEDC)=5347. Mixer-relative gap +4974. Higher memory does not invert the parity bits. Not paq8px or cmix.
+**Result: rejected.** paq(raw)=10321 vs DEDC 5291 vs paq(DEDC)=5347. Mixer-relative gap +4974. Higher memory does not invert the parity bits.
+
+### Hypothesis 17
+paq8px v216 absorbs planted GF(2) XOR (file-type models / a current mixer), so paq8l’s failure is obsolete.
+
+**Result: rejected** at `-4` and `-8` on the same 10 KiB seed 902. `-4`: paq(raw)=10262 vs DEDC 5291 vs paq(DEDC)=5289, mixer gap +4973. `-8`: 10261 vs 5288, mixer gap +4973. Same order as gzip/xz +4949. Not cmix.
 
 ### Decision
-Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. paq8l `-3` and `-8` do not absorb it. All twelve Silesia prefixes lose on composition. Never commit dumps.
+Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. paq8l and paq8px v216 do not absorb it. All twelve Silesia prefixes lose on composition. Never commit dumps.
 
 ### Accounting
 Every JSON file includes payload, relation description, header, framing, CRC, leftover. Round-trip required. Never-worse passthrough when GF(2) is not strictly smaller.

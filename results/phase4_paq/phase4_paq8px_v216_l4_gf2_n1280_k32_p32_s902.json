@@ -1,0 +1,159 @@
+{
+  "experiment_id": "phase4_paq8px_v216_l4_gf2_n1280_k32_p32_s902",
+  "phase": "phase4_paq",
+  "dataset_id": "gf2_n1280_k32_p32_s902",
+  "dataset_sha256": "c78ca4eb1e539975d9aa8b76779a790da3ab91af027b14de14c2d22c1f4b97d6",
+  "dataset_bytes": 10240,
+  "seed": 902,
+  "config": {
+    "n_rows": 1280,
+    "n_info": 32,
+    "n_parity": 32,
+    "seed": 902,
+    "codec": "gf2",
+    "n_cols": 64,
+    "paq": "paq8px",
+    "paq_version": "v216",
+    "paq_level": 4,
+    "paq8px_exe": "paq8px.exe",
+    "paq8px_version": "v216",
+    "paq8px_level": 4,
+    "paq8px_raw_bytes": 10262,
+    "paq8px_raw_seconds": 14.746529099997133,
+    "paq8px_raw_error": "",
+    "paq8px_dedc_bytes": 5289,
+    "paq8px_dedc_seconds": 9.451457499992102,
+    "paq8px_dedc_error": "",
+    "paq8px_vs_dedc": 4971,
+    "paq8px_raw_minus_paq_dedc": 4973
+  },
+  "codec_kind": "GF2",
+  "n_relations": 32,
+  "n_independent": 32,
+  "recovered_bits": 40960,
+  "accounting": {
+    "payload_bits": 40960,
+    "relation_description_bits": 1088,
+    "header_bits": 216,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 42328,
+    "total_bytes": 5291
+  },
+  "total_encoded_bytes": 5291,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.15617940001538955,
+  "decode_seconds": 0.09772630000952631,
+  "discovery_seconds": 0.15617940001538955,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 10263,
+      "seconds": 0.0010064999805763364,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 10251,
+      "seconds": 0.0006142000202089548,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 10710,
+      "seconds": 0.004467899998417124,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 10300,
+      "seconds": 0.0944413999968674,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 10250,
+      "seconds": 0.003412899997783825,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 10244,
+      "seconds": 0.039940499991644174,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 5314,
+      "seconds": 0.0004124999977648258,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 5302,
+      "seconds": 0.0002091999922413379,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 5845,
+      "seconds": 0.002757000009296462,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 5352,
+      "seconds": 0.06846269997186027,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 5301,
+      "seconds": 0.0007536999764852226,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 5295,
+      "seconds": 0.02953299999353476,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "paq8px v216 GPL from github.com/hxim/paq8px; dump not committed",
+  "hypothesis": "paq8px is a current context mixer with file-type models. If it absorbs planted XOR, paq(raw) approaches DEDC size and the mixer-relative gap vanishes. If not, paq8l's failure is not an artifact of using the 2007 mixer only.",
+  "verdict": "raw_gap+4953 comp_gap+4949",
+  "utc_timestamp": "2026-08-29T12:25:59.888012+00:00",
+  "git_commit": "13c875ba6ddbeb459209ac42d28299c8b2748269-dirty",
+  "command": "experiments/phase4/paq8px_probe.py 4",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T12:26:01.871807+00:00",
+    "git_commit": "13c875ba6ddbeb459209ac42d28299c8b2748269-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

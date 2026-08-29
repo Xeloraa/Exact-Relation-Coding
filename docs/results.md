@@ -12,7 +12,7 @@ Full ledgers: `results/phase*/**.json` and `summary.csv`.
 
 ## Headline (not a success claim for real data)
 
-1. **Planted GF(2) linear codes: yes, a large composed deduction gap.** Strong byte compressors — including paq8l `-3` and `-8` — leave XOR parity bits almost untouched. After counting relation description, header, CRC, and padding, omitting those bits still wins, and compressing the container does not close the gap.
+1. **Planted GF(2) linear codes: yes, a large composed deduction gap.** Strong byte compressors — including paq8l `-3`/`-8` and paq8px v216 `-4`/`-8` — leave XOR parity bits almost untouched. After counting relation description, header, CRC, and padding, omitting those bits still wins, and compressing the container does not close the gap.
 2. **Nulls: no invented net savings** on iid bits, shuffled planted codes, near-relations with flipped bits, or non-affine exact functions under the affine codec.
 3. **Ordinary source/docs/enwik8/stdlib/Silesia text and binaries: no.** GF(2) on this repo, local CPython `Lib/*.py`, a 1 MB enwik8 prefix, and all twelve 512 KB Silesia prefixes does not yield a composed gap. Statistical codecs still dominate.
 4. **Affine derived columns: composition win, labeled prior art** (functional-dependency elimination). The uncompressed DEDC container loses to xz; `deduce then xz` beats `xz` alone. Same pattern on a parsed CSV `c=a+b` table in Phase 4.
@@ -230,7 +230,24 @@ Local GPL `paq8l.exe` (Matt Mahoney et al., 2007) from `paq8l.zip`, not committe
 | paq8l -8 on DEDC | 5347 |
 | paq8l -8 (raw − DEDC) | **+4974** |
 
-**Interpretation:** this mixer does not absorb planted XOR at `-3` or `-8`. paq(raw) is *larger* than raw at both levels. Raising the mixer memory does not close the gap. The gzip/xz composed gap is not an artifact of using only those baselines. This is not paq8px or cmix. JSON: `results/phase4_paq/`.
+**Interpretation:** this mixer does not absorb planted XOR at `-3` or `-8`. paq(raw) is *larger* than raw at both levels. Raising the mixer memory does not close the gap. The gzip/xz composed gap is not an artifact of using only those baselines. JSON: `results/phase4_paq/`.
+
+### H. paq8px v216 on planted GF(2)
+
+Local GPL `paq8px.exe` v216 (hxim/GotthardtZ et al.) from GitHub Releases, not committed. Same 10 KiB planted code, seed 902. Level `-4` ~660 MB; `-8` ~2408 MB.
+
+| stream | bytes |
+| --- | ---: |
+| raw | 10240 |
+| DEDC container | 5291 |
+| paq8px -4 on raw | 10262 |
+| paq8px -4 on DEDC | 5289 |
+| paq8px -4 (raw − DEDC) | **+4973** |
+| paq8px -8 on raw | 10261 |
+| paq8px -8 on DEDC | 5288 |
+| paq8px -8 (raw − DEDC) | **+4973** |
+
+**Interpretation:** a current mixer with file-type models still leaves planted XOR almost uncompressed. paq(raw) stays near raw size; paq(DEDC) is within a few bytes of the accounted container. The 2007 paq8l result was not a weak-baseline artifact. This is not cmix. JSON: `results/phase4_paq/`.
 
 ## Deduction-gap definitions (applied)
 
@@ -241,12 +258,12 @@ On affine tables / parsed CSV FD: raw negative, composed positive (prior art).
 ## What this does *not* show
 
 - No packet captures or other public corpora beyond Silesia’s twelve members.
-- No paq8px / cmix / bsc. paq8l `-3` and `-8` on 10 KiB planted GF(2) are measured.
+- No cmix / bsc / zpaq. paq8l `-3`/`-8` and paq8px v216 `-4`/`-8` on 10 KiB planted GF(2) are measured.
 - No claim that neural compressors fail on parity.
 - No novelty claim for FD column drop or CRC inversion.
 - Local stdlib and `python.exe` hashes are machine-specific; enwik8 and Silesia prefix SHAs are from the public dumps (dumps not in git).
 
 ## Next experiments (ordered by how much they change the conclusion)
 
-1. paq8px or cmix on planted GF(2) if a binary is available; paq8l `-3` and `-8` already failed to absorb XOR.
-2. Packet captures or another public mix only if a *new kind* of byte string is needed. Silesia’s twelve members (novels, XML, HTML, source, PDF, 16-bit images, MRI, DLL, executable tar, database, star catalog) are complete and all composed-negative.
+1. cmix on planted GF(2) if a binary is available; paq8l and paq8px v216 already failed to absorb XOR.
+2. Packet captures or another public mix only if a *new kind* of byte string is needed. Silesia’s twelve members are complete and all composed-negative.

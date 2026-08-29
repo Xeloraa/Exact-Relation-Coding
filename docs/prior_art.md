@@ -76,6 +76,7 @@ FD-only tools do **not** trip this trigger for the GF(2)-on-bytes question. They
 - 2026-08-29: constraint-based compression; Corra; Wolpe FD pre-pass; US 8,150,888; precomp; Slepian–Wolf; MeLLoC; grammar compression; PAQ mixing; Daikon. No tool found that states a corpus-level deduction gap for general bytes with GF(2) discovery and full accounting.
 - 2026-08-29: PNG/ZIP/gzip CRC32 (PNG spec, zlib `crc32`, precomp); SQLite pager / unused-page zeros vs columnar FD. Same verdict: FD elimination occupied; CRC inversion occupied; live question remains a composed gap on arbitrary bytes.
 - 2026-08-29: local PATH, Program Files, user folders, and this repo — no `paq8px` / `zpaq` / `cmix` / `bsc` on PATH. `paq8l.exe` was later obtained from mattmahoney.net `paq8l.zip` (gitignored). 10 KiB planted GF(2): `-3` paq(raw)=10299 vs DEDC 5291; `-8` paq(raw)=10321 vs DEDC 5291. Mixer does not absorb XOR at either level.
+- 2026-08-29: `paq8px.exe` v216 from github.com/hxim/paq8px Releases (gitignored). Same 10 KiB planted GF(2): `-4` paq(raw)=10262 vs paq(DEDC)=5289 (gap +4973); `-8` 10261 vs 5288 (gap +4973). Current mixer does not absorb XOR. Still no cmix.
 
 ## 2026-08-29 — CRC32, PNG vs GF(2), SQLite pager
 
