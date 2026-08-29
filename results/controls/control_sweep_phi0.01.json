@@ -28,49 +28,49 @@
   },
   "total_encoded_bytes": 32786,
   "roundtrip_ok": true,
-  "encode_seconds": 0.12719410000136122,
-  "decode_seconds": 0.07691089998115785,
-  "discovery_seconds": 0.12719410000136122,
+  "encode_seconds": 0.0754218999936711,
+  "decode_seconds": 0.015712099993834272,
+  "discovery_seconds": 0.0754218999936711,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 32796,
-      "seconds": 0.0011911999899894,
+      "seconds": 0.0009393000218551606,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 32784,
-      "seconds": 0.0011755999876186252,
+      "seconds": 0.0006512000109069049,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 33252,
-      "seconds": 0.007364500022958964,
+      "seconds": 0.005973399995127693,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 32828,
-      "seconds": 0.035860100004356354,
+      "seconds": 0.030019500001799315,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 32778,
-      "seconds": 0.0036035999946761876,
+      "seconds": 0.004103000013856217,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 32772,
-      "seconds": 0.1479121999873314,
+      "seconds": 0.11622490000445396,
       "available": true,
       "notes": ""
     }
@@ -78,37 +78,37 @@
   "composition": {
     "gzip9": {
       "bytes": 32814,
-      "seconds": 0.0014767999819014221,
+      "seconds": 0.0011471000034362078,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 32802,
-      "seconds": 0.0007089000137057155,
+      "seconds": 0.0006767000013496727,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 33282,
-      "seconds": 0.006014899990987033,
+      "seconds": 0.006234000000404194,
       "available": true,
       "notes": ""
     },
     "xz9": {
       "bytes": 32848,
-      "seconds": 0.03015220002271235,
+      "seconds": 0.028032500005792826,
       "available": true,
       "notes": ""
     },
     "zstd19": {
       "bytes": 32796,
-      "seconds": 0.011336299998220056,
+      "seconds": 0.003504899999825284,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 32790,
-      "seconds": 0.04861320002237335,
+      "seconds": 0.02998190000653267,
       "available": true,
       "notes": ""
     }
@@ -116,9 +116,9 @@
   "notes": "passthrough",
   "hypothesis": "As exact structure is broken, composed gain must fall toward 0, never below -64.",
   "verdict": "raw_gap-14 no_deduction header_perturbation-18",
-  "utc_timestamp": "2026-08-29T14:13:01.885810+00:00",
-  "git_commit": "1961135de7ad300747cd1be504d2b35cc2eaebc8-dirty",
-  "command": "experiments/controls/run.py",
+  "utc_timestamp": "2026-08-29T14:31:07.052157+00:00",
+  "git_commit": "133bb60c54548a2c8dfbc73c3ecee7e669732238-dirty",
+  "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\controls\\run.py\"",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -127,8 +127,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T14:13:01.944223+00:00",
-    "git_commit": "1961135de7ad300747cd1be504d2b35cc2eaebc8-dirty",
+    "utc_timestamp": "2026-08-29T14:31:07.106113+00:00",
+    "git_commit": "133bb60c54548a2c8dfbc73c3ecee7e669732238-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

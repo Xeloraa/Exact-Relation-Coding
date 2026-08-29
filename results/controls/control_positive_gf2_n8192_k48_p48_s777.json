@@ -31,49 +31,49 @@
   },
   "total_encoded_bytes": 49487,
   "roundtrip_ok": true,
-  "encode_seconds": 0.08213019999675453,
-  "decode_seconds": 0.032507300027646124,
-  "discovery_seconds": 0.08213019999675453,
+  "encode_seconds": 0.05263230000855401,
+  "decode_seconds": 0.02478859998518601,
+  "discovery_seconds": 0.05263230000855401,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 98352,
-      "seconds": 0.003020700009074062,
+      "seconds": 0.003481299994746223,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 98340,
-      "seconds": 0.0035130000032950193,
+      "seconds": 0.002704100013943389,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 99108,
-      "seconds": 0.013962899975012988,
+      "seconds": 0.013669899984961376,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 98368,
-      "seconds": 0.0420406999764964,
+      "seconds": 0.04158429999370128,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 98316,
-      "seconds": 0.015062799997394904,
+      "seconds": 0.011129499995149672,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 98309,
-      "seconds": 0.05377939998288639,
+      "seconds": 0.038165400008438155,
       "available": true,
       "notes": ""
     }
@@ -81,37 +81,37 @@
   "composition": {
     "gzip9": {
       "bytes": 49525,
-      "seconds": 0.001971099991351366,
+      "seconds": 0.0012501000019256026,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 49513,
-      "seconds": 0.0016234999930020422,
+      "seconds": 0.0014513999922201037,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 50054,
-      "seconds": 0.013697799993678927,
+      "seconds": 0.007810000010067597,
       "available": true,
       "notes": ""
     },
     "xz9": {
       "bytes": 49548,
-      "seconds": 0.03286180002032779,
+      "seconds": 0.02985310001531616,
       "available": true,
       "notes": ""
     },
     "zstd19": {
       "bytes": 49497,
-      "seconds": 0.005137500003911555,
+      "seconds": 0.007795599987730384,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 49491,
-      "seconds": 0.06367270002374426,
+      "seconds": 0.047341099998448044,
       "available": true,
       "notes": ""
     }
@@ -119,9 +119,9 @@
   "notes": "gf2",
   "hypothesis": "Planted exact GF(2) code: composed gain must be large and round-trip exact.",
   "verdict": "raw_gap+48822 comp_gap+48818",
-  "utc_timestamp": "2026-08-29T14:12:57.612127+00:00",
-  "git_commit": "1961135de7ad300747cd1be504d2b35cc2eaebc8-dirty",
-  "command": "experiments/controls/run.py",
+  "utc_timestamp": "2026-08-29T14:31:03.553283+00:00",
+  "git_commit": "133bb60c54548a2c8dfbc73c3ecee7e669732238-dirty",
+  "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\controls\\run.py\"",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -130,8 +130,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T14:12:57.684141+00:00",
-    "git_commit": "1961135de7ad300747cd1be504d2b35cc2eaebc8-dirty",
+    "utc_timestamp": "2026-08-29T14:31:03.601066+00:00",
+    "git_commit": "133bb60c54548a2c8dfbc73c3ecee7e669732238-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",
