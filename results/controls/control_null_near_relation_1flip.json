@@ -26,49 +26,49 @@
   },
   "total_encoded_bytes": 8722,
   "roundtrip_ok": true,
-  "encode_seconds": 0.0038173999928403646,
-  "decode_seconds": 0.008202299999538809,
-  "discovery_seconds": 0.0038173999928403646,
+  "encode_seconds": 0.0025320999848190695,
+  "decode_seconds": 0.004481400013901293,
+  "discovery_seconds": 0.0025320999848190695,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 8727,
-      "seconds": 0.0003417000116314739,
+      "seconds": 0.0002673999988473952,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 8715,
-      "seconds": 0.0002154999820049852,
+      "seconds": 0.00017409998690709472,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 9187,
-      "seconds": 0.0027691000141203403,
+      "seconds": 0.0021915000106673688,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 8764,
-      "seconds": 0.04531390001648106,
+      "seconds": 0.01913339999737218,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 8714,
-      "seconds": 0.0010899000044446439,
+      "seconds": 0.0009062000026460737,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 8708,
-      "seconds": 0.024426199990557507,
+      "seconds": 0.018389200005913153,
       "available": true,
       "notes": ""
     }
@@ -76,37 +76,37 @@
   "composition": {
     "gzip9": {
       "bytes": 8745,
-      "seconds": 0.0004087999986950308,
+      "seconds": 0.00029349999385885894,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 8733,
-      "seconds": 0.0002148000057786703,
+      "seconds": 0.00016460000188089907,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 9205,
-      "seconds": 0.003485599998384714,
+      "seconds": 0.0023267000215128064,
       "available": true,
       "notes": ""
     },
     "xz9": {
       "bytes": 8784,
-      "seconds": 0.04057569999713451,
+      "seconds": 0.02831029999651946,
       "available": true,
       "notes": ""
     },
     "zstd19": {
       "bytes": 8732,
-      "seconds": 0.0012336999934632331,
+      "seconds": 0.0013473000144585967,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 8726,
-      "seconds": 0.030526300019118935,
+      "seconds": 0.022065800003474578,
       "available": true,
       "notes": ""
     }
@@ -125,9 +125,9 @@
   "notes": "passthrough",
   "hypothesis": "No exact global relation: container must fall back to passthrough, no invented saving.",
   "verdict": "raw_gap-14 no_deduction header_perturbation-18",
-  "utc_timestamp": "2026-08-29T15:10:42.285167+00:00",
-  "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
-  "command": "experiments/controls/run.py",
+  "utc_timestamp": "2026-08-29T15:23:44.862082+00:00",
+  "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
+  "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\controls\\run.py\"",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -136,8 +136,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T15:10:42.404341+00:00",
-    "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
+    "utc_timestamp": "2026-08-29T15:23:44.912055+00:00",
+    "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

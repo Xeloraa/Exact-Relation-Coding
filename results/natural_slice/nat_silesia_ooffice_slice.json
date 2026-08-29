@@ -37,49 +37,49 @@
   },
   "total_encoded_bytes": 262162,
   "roundtrip_ok": true,
-  "encode_seconds": 6.535138199978974,
-  "decode_seconds": 0.22463670000433922,
-  "discovery_seconds": 6.535138199978974,
+  "encode_seconds": 2.0658110000076704,
+  "decode_seconds": 0.1345937000005506,
+  "discovery_seconds": 2.0658110000076704,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 142495,
-      "seconds": 0.03324620000785217,
+      "seconds": 0.02431330000399612,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 142483,
-      "seconds": 0.03725150000536814,
+      "seconds": 0.024086900026304647,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 132783,
-      "seconds": 0.036116400005994365,
+      "seconds": 0.02035730000352487,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 123528,
-      "seconds": 0.2748505999916233,
+      "seconds": 0.09126610000384971,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 130469,
-      "seconds": 0.19242579999263398,
+      "seconds": 0.07461760001024231,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 125697,
-      "seconds": 1.2195108000014443,
+      "seconds": 0.838870700012194,
       "available": true,
       "notes": ""
     }
@@ -87,42 +87,43 @@
   "composition": {
     "gzip9": {
       "bytes": 142502,
-      "seconds": 0.031432999996468425,
+      "seconds": 0.022254599985899404,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 142490,
-      "seconds": 0.03385119998711161,
+      "seconds": 0.02249949998804368,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 132775,
-      "seconds": 0.03614539999398403,
+      "seconds": 0.02832099999068305,
       "available": true,
       "notes": ""
     },
     "xz9": {
-      "bytes": -1,
-      "seconds": 0.0,
-      "available": false,
-      "notes": "MemoryError: "
+      "bytes": 123544,
+      "seconds": 0.09535249997861683,
+      "available": true,
+      "notes": ""
     },
     "zstd19": {
       "bytes": 130499,
-      "seconds": 0.25938469998072833,
+      "seconds": 0.08153689999016933,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 125707,
-      "seconds": 2.8013058000069577,
+      "seconds": 0.7766505999898072,
       "available": true,
       "notes": ""
     }
   },
   "composed_roundtrip": {
+    "mode": "full",
     "gzip9": true,
     "zlib9": true,
     "bz2_9": true,
@@ -134,10 +135,10 @@
   },
   "notes": "zip silesia.zip:ooffice prefix 262144 | acquisition=dev_machine_feasibility_slice",
   "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
-  "verdict": "raw_gap-138634 no_deduction header_perturbation-2179",
-  "utc_timestamp": "2026-08-29T14:52:51.031045+00:00",
-  "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
-  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "verdict": "raw_gap-138634 no_deduction header_perturbation-16",
+  "utc_timestamp": "2026-08-29T15:24:29.339672+00:00",
+  "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
+  "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\natural\\run.py\" --mode slice --slice-bytes 262144",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -146,8 +147,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T14:52:51.204182+00:00",
-    "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
+    "utc_timestamp": "2026-08-29T15:24:29.391523+00:00",
+    "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

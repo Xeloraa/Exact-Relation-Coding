@@ -77,7 +77,7 @@ Whole-file experiments run: 1 of the pre-registered corpus list. Remaining rows 
 | silesia_mozilla@slice262144 | 262144 | 1baf584ca878 | PASSTHROUGH | 0 | 262162 | 111811 | 111865 | -54 | -0.05% | 0 | 0 | 0 | True | True | True |
 | silesia_mr@slice262144 | 262144 | 288236c90013 | PASSTHROUGH | 0 | 262162 | 55898 | 56017 | -119 | -0.21% | 0 | 0 | 0 | True | True | True |
 | silesia_nci@slice262144 | 262144 | 6f129b33bdf1 | GF2 | 1 | 229413 | 14563 | 25628 | -11065 | -75.98% | 1 | 0 | 0 | True | True | True |
-| silesia_ooffice@slice262144 | 262144 | 41a8f0abe06c | PASSTHROUGH | 0 | 262162 | 123528 | 125707 | -2179 | -1.76% | 0 | 0 | 0 | True | True | True |
+| silesia_ooffice@slice262144 | 262144 | 41a8f0abe06c | PASSTHROUGH | 0 | 262162 | 123528 | 123544 | -16 | -0.01% | 0 | 0 | 0 | True | True | True |
 | silesia_osdb@slice262144 | 262144 | dfafdca22a0c | PASSTHROUGH | 0 | 262162 | 82475 | 82494 | -19 | -0.02% | 0 | 0 | 0 | True | True | True |
 | silesia_reymont@slice262144 | 262144 | 63949f06bead | GF2 | 1 | 229413 | 53158 | 78146 | -24988 | -47.01% | 1 | 0 | 0 | True | True | True |
 | silesia_samba@slice262144 | 262144 | 21c5e99f13f8 | PASSTHROUGH | 0 | 262162 | 153153 | 153198 | -45 | -0.03% | 0 | 0 | 0 | True | True | True |

@@ -28,49 +28,49 @@
   },
   "total_encoded_bytes": 16559,
   "roundtrip_ok": true,
-  "encode_seconds": 0.041451700002653524,
-  "decode_seconds": 0.009282999992137775,
-  "discovery_seconds": 0.041451700002653524,
+  "encode_seconds": 0.022667700017336756,
+  "decode_seconds": 0.007616499991854653,
+  "discovery_seconds": 0.022667700017336756,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 32796,
-      "seconds": 0.0015977000002749264,
+      "seconds": 0.0010576000204309821,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 32784,
-      "seconds": 0.002626300003612414,
+      "seconds": 0.0010279999987687916,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 33266,
-      "seconds": 0.01037269999505952,
+      "seconds": 0.006958900019526482,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 32828,
-      "seconds": 0.053360499994596466,
+      "seconds": 0.025186199985910207,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 32778,
-      "seconds": 0.010812399996211752,
+      "seconds": 0.0033425000146962702,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 32772,
-      "seconds": 0.024653200001921505,
+      "seconds": 0.013478400011081249,
       "available": true,
       "notes": ""
     }
@@ -78,37 +78,37 @@
   "composition": {
     "gzip9": {
       "bytes": 16587,
-      "seconds": 0.00060450000455603,
+      "seconds": 0.0004932000010740012,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 16575,
-      "seconds": 0.0004385999927762896,
+      "seconds": 0.000295600009849295,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 17042,
-      "seconds": 0.005128300021169707,
+      "seconds": 0.004296500002965331,
       "available": true,
       "notes": ""
     },
     "xz9": {
       "bytes": 16620,
-      "seconds": 0.041785099980188534,
+      "seconds": 0.020147500006714836,
       "available": true,
       "notes": ""
     },
     "zstd19": {
       "bytes": 16569,
-      "seconds": 0.0025627000140957534,
+      "seconds": 0.001649599988013506,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 16563,
-      "seconds": 0.07157669999287464,
+      "seconds": 0.04538039999897592,
       "available": true,
       "notes": ""
     }
@@ -127,9 +127,9 @@
   "notes": "LABEL: checksum inversion; not novel",
   "hypothesis": "Per-record CRC32 is affine over GF(2). Any composed gain here is PRIOR ART (checksum inversion).",
   "verdict": "raw_gap+16213 comp_gap+16209",
-  "utc_timestamp": "2026-08-29T15:10:55.111205+00:00",
-  "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
-  "command": "experiments/controls/run.py",
+  "utc_timestamp": "2026-08-29T15:23:53.112139+00:00",
+  "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
+  "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\controls\\run.py\"",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -138,8 +138,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T15:10:55.245733+00:00",
-    "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
+    "utc_timestamp": "2026-08-29T15:23:53.163879+00:00",
+    "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

@@ -35,49 +35,49 @@
   },
   "total_encoded_bytes": 36018,
   "roundtrip_ok": true,
-  "encode_seconds": 0.3118992999952752,
-  "decode_seconds": 0.03965510000125505,
-  "discovery_seconds": 0.3118992999952752,
+  "encode_seconds": 0.18372810000437312,
+  "decode_seconds": 0.018277600000146776,
+  "discovery_seconds": 0.18372810000437312,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 36033,
-      "seconds": 0.00131559997680597,
+      "seconds": 0.0009229000133927912,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 36021,
-      "seconds": 0.0010944000096060336,
+      "seconds": 0.0008610000077169389,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 36508,
-      "seconds": 0.009531699994113296,
+      "seconds": 0.006216199981281534,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 36060,
-      "seconds": 0.029024999996181577,
+      "seconds": 0.025878000014927238,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 36010,
-      "seconds": 0.005863200000021607,
+      "seconds": 0.006000299996230751,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 36004,
-      "seconds": 0.02339290000963956,
+      "seconds": 0.02294110000366345,
       "available": true,
       "notes": ""
     }
@@ -85,37 +85,37 @@
   "composition": {
     "gzip9": {
       "bytes": 36051,
-      "seconds": 0.0013842999760527164,
+      "seconds": 0.0010212999768555164,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 36039,
-      "seconds": 0.0010955999896395952,
+      "seconds": 0.0012953999976161867,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 36527,
-      "seconds": 0.009050400025444105,
+      "seconds": 0.008948000002419576,
       "available": true,
       "notes": ""
     },
     "xz9": {
       "bytes": 36080,
-      "seconds": 0.029136199998902157,
+      "seconds": 0.024239800026407465,
       "available": true,
       "notes": ""
     },
     "zstd19": {
       "bytes": 36028,
-      "seconds": 0.007422599999699742,
+      "seconds": 0.002961099991807714,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 36022,
-      "seconds": 0.051308699999935925,
+      "seconds": 0.029402100015431643,
       "available": true,
       "notes": ""
     }
@@ -134,9 +134,9 @@
   "notes": "SCOPE CONTROL: a negative from these widths does not rule out structure at other periods",
   "hypothesis": "Exact linear structure at a non-power-of-two record period is invisible to fixed-width discovery.",
   "verdict": "raw_gap-14 no_deduction header_perturbation-18",
-  "utc_timestamp": "2026-08-29T15:11:06.785510+00:00",
-  "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
-  "command": "experiments/controls/run.py",
+  "utc_timestamp": "2026-08-29T15:24:00.757158+00:00",
+  "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
+  "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\controls\\run.py\"",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -145,8 +145,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T15:11:06.862386+00:00",
-    "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
+    "utc_timestamp": "2026-08-29T15:24:00.807769+00:00",
+    "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

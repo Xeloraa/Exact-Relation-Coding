@@ -1,7 +1,7 @@
 # REPRODUCE
 
-- generated: 2026-08-29T14:32:39.538174+00:00
-- git commit: 133bb60c54548a2c8dfbc73c3ecee7e669732238-dirty
+- generated: 2026-08-29T15:25:54.590576+00:00
+- git commit: 258db917ae1991b7954b1ed0cceed98666a09f5d-dirty
 - mode: slice (slice-bytes 262144)
 
 ## Machine
@@ -22,7 +22,7 @@
     "brotli": "1.2.0"
   },
   "ram_total_mib": 8025,
-  "ram_avail_mib": 1098
+  "ram_avail_mib": 1877
 }
 ```
 
@@ -30,10 +30,14 @@
 
 | step | returncode | seconds |
 | --- | ---: | ---: |
-| pytest + codec-equivalence | 0 | 1.48 |
-| corpus downloads (best-effort) | 0 | 0.35 |
-| controls | 0 | 9.09 |
-| natural (slice) | 0 | 88.62 |
+| pytest + codec-equivalence | 0 | 2.69 |
+| independent verifier self-test | 0 | 0.39 |
+| controls | 0 | 20.22 |
+| natural (slice) | 0 | 113.08 |
+| build ledger | 0 | 0.19 |
+| regen paper tables | 0 | 0.09 |
+| check paper numbers | 0 | 0.21 |
+| independent verify ledger | 0 | 0.1 |
 
 ## Corpus manifest (SHA-256 pins)
 
@@ -88,6 +92,13 @@
     "category": "scientific_f32",
     "acquisition_mode": "slice"
   },
+  "silesia_dickens": {
+    "sha256": "b24c37886142e11d0ee687db6ab06f936207aa7f2ea1fd1d9a36763c7a507e6a",
+    "bytes": 10192446,
+    "source": "zip silesia.zip:dickens whole 10192446",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_dickens@slice262144": {
     "sha256": "becc366f2948cfbaefb219df19f54b101a842737428b01c7538b871a35c3edf4",
     "bytes": 262144,
@@ -95,12 +106,26 @@
     "category": "silesia",
     "acquisition_mode": "slice"
   },
+  "silesia_mozilla": {
+    "sha256": "657fc3764b0c75ac9de9623125705831ebbfbe08fed248df73bc2dc66e2a963b",
+    "bytes": 51220480,
+    "source": "zip silesia.zip:mozilla whole 51220480",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_mozilla@slice262144": {
     "sha256": "1baf584ca87856e51fada5fa257864019123d57aa8b9793c097eea145ee165a6",
     "bytes": 262144,
     "source": "zip silesia.zip:mozilla prefix 262144",
     "category": "silesia",
     "acquisition_mode": "slice"
+  },
+  "silesia_mr": {
+    "sha256": "68637ed52e3e4860174ed2dc0840ac77d5f1a60abbcb13770d5754e3774d53e6",
+    "bytes": 9970564,
+    "source": "zip silesia.zip:mr whole 9970564",
+    "category": "silesia",
+    "acquisition_mode": "whole"
   },
   "silesia_mr@slice262144": {
     "sha256": "288236c90013320462fbe5864774054b26334be4ee59a8bde8a9797fbc9148f7",
