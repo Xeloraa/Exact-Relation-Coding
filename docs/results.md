@@ -14,7 +14,7 @@ Full ledgers: `results/phase*/**.json` and `summary.csv`.
 
 1. **Planted GF(2) linear codes: yes, a large composed deduction gap.** Strong byte compressors leave XOR parity bits almost untouched. After counting relation description, header, CRC, and padding, omitting those bits still wins, and compressing the container does not close the gap.
 2. **Nulls: no invented net savings** on iid bits, shuffled planted codes, near-relations with flipped bits, or non-affine exact functions under the affine codec.
-3. **Ordinary source/docs/enwik8/stdlib text: no.** GF(2) on this repo, local CPython `Lib/*.py`, and a 1 MB enwik8 prefix does not yield a composed gap. Statistical codecs still dominate.
+3. **Ordinary source/docs/enwik8/stdlib/Silesia text and binaries: no.** GF(2) on this repo, local CPython `Lib/*.py`, a 1 MB enwik8 prefix, and 512 KB Silesia prefixes (dickens, xml, x-ray, ooffice) does not yield a composed gap. Statistical codecs still dominate.
 4. **Affine derived columns: composition win, labeled prior art** (functional-dependency elimination). The uncompressed DEDC container loses to xz; `deduce then xz` beats `xz` alone. Same pattern on a parsed CSV `c=a+b` table in Phase 4.
 5. **PNG / ZIP / SQLite as whole-file bit matrices: no composed gap.** General GF(2) does not invert per-chunk CRCs. Passthrough / `n_relations==0` composed deltas are header perturbation.
 
@@ -118,7 +118,7 @@ gzip/zstd/xz/brotli all stay at ~raw size: the CRC bits look random. Homogeneous
 
 ## Phase 4 — natural bytes, format traps, scaling
 
-JSON ledgers: `results/phase4_natural/`, `results/phase4_formats/`, `results/phase4_scaling/`, `results/phase4_structured/`. `summary.csv` may contain duplicate reruns; the JSON file for each `experiment_id` is canonical. Large dumps stay under `data/downloads/` (gitignored).
+JSON ledgers: `results/phase4_natural/`, `results/phase4_formats/`, `results/phase4_scaling/`, `results/phase4_structured/`, `results/phase4_pack/`, `results/phase4_silesia/`. `summary.csv` may contain duplicate reruns; the JSON file for each `experiment_id` is canonical. Large dumps stay under `data/downloads/` (gitignored).
 
 `n_relations==0` in `encode_gf2_matrix` materializes the original bytes, then returns passthrough (`tests/test_corpora.py::test_n_rel_zero_equals_passthrough_size`). Composed deltas on those rows are header perturbation, not deduction.
 
@@ -177,22 +177,49 @@ Affine control, 1280 rows × 32 info + parity `XOR(all) XOR 1` (5280 bytes):
 
 Homogeneous discovery correctly misses the constant offset. Affine recovery is the planted affine bit, not a natural-corpus claim.
 
+### E. Pack independent bits, then xz/brotli
+
+Same planted codes as scaling 10 KiB / 100 KiB. Pivot bits packed to bytes, then the same statistical baselines run on that payload alone. Relation description + header + CRC + leftover must still be transmitted for decode.
+
+| size | packed pivots | best_stat(packed) | extra (rel+hdr+crc) | payload_then_stat | DEDC container | composed_gap |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 10 KiB | 5120 | 5124 | 171 | 5295 | 5291 | **+4949** |
+| 100 KiB | 51200 | 51204 | 171 | 51375 | 51371 | **+51030** |
+
+**Interpretation:** the independent bits are already incompressible (best_stat is 4 bytes above packed size). Adding description cost back matches DEDC within 4 bytes. Packing pivots before xz does **not** close or expand the planted composed gap. JSON: `results/phase4_pack/`.
+
+### F. Silesia public-corpus prefixes (dumps not committed)
+
+512 KB prefixes from `silesia.zip` (Matt Mahoney mirror; 12 members). General GF(2) on bytes, not a format parser. Round-trip OK. Dump is gitignored.
+
+| experiment | raw | DEDC | best_stat | raw_gap | composed_gap | rels | kind |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| dickens (ASCII novels) | 512000 | 496043 | 140096 (bz2) | -355947 | **-114679** | 1 | GF2 |
+| xml (concatenated XML tar) | 512000 | 448037 | 15438 (bz2) | -432599 | **-24245** | 1 | GF2 |
+| x-ray (16-bit DICOM) | 512000 | 480073 | 240711 (bz2) | -239362 | **-75917** | 4 | GF2 |
+| ooffice (Windows DLL) | 512000 | 512018 | 238012 (xz9) | -274006 | -20 | 0 | PASSTHROUGH |
+
+Prefix SHA-256: dickens `3d2b8a388908b800ded23f8d2f6b3e181c9951fef6039649acd04d51ccd462f6`; xml `1ae008042047777d47732811e4baef57ac075ee6d39a55d0cee925539fab9fc8`; x-ray `34d420201364c7b288ae907f72cf850e42c35bcff9ba5184c37030ec8e2e752c`; ooffice `dee624c889febeebcc4712ceee0006cd4a6bc044119584ba566980e529df2325`.
+
+Dickens/xml: one bit-plane (xml is an 8-column view, 7 independent — ASCII high bit). x-ray: four relations on a 64-column view (typical unused high bits in 16-bit samples). ooffice: full rank / never-worse passthrough. None of these is a composed win. bz2/xz already exploit the same sparsity plus the actual language/XML/DLL structure.
+
+**Interpretation:** a public mixed corpus does not behave like planted GF(2). JSON: `results/phase4_silesia/`.
+
 ## Deduction-gap definitions (applied)
 
 On planted GF(2) 1 MiB: `deduction_gap_raw ≈ +523731`, `deduction_gap_composed ≈ +523726`.
-On repo text, stdlib, enwik8, PNG/ZIP, structured JSON/logs: both large **negative** (or header-sized on passthrough).
+On repo text, stdlib, enwik8, Silesia prefixes, PNG/ZIP, structured JSON/logs: both large **negative** (or header-sized on passthrough).
 On affine tables / parsed CSV FD: raw negative, composed positive (prior art).
 
 ## What this does *not* show
 
-- No Silesia / packet captures / other public corpora beyond a local 1 MB enwik8 prefix.
+- No remaining Silesia members (mozilla, mr, nci, …) or packet captures.
 - No PAQ/cmix/bsc comparison (not installed).
 - No claim that neural compressors fail on parity.
 - No novelty claim for FD column drop or CRC inversion.
-- Local stdlib and `python.exe` hashes are machine-specific; enwik8 prefix SHA is from the public dump.
+- Local stdlib and `python.exe` hashes are machine-specific; enwik8 and Silesia prefix SHAs are from the public dumps (dumps not in git).
 
 ## Next experiments (ordered by how much they change the conclusion)
 
-1. Silesia (or another public binary/text mix), still not committed.
-2. Whether packing independent bits before xz changes anything on planted GF(2) (it should not: those bits are already nearly incompressible).
-3. PAQ/cmix if a binary is available; if they absorb the planted-GF(2) composed gap, that weakens the “statistical codecs leave XOR unused” claim relative to the strongest mixers.
+1. PAQ/cmix if a binary is available; if they absorb the planted-GF(2) composed gap, that weakens the “statistical codecs leave XOR unused” claim relative to the strongest mixers.
+2. Remaining Silesia members only if a new *kind* of byte string is needed; four prefixes already cover text, XML, medical 16-bit, and a DLL.

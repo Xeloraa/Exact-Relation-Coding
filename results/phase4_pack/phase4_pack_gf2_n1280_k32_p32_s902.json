@@ -1,0 +1,184 @@
+{
+  "experiment_id": "phase4_pack_gf2_n1280_k32_p32_s902",
+  "phase": "phase4",
+  "dataset_id": "gf2_n1280_k32_p32_s902",
+  "dataset_sha256": "c78ca4eb1e539975d9aa8b76779a790da3ab91af027b14de14c2d22c1f4b97d6",
+  "dataset_bytes": 10240,
+  "seed": 902,
+  "config": {
+    "n_rows": 1280,
+    "n_info": 32,
+    "n_parity": 32,
+    "seed": 902,
+    "codec": "gf2",
+    "n_cols": 64,
+    "size_label": "10KiB",
+    "packed_payload_bytes": 5120,
+    "packed_rank": 32,
+    "packed_n_relations": 32,
+    "packed_best_stat_bytes": 5124,
+    "relation_header_crc_leftover_bytes": 171,
+    "payload_then_stat_bytes": 5295,
+    "packed_baselines": {
+      "gzip9": {
+        "bytes": 5143,
+        "available": true,
+        "notes": ""
+      },
+      "zlib9": {
+        "bytes": 5131,
+        "available": true,
+        "notes": ""
+      },
+      "bz2_9": {
+        "bytes": 5622,
+        "available": true,
+        "notes": ""
+      },
+      "xz9": {
+        "bytes": 5180,
+        "available": true,
+        "notes": ""
+      },
+      "zstd19": {
+        "bytes": 5130,
+        "available": true,
+        "notes": ""
+      },
+      "brotli11": {
+        "bytes": 5124,
+        "available": true,
+        "notes": ""
+      }
+    }
+  },
+  "codec_kind": "GF2",
+  "n_relations": 32,
+  "n_independent": 32,
+  "recovered_bits": 40960,
+  "accounting": {
+    "payload_bits": 40960,
+    "relation_description_bits": 1088,
+    "header_bits": 216,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 42328,
+    "total_bytes": 5291
+  },
+  "total_encoded_bytes": 5291,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.14174620000994764,
+  "decode_seconds": 0.08698689998709597,
+  "discovery_seconds": 0.14174620000994764,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 10263,
+      "seconds": 0.0006744999845977873,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 10251,
+      "seconds": 0.00029399999766610563,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 10710,
+      "seconds": 0.017314900003839284,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 10300,
+      "seconds": 0.053917999990517274,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 10250,
+      "seconds": 0.0031979000195860863,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 10244,
+      "seconds": 0.06330909999087453,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 5314,
+      "seconds": 0.0004495000175666064,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 5302,
+      "seconds": 0.00023289999808184803,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 5845,
+      "seconds": 0.002546300005633384,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 5352,
+      "seconds": 0.05130970000755042,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 5301,
+      "seconds": 0.0009441000001970679,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 5295,
+      "seconds": 0.042728599975816905,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "pack pivots then statistical codec; not a new encoder",
+  "hypothesis": "Packed independent bits of a planted GF(2) code are nearly incompressible. xz/brotli on that payload cannot beat the accounted DEDC container once relation description and headers are added back; composition of the container already measures this.",
+  "verdict": "raw_gap+4953 comp_gap+4949",
+  "utc_timestamp": "2026-08-29T11:02:15.758748+00:00",
+  "git_commit": "2a4733c8e72b0657f50c6bc9767237162c6be7db-dirty",
+  "command": "experiments/phase4/pack_pivots.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T11:02:16.971545+00:00",
+    "git_commit": "2a4733c8e72b0657f50c6bc9767237162c6be7db-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

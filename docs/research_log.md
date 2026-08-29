@@ -69,8 +69,18 @@ Homogeneous GF(2) misses `XOR(all) XOR 1`; affine recovers it.
 
 **Result: confirmed** on 1280×33 (homogeneous passthrough; affine 1 relation, composed +116). Control, not a corpus claim.
 
+### Hypothesis 13
+xz/brotli on packed independent bits beats the accounted GF(2) container.
+
+**Result: rejected.** 10 KiB: packed 5120 → best 5124; payload+description 5295 vs DEDC 5291. 100 KiB: 51200 → 51204; 51375 vs 51371. Pivots are incompressible; packing is not an extra win.
+
+### Hypothesis 14
+Silesia 512 KB prefixes (dickens, xml, x-ray, ooffice) have a GF(2) composed gap.
+
+**Result: falsified.** dickens composed −114679 (1 rel); xml −24245 (1 rel, 8-bit plane); x-ray −75917 (4 rels); ooffice passthrough −20. bz2/xz win. Dump not committed.
+
 ### Decision
-Do not kill. Do not claim a real-corpus success. The unanswered question is still a composed gap on arbitrary bytes that are not planted linear codes, declared FD tables, or known checksums. Next: Silesia if local; never commit dumps.
+Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. Next: PAQ/cmix if present; never commit dumps.
 
 ### Accounting
 Every JSON file includes payload, relation description, header, framing, CRC, leftover. Round-trip required. Never-worse passthrough when GF(2) is not strictly smaller.

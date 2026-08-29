@@ -4,7 +4,13 @@ from __future__ import annotations
 
 from deductive.codecs import decode, encode_passthrough
 from deductive.codecs.gf2_codec import encode_bytes_best_gf2
-from deductive.datasets.corpora import make_csv_fd, make_png, make_sqlite_fd, make_zip_stored
+from deductive.datasets.corpora import (
+    load_silesia_member_prefix,
+    make_csv_fd,
+    make_png,
+    make_sqlite_fd,
+    make_zip_stored,
+)
 from deductive.datasets.synthetic import mixed_noise_bits
 
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
@@ -55,3 +61,9 @@ def test_n_rel_zero_equals_passthrough_size():
     assert enc.n_relations == 0
     assert len(enc.data) == len(pt.data)
     assert decode(enc.data) == ds.data
+
+
+def test_load_silesia_unknown_member_is_none():
+    data, note = load_silesia_member_prefix("__not_a_silesia_file__", n_bytes=8)
+    assert data is None
+    assert isinstance(note, str) and note

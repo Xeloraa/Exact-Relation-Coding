@@ -13,6 +13,7 @@ from deductive.datasets.synthetic import (
 from deductive.datasets.corpora import (
     builtin_corpora,
     load_enwik8_prefix,
+    load_silesia_member_prefix,
     local_pe_sample,
     make_csv_fd,
     make_png,
@@ -38,4 +39,5 @@ __all__ = [
     "python_stdlib_sample",
     "local_pe_sample",
     "load_enwik8_prefix",
+    "load_silesia_member_prefix",
 ]

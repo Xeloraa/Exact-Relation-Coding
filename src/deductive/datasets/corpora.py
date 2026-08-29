@@ -101,8 +101,10 @@ enwik8:
   wget http://mattmahoney.net/dc/enwik8.zip
   unzip enwik8.zip
 
-Silesia:
-  see https://sun.aei.polsl.pl/~sdeor/index.php?page=silesia
+Silesia (dumps not committed):
+  wget http://mattmahoney.net/dc/silesia.zip
+  # mirrors: https://www.mattmahoney.net/dc/silesia.zip
+  # original index: https://sun.aei.polsl.pl/~sdeor/index.php?page=silesia
 
 CTU-13 NetFlow (tabular / FD control; format-awareness trap):
   public research dataset; treat derived-column wins as known FD elimination
@@ -256,4 +258,92 @@ def try_download_enwik8_zip(timeout: int = 60) -> str:
         return f"downloaded {dest.stat().st_size} bytes"
     except Exception as exc:  # noqa: BLE001
         return f"download failed: {type(exc).__name__}: {exc}"
+
+
+SILESIA_ZIP_URLS = (
+    "http://mattmahoney.net/dc/silesia.zip",
+    "https://www.mattmahoney.net/dc/silesia.zip",
+    "https://github.com/DataCompression/corpus-collection/raw/main/Silesia-Corpus/silesia.zip",
+)
+
+SILESIA_MEMBER_URLS = {
+    "dickens": "https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/dickens",
+    "xml": "https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/xml",
+    "x-ray": "https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/x-ray",
+    "ooffice": "https://raw.githubusercontent.com/MiloszKrajewski/SilesiaCorpus/master/ooffice",
+}
+
+
+def try_download_silesia_zip(timeout: int = 180) -> str:
+    """Best-effort Silesia zip. Failures are recorded, not retried forever."""
+    import urllib.request
+
+    dest = downloads_dir() / "silesia.zip"
+    if dest.is_file() and dest.stat().st_size > 10_000_000:
+        return f"already have {dest.name} ({dest.stat().st_size} bytes)"
+    tmp = dest.with_suffix(".zip.part")
+    last = "no urls"
+    for url in SILESIA_ZIP_URLS:
+        try:
+            with urllib.request.urlopen(url, timeout=timeout) as resp:
+                tmp.write_bytes(resp.read())
+            size = tmp.stat().st_size
+            if size < 1_000_000:
+                last = f"{url}: too small ({size})"
+                tmp.unlink(missing_ok=True)
+                continue
+            tmp.replace(dest)
+            return f"downloaded {dest.stat().st_size} bytes from {url}"
+        except Exception as exc:  # noqa: BLE001
+            last = f"{url}: {type(exc).__name__}: {exc}"
+            tmp.unlink(missing_ok=True)
+    return f"download failed: {last}"
+
+
+def try_download_silesia_member(member: str, timeout: int = 90) -> str:
+    """Fetch one Silesia file if the zip is unavailable. Not committed."""
+    import urllib.request
+
+    if member not in SILESIA_MEMBER_URLS:
+        return f"unknown member {member}"
+    dest = downloads_dir() / member
+    if dest.is_file() and dest.stat().st_size > 100_000:
+        return f"already have {dest.name} ({dest.stat().st_size} bytes)"
+    url = SILESIA_MEMBER_URLS[member]
+    tmp = dest.with_suffix(dest.suffix + ".part")
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as resp:
+            tmp.write_bytes(resp.read())
+        if tmp.stat().st_size < 1000:
+            tmp.unlink(missing_ok=True)
+            return f"download failed: {url} too small"
+        tmp.replace(dest)
+        return f"downloaded {dest.stat().st_size} bytes ({member})"
+    except Exception as exc:  # noqa: BLE001
+        tmp.unlink(missing_ok=True)
+        return f"download failed: {type(exc).__name__}: {exc}"
+
+
+def load_silesia_member_prefix(member: str, n_bytes: int = 512_000) -> tuple[bytes | None, str]:
+    """Load a prefix of one Silesia file. Never commits the dump."""
+    root = downloads_dir()
+    for path in (root / member, root / "silesia" / member):
+        if path.is_file():
+            data = path.read_bytes()[:n_bytes]
+            return data, f"local {path.name} prefix {len(data)}"
+    zpath = root / "silesia.zip"
+    if zpath.is_file():
+        with zipfile.ZipFile(zpath) as zf:
+            target = None
+            for name in zf.namelist():
+                base = name.rstrip("/").split("/")[-1]
+                if base == member and not name.endswith("/"):
+                    target = name
+                    break
+            if target is None:
+                return None, f"{member} not in silesia.zip"
+            with zf.open(target) as f:
+                data = f.read(n_bytes)
+            return data, f"zip {zpath.name}:{target} prefix {len(data)}"
+    return None, "silesia not present under data/downloads/"
 
