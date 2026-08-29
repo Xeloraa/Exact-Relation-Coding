@@ -9,8 +9,6 @@ import numpy as np
 
 
 def _mask(nbits: int) -> int:
-    if nbits >= 64:
-        return (1 << nbits) - 1
     return (1 << nbits) - 1
 
 

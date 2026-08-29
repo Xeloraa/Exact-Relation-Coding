@@ -48,12 +48,26 @@
     "category": "scientific_f32",
     "acquisition_mode": "slice"
   },
+  "silesia_dickens": {
+    "sha256": "b24c37886142e11d0ee687db6ab06f936207aa7f2ea1fd1d9a36763c7a507e6a",
+    "bytes": 10192446,
+    "source": "zip silesia.zip:dickens whole 10192446",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_dickens@slice262144": {
     "sha256": "becc366f2948cfbaefb219df19f54b101a842737428b01c7538b871a35c3edf4",
     "bytes": 262144,
     "source": "zip silesia.zip:dickens prefix 262144",
     "category": "silesia",
     "acquisition_mode": "slice"
+  },
+  "silesia_mozilla": {
+    "sha256": "657fc3764b0c75ac9de9623125705831ebbfbe08fed248df73bc2dc66e2a963b",
+    "bytes": 51220480,
+    "source": "zip silesia.zip:mozilla whole 51220480",
+    "category": "silesia",
+    "acquisition_mode": "whole"
   },
   "silesia_mozilla@slice262144": {
     "sha256": "1baf584ca87856e51fada5fa257864019123d57aa8b9793c097eea145ee165a6",

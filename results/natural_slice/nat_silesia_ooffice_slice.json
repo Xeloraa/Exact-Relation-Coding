@@ -37,49 +37,49 @@
   },
   "total_encoded_bytes": 262162,
   "roundtrip_ok": true,
-  "encode_seconds": 1.787111100013135,
-  "decode_seconds": 0.14206109999213368,
-  "discovery_seconds": 1.787111100013135,
+  "encode_seconds": 6.535138199978974,
+  "decode_seconds": 0.22463670000433922,
+  "discovery_seconds": 6.535138199978974,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 142495,
-      "seconds": 0.02477270000963472,
+      "seconds": 0.03324620000785217,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 142483,
-      "seconds": 0.024011200002860278,
+      "seconds": 0.03725150000536814,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 132783,
-      "seconds": 0.02026970000588335,
+      "seconds": 0.036116400005994365,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 123528,
-      "seconds": 0.1745533999928739,
+      "seconds": 0.2748505999916233,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 130469,
-      "seconds": 0.13738839997677132,
+      "seconds": 0.19242579999263398,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 125697,
-      "seconds": 0.8655566000088584,
+      "seconds": 1.2195108000014443,
       "available": true,
       "notes": ""
     }
@@ -87,47 +87,57 @@
   "composition": {
     "gzip9": {
       "bytes": 142502,
-      "seconds": 0.027998800011118874,
+      "seconds": 0.031432999996468425,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 142490,
-      "seconds": 0.026301000005332753,
+      "seconds": 0.03385119998711161,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 132775,
-      "seconds": 0.022287300002062693,
+      "seconds": 0.03614539999398403,
       "available": true,
       "notes": ""
     },
     "xz9": {
-      "bytes": 123544,
-      "seconds": 0.0963194000069052,
-      "available": true,
-      "notes": ""
+      "bytes": -1,
+      "seconds": 0.0,
+      "available": false,
+      "notes": "MemoryError: "
     },
     "zstd19": {
       "bytes": 130499,
-      "seconds": 0.0766427000053227,
+      "seconds": 0.25938469998072833,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 125707,
-      "seconds": 0.7614453999849502,
+      "seconds": 2.8013058000069577,
       "available": true,
       "notes": ""
     }
   },
+  "composed_roundtrip": {
+    "gzip9": true,
+    "zlib9": true,
+    "bz2_9": true,
+    "xz9": true,
+    "zstd19": true,
+    "brotli11": true,
+    "all_ok": true,
+    "n_codecs_checked": 6
+  },
   "notes": "zip silesia.zip:ooffice prefix 262144 | acquisition=dev_machine_feasibility_slice",
   "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
-  "verdict": "raw_gap-138634 no_deduction header_perturbation-16",
-  "utc_timestamp": "2026-08-29T14:31:33.768080+00:00",
-  "git_commit": "133bb60c54548a2c8dfbc73c3ecee7e669732238-dirty",
-  "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\natural\\run.py\" --mode slice --slice-bytes 262144",
+  "verdict": "raw_gap-138634 no_deduction header_perturbation-2179",
+  "utc_timestamp": "2026-08-29T14:52:51.031045+00:00",
+  "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
+  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -136,8 +146,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T14:31:33.816809+00:00",
-    "git_commit": "133bb60c54548a2c8dfbc73c3ecee7e669732238-dirty",
+    "utc_timestamp": "2026-08-29T14:52:51.204182+00:00",
+    "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

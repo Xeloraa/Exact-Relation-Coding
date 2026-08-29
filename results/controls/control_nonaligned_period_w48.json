@@ -1,13 +1,14 @@
 {
-  "experiment_id": "nat_silesia_sao_slice",
-  "phase": "natural_slice",
-  "dataset_id": "silesia_sao@slice262144",
-  "dataset_sha256": "2e897282e031856af823048d977bddaf54869d43dea72ba544bec003d353db3a",
-  "dataset_bytes": 262144,
-  "seed": null,
+  "experiment_id": "control_nonaligned_period_w48",
+  "phase": "controls",
+  "dataset_id": "nonaligned_period_w48_s71",
+  "dataset_sha256": "90bf4c264f81709fef54c5479b9b212a06bad48b5a20b7b30b81aac0f9421508",
+  "dataset_bytes": 36000,
+  "seed": 71,
   "config": {
-    "codec": "gf2_best",
-    "widths": [
+    "control": "scope_axis_aligned",
+    "record_period_bits": 48,
+    "tried_widths": [
       8,
       16,
       32,
@@ -15,114 +16,112 @@
       128,
       256
     ],
-    "category": "silesia",
-    "acquisition": "dev_machine_feasibility_slice",
-    "prefix": 262144,
-    "prefix_reason": "dev_machine_feasibility_slice"
+    "note": "structure is real at width 48/96; not among tried widths"
   },
   "codec_kind": "PASSTHROUGH",
   "n_relations": 0,
-  "n_independent": 2097152,
+  "n_independent": 288000,
   "recovered_bits": 0,
   "accounting": {
-    "payload_bits": 2097152,
+    "payload_bits": 288000,
     "relation_description_bits": 0,
     "header_bits": 112,
     "framing_bits": 0,
     "crc_bits": 32,
     "leftover_bits": 0,
     "other_sideinfo_bits": 0,
-    "total_bits": 2097296,
-    "total_bytes": 262162
+    "total_bits": 288144,
+    "total_bytes": 36018
   },
-  "total_encoded_bytes": 262162,
+  "total_encoded_bytes": 36018,
   "roundtrip_ok": true,
-  "encode_seconds": 3.202987900003791,
-  "decode_seconds": 0.26611219998449087,
-  "discovery_seconds": 3.202987900003791,
+  "encode_seconds": 0.3118992999952752,
+  "decode_seconds": 0.03965510000125505,
+  "discovery_seconds": 0.3118992999952752,
   "baselines": [
     {
       "name": "gzip9",
-      "bytes": 195943,
-      "seconds": 0.05337300000246614,
+      "bytes": 36033,
+      "seconds": 0.00131559997680597,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
-      "bytes": 195931,
-      "seconds": 0.056602399999974295,
+      "bytes": 36021,
+      "seconds": 0.0010944000096060336,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
-      "bytes": 182638,
-      "seconds": 0.045352499990258366,
+      "bytes": 36508,
+      "seconds": 0.009531699994113296,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
-      "bytes": 167536,
-      "seconds": 0.3250562000030186,
+      "bytes": 36060,
+      "seconds": 0.029024999996181577,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
-      "bytes": 187928,
-      "seconds": 0.25861770001938567,
+      "bytes": 36010,
+      "seconds": 0.005863200000021607,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
-      "bytes": 173425,
-      "seconds": 1.231896000012057,
+      "bytes": 36004,
+      "seconds": 0.02339290000963956,
       "available": true,
       "notes": ""
     }
   ],
   "composition": {
     "gzip9": {
-      "bytes": 195958,
-      "seconds": 0.07372459999169223,
+      "bytes": 36051,
+      "seconds": 0.0013842999760527164,
       "available": true,
       "notes": ""
     },
     "zlib9": {
-      "bytes": 195946,
-      "seconds": 0.039838299999246374,
+      "bytes": 36039,
+      "seconds": 0.0010955999896395952,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
-      "bytes": 182571,
-      "seconds": 0.04228630001307465,
+      "bytes": 36527,
+      "seconds": 0.009050400025444105,
       "available": true,
       "notes": ""
     },
     "xz9": {
-      "bytes": 167388,
-      "seconds": 0.26143749998300336,
+      "bytes": 36080,
+      "seconds": 0.029136199998902157,
       "available": true,
       "notes": ""
     },
     "zstd19": {
-      "bytes": 187957,
-      "seconds": 0.3159133000008296,
+      "bytes": 36028,
+      "seconds": 0.007422599999699742,
       "available": true,
       "notes": ""
     },
     "brotli11": {
-      "bytes": 173465,
-      "seconds": 1.0697556000086479,
+      "bytes": 36022,
+      "seconds": 0.051308699999935925,
       "available": true,
       "notes": ""
     }
   },
   "composed_roundtrip": {
+    "mode": "full",
     "gzip9": true,
     "zlib9": true,
     "bz2_9": true,
@@ -132,12 +131,12 @@
     "all_ok": true,
     "n_codecs_checked": 6
   },
-  "notes": "zip silesia.zip:sao prefix 262144 | acquisition=dev_machine_feasibility_slice",
-  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
-  "verdict": "raw_gap-94626 no_deduction header_perturbation+148",
-  "utc_timestamp": "2026-08-29T14:53:29.674702+00:00",
+  "notes": "SCOPE CONTROL: a negative from these widths does not rule out structure at other periods",
+  "hypothesis": "Exact linear structure at a non-power-of-two record period is invisible to fixed-width discovery.",
+  "verdict": "raw_gap-14 no_deduction header_perturbation-18",
+  "utc_timestamp": "2026-08-29T15:11:06.785510+00:00",
   "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
-  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "command": "experiments/controls/run.py",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -146,7 +145,7 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T14:53:29.832766+00:00",
+    "utc_timestamp": "2026-08-29T15:11:06.862386+00:00",
     "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
     "package_versions": {
       "python": "3.13.6",

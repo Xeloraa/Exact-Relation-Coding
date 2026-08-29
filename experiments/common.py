@@ -7,7 +7,7 @@ import time
 from pathlib import Path
 from typing import Any, Callable
 
-from deductive.baselines import composition_sizes, run_baselines
+from deductive.baselines import composition_sizes, run_baselines, verify_composed_roundtrip
 from deductive.codecs import Encoded, decode
 from deductive.results import ExperimentRecord, append_csv, write_json
 
@@ -48,6 +48,7 @@ def run_codec_experiment(
 
     baselines = run_baselines(data, skip_slow=skip_slow_baselines)
     composition = composition_sizes(encoded.data)
+    composed_roundtrip = verify_composed_roundtrip(data, encoded.data, decode)
 
     record = ExperimentRecord(
         experiment_id=experiment_id,
@@ -69,10 +70,13 @@ def run_codec_experiment(
         discovery_seconds=discovery_and_encode,
         baselines=baselines,
         composition=composition,
+        composed_roundtrip=composed_roundtrip,
         notes=notes or encoded.notes,
         hypothesis=hypothesis,
     )
     record.verdict = _verdict(record)
+    if composed_roundtrip.get("all_ok") is not True and composed_roundtrip.get("n_codecs_checked", 0):
+        record.verdict = "FAIL_COMPOSED_ROUNDTRIP " + record.verdict
     return record
 
 

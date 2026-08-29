@@ -1,9 +1,9 @@
 {
-  "experiment_id": "nat_sdrbench_exaalt_vy_slice",
-  "phase": "natural_slice",
-  "dataset_id": "sdrbench_exaalt2869440_vy.f32@slice262144",
-  "dataset_sha256": "048529c77afa1110a4c2171c4fbc89a45ea4547547d1468597081a75d08e73e7",
-  "dataset_bytes": 262144,
+  "experiment_id": "nat_silesia_dickens",
+  "phase": "natural",
+  "dataset_id": "silesia_dickens",
+  "dataset_sha256": "b24c37886142e11d0ee687db6ab06f936207aa7f2ea1fd1d9a36763c7a507e6a",
+  "dataset_bytes": 10192446,
   "seed": null,
   "config": {
     "codec": "gf2_best",
@@ -15,129 +15,125 @@
       128,
       256
     ],
-    "category": "scientific_f32",
-    "acquisition": "dev_machine_feasibility_slice",
-    "prefix": 262144,
-    "prefix_reason": "dev_machine_feasibility_slice"
+    "category": "silesia",
+    "acquisition": "whole_file"
   },
   "codec_kind": "GF2",
-  "n_relations": 3,
-  "n_independent": 29,
-  "recovered_bits": 196608,
+  "n_relations": 25,
+  "n_independent": 231,
+  "recovered_bits": 7962825,
   "accounting": {
-    "payload_bits": 1900544,
-    "relation_description_bits": 122,
+    "payload_bits": 73576503,
+    "relation_description_bits": 6031,
     "header_bits": 216,
-    "framing_bits": 6,
+    "framing_bits": 2,
     "crc_bits": 32,
-    "leftover_bits": 32,
+    "leftover_bits": 272,
     "other_sideinfo_bits": 0,
-    "total_bits": 1900952,
-    "total_bytes": 237619
+    "total_bits": 73583056,
+    "total_bytes": 9197882
   },
-  "total_encoded_bytes": 237619,
+  "total_encoded_bytes": 9197882,
   "roundtrip_ok": true,
-  "encode_seconds": 3.3888562999782152,
-  "decode_seconds": 0.053759400005219504,
-  "discovery_seconds": 3.3888562999782152,
+  "encode_seconds": 288.16058769999654,
+  "decode_seconds": 6.649129700002959,
+  "discovery_seconds": 288.16058769999654,
   "baselines": [
     {
       "name": "gzip9",
-      "bytes": 241902,
-      "seconds": 0.02804960001958534,
+      "bytes": 3854747,
+      "seconds": 1.2573886000027414,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
-      "bytes": 241890,
-      "seconds": 0.02464630000758916,
+      "bytes": 3854735,
+      "seconds": 1.7345221000141464,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
-      "bytes": 226808,
-      "seconds": 0.05082010000478476,
+      "bytes": 2799520,
+      "seconds": 2.517458100017393,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
-      "bytes": 232408,
-      "seconds": 0.15336769999703392,
+      "bytes": 2830604,
+      "seconds": 20.767117799987318,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
-      "bytes": 237721,
-      "seconds": 0.139054799976293,
+      "bytes": 2849941,
+      "seconds": 9.441941800003406,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
-      "bytes": 238467,
-      "seconds": 1.1198512999981176,
+      "bytes": 2853158,
+      "seconds": 32.90316359998542,
       "available": true,
       "notes": ""
     }
   ],
   "composition": {
     "gzip9": {
-      "bytes": 237712,
-      "seconds": 0.011811999982455745,
+      "bytes": 7684888,
+      "seconds": 0.8586804999795277,
       "available": true,
       "notes": ""
     },
     "zlib9": {
-      "bytes": 237700,
-      "seconds": 0.012091100012185052,
+      "bytes": 7684876,
+      "seconds": 1.1239636999962386,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
-      "bytes": 237880,
-      "seconds": 0.058821800019359216,
+      "bytes": 5499099,
+      "seconds": 1.5754774999804795,
       "available": true,
       "notes": ""
     },
     "xz9": {
-      "bytes": 237688,
-      "seconds": 0.13794169999891892,
+      "bytes": 5444536,
+      "seconds": 6.50572319998173,
       "available": true,
       "notes": ""
     },
     "zstd19": {
-      "bytes": 237634,
-      "seconds": 0.0992610999965109,
+      "bytes": 5503061,
+      "seconds": 7.314500299980864,
       "available": true,
       "notes": ""
     },
     "brotli11": {
-      "bytes": 237624,
-      "seconds": 0.3612661999941338,
+      "bytes": 5507377,
+      "seconds": 30.2321082999988,
       "available": true,
       "notes": ""
     }
   },
   "composed_roundtrip": {
+    "mode": "fast_subset",
     "gzip9": true,
     "zlib9": true,
-    "bz2_9": true,
-    "xz9": true,
     "zstd19": true,
-    "brotli11": true,
     "all_ok": true,
-    "n_codecs_checked": 6
+    "n_codecs_checked": 3
   },
-  "notes": "sdrbench exaalt-2869440:SDRBENCH-EXAALT-2869440/vy.f32 (11477760 B, dtype <f4) [prefix 262144] | acquisition=dev_machine_feasibility_slice",
+  "notes": "zip silesia.zip:dickens whole 10192446 | acquisition=whole_file",
   "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
-  "verdict": "raw_gap-10811 comp_gap-10816",
-  "utc_timestamp": "2026-08-29T14:54:31.849124+00:00",
+  "verdict": "raw_gap-6398362 comp_gap-2645016",
+  "utc_timestamp": "2026-08-29T15:06:14.558301+00:00",
   "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
-  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "command": "experiments/natural/run.py --mode whole --only silesia_dickens",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -146,7 +142,7 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T14:54:31.950950+00:00",
+    "utc_timestamp": "2026-08-29T15:06:14.717216+00:00",
     "git_commit": "e89073977350ef611f91acdeaf303c5dcad9a61c-dirty",
     "package_versions": {
       "python": "3.13.6",

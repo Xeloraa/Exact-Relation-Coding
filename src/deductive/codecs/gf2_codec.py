@@ -191,6 +191,8 @@ def decode_gf2(data: bytes) -> bytes:
     n_cols = r.read_bits(32)
     n_pivots = r.read_bits(32)
     flags = r.read_bits(8)
+    if flags & ~0b11:
+        raise ValueError(f"unknown flag bits set: {flags:#010b}")
     affine = bool(flags & 1)
     ones_is_pivot = bool(flags & 2)
     orig_len = r.read_bits(64)
@@ -252,21 +254,37 @@ def encode_bytes_gf2(data: bytes, n_cols: int, *, affine: bool = False) -> Encod
 def encode_bytes_best_gf2(
     data: bytes,
     widths: tuple[int, ...] = (8, 16, 32, 64, 128, 256),
+    *,
+    strict: bool = False,
 ) -> Encoded:
-    """Try several column widths, homogeneous and affine, plus passthrough."""
+    """Try several column widths, homogeneous and affine, plus passthrough.
+
+    A per-config failure is recorded (count + last message) in the returned
+    ``Encoded.notes`` rather than silently dropped, so a discovery/verification
+    bug cannot hide as a skipped width. With ``strict=True`` any per-config
+    exception is re-raised instead of recorded.
+    """
     best = encode_passthrough(data)
+    best_desc = "passthrough"
+    errors: list[str] = []
     for w in widths:
         if w <= 0:
             continue
         for affine in (False, True):
             try:
                 cand = encode_bytes_gf2(data, w, affine=affine)
-            except Exception:
+            except Exception as exc:  # noqa: BLE001
+                if strict:
+                    raise
+                errors.append(f"w={w} affine={affine}: {type(exc).__name__}: {exc}")
                 continue
             if len(cand.data) < len(best.data):
                 best = cand
-                mode = "affine" if affine else "linear"
-                best.notes = f"gf2 {mode} n_cols={w}"
+                best_desc = f"gf2 {'affine' if affine else 'linear'} n_cols={w}"
+    note = best_desc
+    if errors:
+        note += f" | {len(errors)} config(s) errored; last: {errors[-1]}"
+    best.notes = note
     return best
 
 

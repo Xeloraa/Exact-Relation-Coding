@@ -77,11 +77,14 @@ def corpus_items(mode: str, slice_bytes: int):
 def evaluate(rec, data_len: int) -> dict:
     g_abs = rec.composition_gap_bytes()
     g_pct = rec.composition_gap_pct()
+    g_abs_m = rec.composition_gap_matched_bytes()
+    g_pct_m = rec.composition_gap_matched_pct()
     raw_gap = rec.raw_gap_bytes()
     is_pt = rec.codec_kind == "PASSTHROUGH" or rec.n_relations == 0
     claim_A = rec.n_relations >= 1
     claim_B = (rec.total_encoded_bytes < passthrough_size(data_len)) and (raw_gap is not None and raw_gap > 0)
     claim_C = g_abs is not None and g_abs > 0
+    # locked definition (docs/preregistration.md S3) -- do not add conditions here
     meaningful = bool(
         claim_C
         and g_pct is not None and g_pct >= PREREG_G_PCT
@@ -90,6 +93,13 @@ def evaluate(rec, data_len: int) -> dict:
         and not is_pt
         and rec.dataset_id not in PRIOR_ART_IDS
     )
+    # extra VALIDITY gates a reportable positive must also clear (not a redefinition)
+    crt = rec.composed_roundtrip_ok()
+    matched_ok = (
+        g_pct_m is not None and g_pct_m >= PREREG_G_PCT
+        and g_abs_m is not None and g_abs_m >= PREREG_G_ABS
+    )
+    reportable = bool(meaningful and crt is True and (rec.codec_sets_match() or matched_ok))
     return {
         "experiment_id": rec.experiment_id,
         "dataset_id": rec.dataset_id,
@@ -103,11 +113,18 @@ def evaluate(rec, data_len: int) -> dict:
         "raw_gap_bytes": raw_gap,
         "G_abs_bytes": g_abs,
         "G_pct": g_pct,
+        "G_abs_matched_bytes": g_abs_m,
+        "G_pct_matched": g_pct_m,
+        "codec_sets_match": rec.codec_sets_match(),
+        "available_raw_codecs": rec.available_raw_codecs(),
+        "available_composed_codecs": rec.available_composed_codecs(),
         "roundtrip_ok": rec.roundtrip_ok,
+        "composed_roundtrip_ok": crt,
         "claim_A_discoverable": claim_A,
         "claim_B_reduces_representation": claim_B,
         "claim_C_survives_composition": claim_C,
         "meaningful_positive_prereg": meaningful,
+        "reportable_positive": reportable,
     }
 
 
@@ -116,6 +133,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--mode", choices=("slice", "whole"), default="slice")
     ap.add_argument("--slice-bytes", type=int, default=262_144)
     ap.add_argument("--widths", type=int, nargs="+", default=[8, 16, 32, 64, 128, 256])
+    ap.add_argument("--only", type=str, nargs="+", default=None,
+                    help="substring filter on experiment id (e.g. --only silesia_dickens); "
+                         "lets a resource-limited machine run corpora one at a time")
     args = ap.parse_args(argv)
 
     is_slice = args.mode == "slice"
@@ -124,6 +144,8 @@ def main(argv: list[str] | None = None) -> int:
     id_suffix = f"@slice{args.slice_bytes}" if is_slice else ""
     verdicts = []
     for exp_id, ds_id, category, data, note in corpus_items(args.mode, args.slice_bytes):
+        if args.only and not any(tok in exp_id for tok in args.only):
+            continue
         exp_id = exp_id + ("_slice" if is_slice else "")
         ds_id = ds_id + id_suffix
         if data is None:

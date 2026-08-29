@@ -45,6 +45,7 @@ class ExperimentRecord:
     discovery_seconds: float
     baselines: list[BaselineSize] = field(default_factory=list)
     composition: dict[str, Any] = field(default_factory=dict)
+    composed_roundtrip: dict[str, Any] = field(default_factory=dict)
     notes: str = ""
     hypothesis: str = ""
     verdict: str = ""
@@ -115,6 +116,55 @@ class ExperimentRecord:
             return None
         return base - self.total_encoded_bytes
 
+    # --- matched-codec-set gap: only codecs that ran on BOTH sides ----------
+    def _raw_sizes_by_codec(self) -> dict[str, int]:
+        return {b.name: b.bytes for b in self.baselines if b.available and b.bytes >= 0}
+
+    def _composed_sizes_by_codec(self) -> dict[str, int]:
+        out: dict[str, int] = {}
+        for name, val in self.composition.items():
+            if isinstance(val, dict) and val.get("available") is not False:
+                n = int(val.get("bytes", -1))
+                if n >= 0:
+                    out[name] = n
+        return out
+
+    def available_raw_codecs(self) -> list[str]:
+        return sorted(self._raw_sizes_by_codec())
+
+    def available_composed_codecs(self) -> list[str]:
+        return sorted(self._composed_sizes_by_codec())
+
+    def codec_sets_match(self) -> bool:
+        return self.available_raw_codecs() == self.available_composed_codecs()
+
+    def composition_gap_matched_bytes(self) -> int | None:
+        """G_abs restricted to codecs that ran on BOTH raw and container.
+
+        Guards against an asymmetric comparison where e.g. xz9 OOMs on one side
+        only. Equals composition_gap_bytes() when codec_sets_match().
+        """
+        raw = self._raw_sizes_by_codec()
+        comp = self._composed_sizes_by_codec()
+        common = set(raw) & set(comp)
+        if not common:
+            return None
+        return min(raw[c] for c in common) - min(comp[c] for c in common)
+
+    def composition_gap_matched_pct(self) -> float | None:
+        g = self.composition_gap_matched_bytes()
+        raw = self._raw_sizes_by_codec()
+        comp = self._composed_sizes_by_codec()
+        common = set(raw) & set(comp)
+        if g is None or not common:
+            return None
+        base = min(raw[c] for c in common)
+        return g / base if base else None
+
+    def composed_roundtrip_ok(self) -> bool | None:
+        v = self.composed_roundtrip.get("all_ok")
+        return bool(v) if v is not None else None
+
 
 def write_json(path: Path, record: ExperimentRecord) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -148,6 +198,10 @@ def append_csv(path: Path, record: ExperimentRecord) -> None:
         "raw_gap_bytes": record.raw_gap_bytes(),
         "composition_gap_bytes": record.composition_gap_bytes(),
         "composition_gap_pct": record.composition_gap_pct(),
+        "composition_gap_matched_bytes": record.composition_gap_matched_bytes(),
+        "composition_gap_matched_pct": record.composition_gap_matched_pct(),
+        "codec_sets_match": record.codec_sets_match(),
+        "composed_roundtrip_ok": record.composed_roundtrip_ok(),
         "verdict": record.verdict,
         "git_commit": record.git_commit,
         "utc_timestamp": record.utc_timestamp,
