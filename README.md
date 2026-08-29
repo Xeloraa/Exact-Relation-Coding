@@ -30,31 +30,40 @@ deferred to a higher-memory machine.
   whole-file corpora need a bigger machine.
 - `experiments/controls/run.py` — positive / null / corruption-sweep / labelled
   prior-art battery, all gates **pass** (`results/controls/`).
-- `experiments/natural/run.py` — pre-registered corpus list (12 whole Silesia +
-  enwik8 + 6 SDRBench EXAALT f32 fields + UCI household power). Dev-machine
-  **feasibility slices** only so far (`results/natural_slice/`, 256 KiB
-  prefixes): 20/20 round-trip ok, 0 meaningful positives. **Not the answer** —
-  `--mode whole` on a ≥ 32 GiB machine is required (`docs/preregistration.md` §4).
+- `experiments/natural/run.py` — pre-registered corpus list (12 Silesia + enwik8
+  + 6 SDRBench EXAALT f32 fields + UCI household power). **8 of 12 Silesia
+  members run whole** (`results/natural/`, ≤ 10 MB — the dev-machine ceiling);
+  all 12 + enwik8 + 6 float fields + telemetry as ≥ 256 KiB prefixes
+  (`results/natural_slice/`). **0 meaningful positives on any of them.** The 4
+  largest Silesia members + whole enwik8/SDRBench/UCI need > 8 GiB
+  (`docs/environment_constraints.md`); `--mode whole` runs them unchanged.
+- `experiments/offset/run.py` — bit-phase-offset detector extension (the kill
+  criterion's one bounded broadening attempt): every width × every bit phase.
+  Run on every natural file — **0 threshold crossings**, no file beats phase-0
+  by more than header noise. The axis-aligned negative is phase-robust.
+  `docs/kill_criterion_status.md`.
 - `scripts/reproduce.py` — one command: pytest+equivalence+properties+independent
-  verifier → downloads → controls → natural → phases → ledger → paper tables →
-  number check → ledger verify; writes `results/REPRODUCE.md`.
-- `docs/audit.md` — from-scratch adversarial implementation audit (findings
-  A1–A7 fixed; correction C1). `docs/adversarial_review.md` — every credible
-  reviewer objection with disposition. `docs/statistics.md` — why conventional
-  statistics mostly do not apply here and what is reported instead.
+  verifier → downloads → controls → natural → offset → phases → ledger → tables
+  → figures → number check → ledger verify; writes `results/REPRODUCE.md`.
+- `docs/audit.md` — adversarial implementation audit (A1–A9 fixed; correction
+  C1). `docs/adversarial_review.md` — every credible reviewer objection + the
+  13 canonical ones, each resolved / narrowed / disclosed.
+  `docs/submission_gap_audit.md` — the REQ/REC/OPT/NO checklist.
+  `docs/venue_assessment.md` — honest venue call (**B**: workshop /
+  negative-results / preprint). `docs/statistics.md` — RQ-A..E layer reporting.
 - `verification/independent_verify.py` — shared-nothing second decoder +
-  independent accounting re-derivation (run in CI and over the ledger).
-- `results/ledger.{json,csv}` — one row per experiment, every quantity;
-  **0** accounting / round-trip / composed-round-trip failures across 95 rows.
-- `paper/deductive-coding.md` — full 24-section technical paper; inline numbers
-  ledger-checked; Results §15.2 and the §21 verdict `PENDING` the whole-file
-  sweep. `paper/results_tables.md` — generated, no hand-typed numbers.
+  independent accounting re-derivation + `verify_composed` (full
+  `raw→encode→compress→decompress→decode→raw` chain).
+- `results/ledger.{json,csv}` — one row per experiment; **0** accounting /
+  round-trip / composed-round-trip failures.
+- `paper/deductive-coding.md` — full technical paper (abstract … conclusion +
+  reproducibility + exact commands); RQ-A..E hierarchy; inline numbers
+  ledger-checked; `paper/results_tables.md` + `paper/figures/` generated.
 
-**One clean whole natural file is done:** Silesia `dickens` (10.19 MB) —
-GF(2) finds 25 relations, container is larger than raw, `G_abs` ≈ −2.6 MB
-(−94%), round-trip + composed round-trip + independent decode all pass.
-Every other whole-file corpus is deferred (dev machine tops out ~10 MB
-foreground; `docs/environment_constraints.md`).
+**Whole natural files done (8/12 Silesia):** 3 find GF(2) relations
+(`dickens` −94 %, `x-ray` −47 %, `xml` −303 %) and 5 fall to passthrough
+(header noise). Every one is round-trip + composed round-trip verified; none
+is a meaningful positive. The bit-phase-offset extension changes nothing.
 
 Prior established results unchanged: planted GF(2) shows a large **composed**
 deduction gap against gzip/zstd/xz/brotli, paq8l `-3`/`-8`, and paq8px v216
@@ -63,8 +72,13 @@ enwik8, stdlib, PNG/ZIP, structured JSON/log text show **no** composed gap.
 Affine derived-column and CRC32-record wins are labelled established techniques
 (FD elimination; checksum inversion), not novelty. See `docs/results.md`.
 
-Current verdict: **INCONCLUSIVE by the pre-registration** until the whole-file
-sweep exists. The project is not killed and is not a real-corpus success.
+Current verdict: **INCONCLUSIVE-for-the-full-list by the pre-registration**
+(4 giant Silesia members + whole enwik8/SDRBench/UCI need > 8 GiB), while the
+coverage achieved — 8/12 Silesia whole + 12 slices + 6 float fields + telemetry
++ the bit-phase-offset extension — is a clean, layered **NEGATIVE**
+(structure exists → is discoverable → still does not reduce the representation).
+Venue: **B** (workshop / negative-results / preprint); `docs/venue_assessment.md`.
+The mechanism itself is not novel (`docs/prior_art.md`).
 
 Derived-column elimination in databases is **established prior art**. This project does not claim that idea. See `docs/prior_art.md`.
 
