@@ -50,6 +50,35 @@ def test_independent_gf2_affine(seed):
     _check(encode_bytes_gf2(ds.data, 24, affine=True).data, ds.data)
 
 
+@pytest.mark.parametrize("offset", [0, 1, 3, 7, 15, 31])
+def test_independent_gf2_offset(offset):
+    from deductive.codecs.gf2_codec import encode_bytes_gf2_offset
+
+    ds = gf2_linear_code(n_rows=600, n_info=16, n_parity=16, seed=21)
+    _check(encode_bytes_gf2_offset(ds.data, 32, offset).data, ds.data)
+
+
+def test_independent_gf2_offset_best_recovers_phase_shift():
+    """A planted width-24 code with 8 junk bits prepended: offset search must
+    find it and both decoders must agree."""
+    import numpy as _np
+    from deductive.codecs.gf2_codec import encode_bytes_best_gf2_offsets
+    from deductive.codecs import decode
+
+    info = _np.random.default_rng(1).integers(0, 2, (2000, 12), dtype=_np.uint8)
+    masks = _np.random.default_rng(2).integers(0, 2, (12, 12), dtype=_np.uint8)
+    masks[masks.sum(1) == 0, 0] = 1
+    par = (info @ masks.T) & 1
+    body = _np.packbits(_np.concatenate([info, par], 1).reshape(-1).astype(_np.uint8),
+                        bitorder="little").tobytes()
+    shifted = bytes([0b10101010]) + body
+    best, info_d = encode_bytes_best_gf2_offsets(
+        shifted, width_offsets=((24, None), (8, None), (16, None)))
+    assert best.kind.name == "GF2" and info_d["offset"] == 8
+    assert decode(best.data) == shifted
+    _check(best.data, shifted)
+
+
 def test_independent_gf2_affine_offset():
     rng = np.random.default_rng(11)
     info = rng.integers(0, 2, size=(256, 8), dtype=np.uint8)

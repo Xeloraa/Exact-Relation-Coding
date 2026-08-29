@@ -86,13 +86,19 @@ def _reconstruct_gf2(b: Bits) -> tuple[bytes, dict]:
     n_cols = b.uint(32)
     n_piv = b.uint(32)
     flags = b.uint(8)
-    if flags & ~0b11:
+    if flags & ~0b111:
         raise ValueError(f"unknown flags {flags:#b}")
     affine = bool(flags & 1)
     ones_is_pivot = bool(flags & 2)
+    has_prefix = bool(flags & 4)
     orig_len = b.uint(64)
     leftover_n = b.uint(32)
     leftover = b.bits(leftover_n)
+    prefix_n = 0
+    prefix = []
+    if has_prefix:
+        prefix_n = b.uint(32)
+        prefix = b.bits(prefix_n)
     mask = b.bits(n_cols)
     pivot_idx = [i for i, m in enumerate(mask) if m]
     free_idx = [i for i, m in enumerate(mask) if not m]
@@ -111,6 +117,8 @@ def _reconstruct_gf2(b: Bits) -> tuple[bytes, dict]:
         "payload": n_rows * n_piv,
         "crc": 32,
     }
+    if has_prefix:
+        acct["prefix"] = 32 + prefix_n
 
     # reconstruct the matrix, row by row, with a plain XOR loop
     out_rows = []
@@ -128,7 +136,7 @@ def _reconstruct_gf2(b: Bits) -> tuple[bytes, dict]:
             row[f] = acc
         out_rows.append(row)
 
-    flat = [bit for row in out_rows for bit in row] + list(leftover)
+    flat = list(prefix) + [bit for row in out_rows for bit in row] + list(leftover)
     need = orig_len * 8
     if len(flat) < need:
         raise ValueError("not enough reconstructed bits")
@@ -274,6 +282,10 @@ def _self_test() -> int:
     check("gf2_linear", encode_bytes_gf2(ds.data, 48).data, ds.data)
     ds = gf2_linear_code(n_rows=500, n_info=12, n_parity=12, seed=9)
     check("gf2_affine", encode_bytes_gf2(ds.data, 24, affine=True).data, ds.data)
+    from deductive.codecs.gf2_codec import encode_bytes_gf2_offset  # noqa: PLC0415
+    ds = gf2_linear_code(n_rows=700, n_info=16, n_parity=16, seed=13)
+    for off in (1, 5, 13):
+        check(f"gf2_offset{off}", encode_bytes_gf2_offset(ds.data, 32, off).data, ds.data)
     nb = mixed_noise_bits(n_rows=256, n_cols=32, seed=1)
     check("passthrough", encode_passthrough(nb.data).data, nb.data)
     ft = exact_functional_table(n_rows=120, seed=6, fn="affine")

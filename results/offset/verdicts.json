@@ -1,0 +1,22 @@
+{
+  "mode": "slice",
+  "verdicts": [
+    {
+      "experiment_id": "off_silesia_xml",
+      "dataset_id": "silesia_xml@slice262144",
+      "scope": "slice",
+      "dataset_sha256": "f2bbde07c2061c09fa41e4d4998c07847fbcc23d4ab166ca105a7f66ac8cd37b",
+      "dataset_bytes": 262144,
+      "codec_kind": "GF2",
+      "n_relations": 1,
+      "offset_config": "zip silesia.zip:xml prefix 262144 | detector=bit_offset_search",
+      "G_abs_offset": -17365,
+      "G_pct_offset": -1.502292585863829,
+      "G_abs_phase0": -17365,
+      "offset_helped_vs_phase0": false,
+      "crosses_prereg_threshold": false,
+      "roundtrip_ok": true,
+      "composed_roundtrip_ok": true
+    }
+  ]
+}

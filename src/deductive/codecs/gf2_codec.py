@@ -4,9 +4,11 @@ Container layout (LSB-first bits, then byte padding):
 
     magic[4] version[8] kind[8]
     n_rows[32] n_cols[32] n_payload_pivots[32]
-    flags[8]  (bit0=affine, bit1=ones_is_pivot; ones column is never sent)
+    flags[8]  (bit0=affine, bit1=ones_is_pivot, bit2=has_prefix;
+               ones column is never sent)
     original_nbytes[64] leftover_nbits[32]
     leftover bits (if any)
+    prefix_nbits[32] + prefix bits          -- only if flags bit2 (bit-offset codec)
     pivot_mask[n_cols]
     for each free column in increasing index:
         coefficients[n_pivots]
@@ -66,6 +68,28 @@ def reshape_bits(data: bytes, n_cols: int) -> tuple[np.ndarray, np.ndarray]:
     return matrix, leftover
 
 
+def reshape_bits_offset(data: bytes, n_cols: int, offset: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Reshape starting `offset` bits in. Returns (matrix, prefix, leftover).
+
+    `prefix` is the `offset` bits skipped before the first row; `leftover` is the
+    `< n_cols` bits after the last full row. Together with the matrix they
+    reconstruct every bit of `data` in order. offset == 0 gives an empty prefix
+    and is equivalent to `reshape_bits`.
+    """
+    if n_cols <= 0:
+        raise ValueError("n_cols must be positive")
+    if not (0 <= offset < n_cols):
+        raise ValueError("offset must be in [0, n_cols)")
+    bits = bits_from_bytes(data)
+    prefix = bits[:offset]
+    body = bits[offset:]
+    n_rows = body.size // n_cols
+    used = n_rows * n_cols
+    matrix = body[:used].reshape(n_rows, n_cols)
+    leftover = body[used:]
+    return matrix, prefix, leftover
+
+
 @dataclass
 class GF2EncodeChoice:
     n_cols: int
@@ -78,6 +102,7 @@ def encode_gf2_matrix(
     *,
     original: bytes | None = None,
     leftover: np.ndarray | None = None,
+    prefix: np.ndarray | None = None,
     basis: GF2ColumnBasis | None = None,
     affine: bool = False,
 ) -> Encoded:
@@ -108,7 +133,13 @@ def encode_gf2_matrix(
         leftover_u8 = np.zeros(0, dtype=np.uint8)
     else:
         leftover_u8 = leftover.astype(np.uint8).reshape(-1) & 1
+    if prefix is None:
+        prefix_u8 = np.zeros(0, dtype=np.uint8)
+    else:
+        prefix_u8 = prefix.astype(np.uint8).reshape(-1) & 1
     if original is None:
+        if prefix_u8.size:
+            raise ValueError("prefix requires an explicit `original`")
         if leftover_u8.size:
             flat = np.concatenate([bit.reshape(-1), leftover_u8])
         else:
@@ -120,9 +151,9 @@ def encode_gf2_matrix(
         original = bytes_from_bits(flat)
     else:
         needed = len(original) * 8
-        have = int(bit.size + leftover_u8.size)
+        have = int(prefix_u8.size + bit.size + leftover_u8.size)
         if have < needed:
-            raise ValueError("matrix+leftover shorter than original")
+            raise ValueError("prefix+matrix+leftover shorter than original")
 
     if n_rel == 0:
         # Full column rank: relation description cannot omit symbols.
@@ -138,10 +169,15 @@ def encode_gf2_matrix(
         flags |= 1
         if aff is not None and aff.ones_is_pivot:
             flags |= 2
+    if prefix_u8.size:
+        flags |= 4
     w.write_bits("header", flags, 8)
     w.write_bits("header", len(original), 64)
     w.write_bits("leftover", int(leftover_u8.size), 32)
     w.write_bit_array("leftover", leftover_u8)
+    if prefix_u8.size:
+        w.write_bits("prefix", int(prefix_u8.size), 32)
+        w.write_bit_array("prefix", prefix_u8)
 
     if affine and aff is not None:
         pivot_cols = np.asarray(aff.real_pivot_indices, dtype=np.int64)
@@ -191,13 +227,19 @@ def decode_gf2(data: bytes) -> bytes:
     n_cols = r.read_bits(32)
     n_pivots = r.read_bits(32)
     flags = r.read_bits(8)
-    if flags & ~0b11:
+    if flags & ~0b111:
         raise ValueError(f"unknown flag bits set: {flags:#010b}")
     affine = bool(flags & 1)
     ones_is_pivot = bool(flags & 2)
+    has_prefix = bool(flags & 4)
     orig_len = r.read_bits(64)
     leftover_nbits = r.read_bits(32)
     leftover = r.read_bit_array(leftover_nbits)
+    if has_prefix:
+        prefix_nbits = r.read_bits(32)
+        prefix = r.read_bit_array(prefix_nbits)
+    else:
+        prefix = np.zeros(0, dtype=np.uint8)
     pivot_mask = r.read_bit_array(n_cols)
     pivot_indices = tuple(int(i) for i in np.flatnonzero(pivot_mask))
     free_indices = tuple(int(i) for i in np.flatnonzero(pivot_mask == 0))
@@ -228,9 +270,12 @@ def decode_gf2(data: bytes) -> bytes:
             coefficients=coeffs,
         )
         matrix = reconstruct(n_rows, n_cols, pivot_bits, basis)
-    flat = matrix.reshape(-1)
+    parts = [matrix.reshape(-1)]
+    if prefix.size:
+        parts.insert(0, prefix)
     if leftover.size:
-        flat = np.concatenate([flat, leftover])
+        parts.append(leftover)
+    flat = np.concatenate(parts) if len(parts) > 1 else parts[0]
     if orig_len == 0:
         rec = b""
     else:
@@ -249,6 +294,55 @@ def decode_gf2(data: bytes) -> bytes:
 def encode_bytes_gf2(data: bytes, n_cols: int, *, affine: bool = False) -> Encoded:
     matrix, leftover = reshape_bits(data, n_cols)
     return encode_gf2_matrix(matrix, original=data, leftover=leftover, affine=affine)
+
+
+def encode_bytes_gf2_offset(data: bytes, n_cols: int, offset: int, *, affine: bool = False) -> Encoded:
+    """GF(2) codec on the bit matrix that starts `offset` bits into `data`.
+
+    offset == 0 is byte-identical to `encode_bytes_gf2`. offset > 0 carries the
+    skipped `offset` bits as a counted `prefix` field (flags bit 2).
+    """
+    matrix, prefix, leftover = reshape_bits_offset(data, n_cols, offset)
+    return encode_gf2_matrix(matrix, original=data, leftover=leftover, prefix=prefix, affine=affine)
+
+
+def encode_bytes_best_gf2_offsets(
+    data: bytes,
+    width_offsets=((8, None), (16, None), (32, None), (64, None), (128, 8), (256, 8)),
+) -> tuple[Encoded, dict]:
+    """Detector extension: for each width, try a set of bit phase offsets.
+
+    `width_offsets` is a sequence of `(w, n_offsets)`: `n_offsets=None` sweeps
+    every phase `0..w-1`; an integer `k` sweeps `0..k-1` (a coarse sweep for
+    wide `w`). Bounded — no nonlinear search. Returns the smallest fully
+    accounted container over all `(width, offset, {homogeneous, affine})` plus
+    passthrough, and a dict describing the winning config and the sweep size.
+    """
+    best = encode_passthrough(data)
+    best_cfg = {"kind": "passthrough", "width": None, "offset": None, "affine": None}
+    tried = errored = 0
+    for w, n_off in width_offsets:
+        if w <= 0:
+            continue
+        limit = w if n_off is None else min(w, int(n_off))
+        for off in range(limit):
+            for affine in (False, True):
+                tried += 1
+                try:
+                    cand = encode_bytes_gf2_offset(data, w, off, affine=affine)
+                except Exception:  # noqa: BLE001
+                    errored += 1
+                    continue
+                if len(cand.data) < len(best.data):
+                    best = cand
+                    best_cfg = {"kind": cand.kind.name, "width": w, "offset": off,
+                                "affine": affine}
+    info = {**best_cfg, "configs_tried": tried, "configs_errored": errored,
+            "width_offsets": [list(t) for t in width_offsets]}
+    best.notes = (f"offset-search {best_cfg['kind']} w={best_cfg['width']} "
+                  f"off={best_cfg['offset']} affine={best_cfg['affine']} "
+                  f"({tried} configs, {errored} errored)")
+    return best, info
 
 
 def encode_bytes_best_gf2(
