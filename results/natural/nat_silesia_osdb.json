@@ -1,0 +1,158 @@
+{
+  "experiment_id": "nat_silesia_osdb",
+  "phase": "natural",
+  "dataset_id": "silesia_osdb",
+  "dataset_sha256": "60f027179302ca3ad87c58ac90b6be72ec23588aaa7a3b7fe8ecc0f11def3fa3",
+  "dataset_bytes": 10085684,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "category": "silesia",
+    "acquisition": "whole_file"
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 80685472,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 80685472,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 80685616,
+    "total_bytes": 10085702
+  },
+  "total_encoded_bytes": 10085702,
+  "roundtrip_ok": true,
+  "encode_seconds": 134.01917510002386,
+  "decode_seconds": 6.18053919999511,
+  "discovery_seconds": 134.01917510002386,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 3673189,
+      "seconds": 0.4889381999964826,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 3673177,
+      "seconds": 0.5379727999970783,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 2802792,
+      "seconds": 0.7951558000058867,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 2849908,
+      "seconds": 5.385747799999081,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 3100173,
+      "seconds": 6.402655299985781,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 2825123,
+      "seconds": 22.593581299996004,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 3673194,
+      "seconds": 0.4709028000070248,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 3673182,
+      "seconds": 0.49115610000444576,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 2802817,
+      "seconds": 0.7901219000050332,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 2849876,
+      "seconds": 5.573476700024912,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 3095637,
+      "seconds": 6.089272799988976,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 2825212,
+      "seconds": 22.547675700014224,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "composed_roundtrip": {
+    "mode": "fast_subset",
+    "gzip9": true,
+    "zlib9": true,
+    "zstd19": true,
+    "all_ok": true,
+    "n_codecs_checked": 3
+  },
+  "notes": "zip silesia.zip:osdb whole 10085684 | acquisition=whole_file",
+  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
+  "verdict": "raw_gap-7282910 no_deduction header_perturbation-25",
+  "utc_timestamp": "2026-08-29T16:24:24.007306+00:00",
+  "git_commit": "0cc59f8fa6154f625fe9e3ae601ffdd00c377396-dirty",
+  "command": "experiments/natural/run.py --mode whole --only silesia_osdb",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T16:24:24.146976+00:00",
+    "git_commit": "0cc59f8fa6154f625fe9e3ae601ffdd00c377396-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

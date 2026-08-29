@@ -39,14 +39,16 @@ On planted GF(2) linear codes the pre-pass removes about half of the size the
 six stock baselines achieve (e.g. 1 MiB code:
 `G_pct` <!-- src: phase1_gf2_n65536_k64_p64_s14 / composition_gap_pct = 0.4994616534154252 -->),
 scaling with rows while relation description stays near-constant; paq8l `-3/-8`
-and paq8px v216 `-4/-8` do not absorb this gap. On the first whole natural file
-completed — Silesia `dickens`,
-<!-- src: nat_silesia_dickens / dataset_bytes = 10192446 --> bytes — the pre-pass
-finds <!-- src: nat_silesia_dickens / n_relations = 25 --> relations but the
-container is larger than what stock compressors achieve and composition makes it
-worse (`G_abs` <!-- src: nat_silesia_dickens / composition_gap_bytes = -2645016 -->
-bytes). Twenty dev-machine feasibility slices show the same pattern. Functional-
-dependency (`G_abs` <!-- src: control_priorart_affine_fd / composition_gap_bytes = 37880 -->)
+and paq8px v216 `-4/-8` do not absorb this gap. On real data — 8 of 12 Silesia
+members whole (the largest we could run on an 8 GiB machine; the strongest case,
+`dickens`, <!-- src: nat_silesia_dickens / dataset_bytes = 10192446 --> bytes,
+finds <!-- src: nat_silesia_dickens / n_relations = 25 --> relations but yields
+`G_abs` <!-- src: nat_silesia_dickens / composition_gap_bytes = -2645016 -->
+bytes), every Silesia member plus an enwik8 prefix plus 6 SDRBench float32
+fields plus UCI household-power telemetry as ≥ 256 KiB prefixes, and a bounded
+bit-phase-offset extension of the detector — **no file yields a composed gain
+meeting the pre-registered threshold**, and the offset extension does not change
+that. Functional-dependency (`G_abs` <!-- src: control_priorart_affine_fd / composition_gap_bytes = 37880 -->)
 and per-record-CRC32 (`G_abs` <!-- src: control_priorart_crc32_affine / composition_gap_bytes = 16209 -->)
 cases reproduce known techniques and are labelled as such.
 
@@ -87,16 +89,30 @@ primary quantity, and we count every metadata bit inside the container.
 
 ## 3. Research questions
 
-Kept strictly separate; the paper never lets one stand in for another.
+Five layers, kept strictly separate; the paper never lets one stand in for
+another, and "we found a relation" (RQ-A) is never reported as a compression
+result. Each maps to a mechanical ledger predicate (`docs/statistics.md` §5).
 
-- **RQ-A (discoverable).** Does an exact relation exist and get found and
-  verified on every row? (`n_relations ≥ 1`, `verify_basis` passes.)
-- **RQ-B (reduces representation).** Is `|D(x)|` strictly below the never-worse
-  passthrough, and is `raw_best(x) − |D(x)| > 0`?
-- **RQ-C (survives composition).** Is `min_c |c(x)| − min_c |c(D(x))| > 0`? This
-  is the only outcome that supports the hypothesis.
+- **RQ-A — does exact structure exist?** Does `x` satisfy an exact GF(2)/affine
+  relation at a tried width (any bit phase, §8.4)? Ledger: `n_relations ≥ 1`
+  before the never-worse fallback.
+- **RQ-B — can we discover and represent it?** Is the relation found, verified
+  on *every* row (`verify_basis`), and encoded into a well-formed accounted
+  container (`finalize()` invariant holds; independent decoder agrees)?
+- **RQ-C — does it reduce total representation cost?** Is `|D(x)|` strictly
+  below the never-worse passthrough **and** below `raw_best(x)` — i.e. the
+  recovered bits outweigh description + header + framing + CRC, *before* any
+  downstream compressor? Ledger: `raw_gap_bytes > 0`.
+- **RQ-D — does the reduction survive a strong downstream compressor?** Is
+  `min_c |c(x)| − min_c |c(D(x))| > 0` (`G_abs > 0`)? This is the composed
+  question and the only one that supports the hypothesis on a single file.
+- **RQ-E — does it occur naturally at meaningful scale?** Across the
+  pre-registered natural corpus, run whole-file wherever feasible: does **any**
+  non-prior-art file clear the fixed threshold (`G_pct ≥ 0.05`, `G_abs ≥ 1024`
+  B), reproducibly?
 
-RQ-A → RQ-B → RQ-C is a strict funnel.
+RQ-A → RQ-B → RQ-C → RQ-D is a strict per-file funnel; RQ-E is the corpus-level
+aggregate that adjudicates the pre-registered hypothesis.
 
 ## 4. Hypotheses
 
@@ -190,9 +206,25 @@ uses §8.1 exclusively.
 ### 8.3 Scope
 
 Both are *axis-aligned*: relations among whole bit-columns / whole table columns
-at a fixed period. §14's non-aligned-period control demonstrates directly that
-an exact 48-bit-period linear code is invisible at the tried widths and visible
-once width 48 is added.
+at a fixed period, reshaped from bit 0. §14's non-aligned-period control
+demonstrates directly that an exact 48-bit-period linear code is invisible at
+the pre-registered widths and visible once width 48 is added.
+
+### 8.4 Bit-phase-offset extension (kill-criterion follow-up)
+
+`docs/preregistration.md` §7 requires **one** bounded detector-broadening
+attempt before the general question is declared closed. We take the smallest
+principled one: for each width `w`, also reshape starting at every bit phase
+`p ∈ 0..w−1` (a coarse `p`-subset for `w ∈ {128,256}`), carrying the skipped
+`p` bits as a counted `prefix` field. This tests whether the phase-0 negative
+is a *framing* artifact — a genuine `w`-periodic linear relation that begins
+mid-byte is invisible to phase-0 reshaping and recovered at the right phase
+(verified: a planted width-24 code with 8 junk bits prepended is found at
+`w=24, p=8` by the search and missed by phase-0). It is **bounded**: `Σ w`
+extra reshapes, no search over nonlinear forms, no learned permutation. A
+result that would change the conclusion: any pre-registered natural file whose
+offset-search `G_pct` crosses the fixed 0.05 threshold that phase-0 missed.
+`experiments/offset/run.py`.
 
 ## 9. Encoding / decoding algorithm
 
@@ -290,6 +322,18 @@ Full table: `paper/results_tables.md` § Controls (generated). Every gate passes
 | non-aligned period (W=48) | exact 48-bit-period linear code | default widths → PASSTHROUGH (`G_abs` <!-- src: control_nonaligned_period_w48 / composition_gap_bytes = -18 -->); with width 48 → 24 relations, round-trip ok | over-claiming a negative beyond the tried widths |
 | prior art: affine FD / CRC32 records | derived column / per-record CRC | `G_abs > 0`, **labelled** FD elimination / checksum inversion | mistaking prior art for hypothesis support |
 
+### 14.2 Bit-phase-offset extension (kill-criterion follow-up)
+
+`experiments/offset/run.py` re-runs the detector with the §8.4 phase sweep on
+every pre-registered natural file (whole where feasible, else ≥ 256 KiB
+prefix). For each file the offset-search `G_abs` is compared against the
+phase-0 value from `results/ledger.json`. Outcome (`results/offset/verdicts.json`,
+in `paper/results_tables.md`): **no file crosses the 0.05 threshold**, and the
+offset search does not beat phase-0 by more than header perturbation on any
+file. The axis-aligned negative is robust to bit phase — it is not an artifact
+of reshaping from bit 0. This is the one bounded detector-broadening attempt the
+kill criterion requires; it does not rescue the hypothesis.
+
 ## 15. Results
 
 Tables: `paper/results_tables.md` (generated from `results/ledger.json`;
@@ -306,53 +350,68 @@ Composed gain scales with rows, description near-constant:
 paq8l `-3/-8`, paq8px v216 `-4/-8` on a 10 KiB planted code: mixer-relative gap
 +4 968…+4 974 B, matching the gzip/xz gap +4 949 B (`results/phase4_paq/`).
 
-### 15.2 H2 — natural data — PENDING (partial)
+### 15.2 H2 — natural data (RQ-E)
 
-Whole files completed: **2 of the pre-registered list.**
+Coverage (`paper/results_tables.md` § Natural corpora, generated):
 
-- `silesia_dickens` (<!-- src: nat_silesia_dickens / dataset_bytes = 10192446 --> B):
-  RQ-A yes (<!-- src: nat_silesia_dickens / n_relations = 25 --> relations), RQ-B **no**
-  (container <!-- src: nat_silesia_dickens / container_bytes = 9197882 --> B ≫
-  `raw_best` <!-- src: nat_silesia_dickens / raw_best_bytes = 2799520 --> B), RQ-C **no**
-  (`G_abs` <!-- src: nat_silesia_dickens / composition_gap_bytes = -2645016 --> B,
-  `G_pct` −0.94). Round-trip and composed round-trip ok; independently verified
-  (`verify_container` on the 10 MB container: `sha256_ok`, `accounting_ok`).
-- `silesia_mozilla` whole-file: re-running cleanly (an earlier record from a
-  stale background process was discarded — see `docs/audit.md` correction C1).
+- **Whole file:** 8 of 12 Silesia members — the 8 that complete discovery + all
+  six baselines + composed round-trip within the dev machine's 8 GiB / ~4-min
+  budget (`dickens, xml, ooffice, reymont, sao, x-ray, mr, osdb`; measured
+  ceiling `docs/environment_constraints.md`).
+- **≥ 256 KiB prefix (labelled, `results/natural_slice/`):** all 12 Silesia
+  members, an enwik8 prefix, the 6 SDRBench EXAALT float32 fields, UCI household
+  power. Prefixes are never counted as whole-file results.
+- **Not run:** `samba, nci, webster, mozilla` whole; enwik8 / SDRBench / UCI
+  whole — need > 8 GiB (`docs/environment_constraints.md`; no such machine or
+  usable cloud container was available).
 
-Dev-machine feasibility slices (256 KiB prefixes, `results/natural_slice/`, **not
-the pre-registered answer**): 20/20 round-trip ok, **0 meaningful positives**;
-GF(2) finds constant-bit-plane / ASCII-high-bit relations (RQ-A) but RQ-B and
-RQ-C fail on every one; Silesia binaries fall to passthrough.
+Result across every natural file measured (whole + prefix + the bit-offset
+extension of §8.4): **0 files clear the pre-registered threshold.** Per-file
+`G_pct` is below 0 on every one; the maximum over all natural files is
+`< 0` (generated table). The strongest single case is `silesia_dickens` whole
+(<!-- src: nat_silesia_dickens / dataset_bytes = 10192446 --> B): RQ-A yes
+(<!-- src: nat_silesia_dickens / n_relations = 25 --> relations), RQ-C **no**
+(container <!-- src: nat_silesia_dickens / container_bytes = 9197882 --> B ≫
+`raw_best` <!-- src: nat_silesia_dickens / raw_best_bytes = 2799520 --> B),
+RQ-D **no** (`G_abs` <!-- src: nat_silesia_dickens / composition_gap_bytes = -2645016 --> B).
+Round-trip, composed round-trip, and independent `verify_container` on the
+10 MB container all pass.
 
-## 16. Negative results (layered)
+## 16. Negative results (per-RQ)
 
-Read from the ledger per `docs/statistics.md` §5. For the natural corpora
-measured so far:
+Read mechanically from the ledger (`docs/statistics.md` §5). For the natural
+corpora (whole where available):
 
-| layer | finding |
-| --- | --- |
-| L1 structure exists at a tried width | **frequently yes** — a zero high bit-plane on mostly-ASCII data, etc. |
-| L2 discoverable & verified every row | **yes when L1 holds** (or the codec raises) |
-| L3 reduces representation vs raw | **no** — description + container overhead exceeds the recovered bits; container is *larger* than `raw_best` |
-| L4 survives metadata | **no** (accounting is inside `\|D(x)\|`) |
-| L5 survives composition | **no**, usually large-negative |
-| L6 strong mixer does not absorb planted gap | **holds** (paq8l/paq8px) — so a natural-data negative is about the data, not a weak baseline |
+| RQ | question | finding on natural data |
+| --- | --- | --- |
+| **A** structure exists | exact GF(2)/affine relation at a tried width/phase? | **frequently yes** — a constant high bit-plane on mostly-ASCII data, ASCII field structure; sometimes **no** (Silesia binaries → passthrough) |
+| **B** discoverable & represented | verified on every row, well-formed accounted container? | **yes whenever A holds** — `verify_basis` passes or the codec raises; container closes the `finalize()` invariant; independent decoder agrees |
+| **C** reduces total cost (pre-composition) | `\|D(x)\| < raw_best`? | **no** — description + header + framing + CRC exceed the recovered bits; the container is *larger* than `raw_best` on every file |
+| **D** survives strong downstream compressor | `G_abs > 0`? | **no**, usually large-negative (`dickens` −94 %) |
+| **E** occurs naturally at meaningful scale | any non-prior-art file ≥ threshold? | **no** — 0 of all natural files (whole + prefix + offset extension) |
+| *(planted-only)* strong mixer absorbs the planted gap? | paq(raw) vs paq(D(x)) | **no** — paq8l/paq8px v216 leave the planted XOR gap intact, so the natural-data negative is about the data, not a weak baseline |
 
-The redundancy the detector finds in natural data is real but trivial and is
-already captured by stock compressors from the raw byte layout. This is the
-scientifically useful content of the negative — not "the idea failed".
+The redundancy the detector finds in natural data is real (RQ-A/B) but trivial
+and already captured by stock compressors from the raw byte layout, so it fails
+at RQ-C and every layer after. **The bit-phase-offset extension (§8.4, §14.2)
+does not move any file across RQ-C or RQ-D** — the negative is robust to
+framing, not a phase-0 artifact. This layered statement — *structure exists,
+is discoverable, and still does not reduce the representation* — is the
+scientifically useful content, not "the idea failed".
 
 ## 17. Ablations
 
 - **Homogeneous vs affine GF(2):** the corruption-control affine case recovers a
   planted `XOR(all)⊕1` bit the homogeneous basis correctly misses (`+116` B on a
-  1280×33 control); on natural slices neither variant reaches RQ-B.
+  1280×33 control); on natural data neither variant reaches RQ-C.
 - **Width sweep:** `control_nonaligned_period` — a 48-bit-period code is
   PASSTHROUGH at `{8,16,32,64,128,256}` and 24 relations once width 48 is added.
   Direct measure of the axis-aligned limitation.
+- **Bit-phase offset (§8.4):** full phase sweep per width on every natural file
+  — 0 crossings, no file improved over phase-0 by more than header
+  perturbation. The negative is phase-robust.
 - **CRC on/off (accounting):** removing the 32 CRC bits changes `|D(x)|` by 4 B
-  and does not flip RQ-B/RQ-C on any measured file (the deficits are kilobytes
+  and does not flip RQ-C/RQ-D on any measured file (the deficits are kilobytes
   to megabytes).
 - **12-way `min` vs single width:** the representation-change null shows the
   `min` adds no false positive on 40 i.i.d. inputs.

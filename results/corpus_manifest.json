@@ -111,6 +111,13 @@
     "category": "silesia",
     "acquisition_mode": "slice"
   },
+  "silesia_osdb": {
+    "sha256": "60f027179302ca3ad87c58ac90b6be72ec23588aaa7a3b7fe8ecc0f11def3fa3",
+    "bytes": 10085684,
+    "source": "zip silesia.zip:osdb whole 10085684",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_osdb@slice262144": {
     "sha256": "dfafdca22a0cc7b551554126b88105a632275c0251164b07ca47633e97d91a11",
     "bytes": 262144,
