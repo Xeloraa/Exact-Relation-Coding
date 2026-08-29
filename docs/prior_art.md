@@ -10,7 +10,7 @@ Last audit pass: 2026-08-29.
 
 That idea is occupied (database patents, Corra, and a 2026 derived-column pre-pass). This repository still has a distinct *question*: whether automatically discovered **exact** relations, including GF(2) linear structure on general byte strings, produce a **composed** deduction gap against strong general-purpose compressors after full description cost — and whether that gap exists outside format-aware and FD-shaped data.
 
-Until real-corpus composition results exist, novelty of the *research question* is possible; novelty of FD elimination is not.
+Real-corpus composition results exist and are negative for GF(2) on general bytes (this repo, enwik8, stdlib, all twelve Silesia prefixes, PNG/ZIP, structured JSON/logs). Novelty of the *research question* is still possible for other exact-relation families; novelty of FD elimination is not.
 
 ## Close work
 
