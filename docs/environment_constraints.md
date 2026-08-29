@@ -26,11 +26,21 @@ baseline's own buffers. `xz -9` alone requests ~700 MiB. Measured earlier in the
 project: `xz -9` raised `MemoryError` on a **1 MiB** enwik8 prefix on this
 machine after GF(2) discovery.
 
-Therefore, on this machine:
+Therefore, on this machine (measured, not estimated):
 
-- Feasible now: inputs up to ~256 KiB (feasibility slices, controls, synthetic).
-- Not feasible now: whole Silesia members (5–51 MiB), enwik8 whole, SDRBench
-  whole fields (10–100 MiB), UCI household power whole (~127 MiB).
+- Feasible: inputs up to ~256 KiB (feasibility slices, controls, synthetic);
+  and, foreground with a long timeout, **one** whole Silesia member up to
+  ~10 MiB — `silesia_dickens` (10 192 446 B) completes discovery + all six
+  baselines + composed round-trip in a few minutes and is independently
+  verified.
+- **Not feasible:** the 12-width `encode_bytes_best_gf2` sweep on a 5.3 MiB file
+  (`silesia_xml`) did not finish in 120 s on 4 cores; `silesia_mozilla`
+  (51 MiB) did not complete a clean whole-file run (OOM / time). So whole
+  Silesia members above ~10 MiB, `enwik8` whole, whole SDRBench fields
+  (11.5 MiB each), and UCI household power whole (~127 MiB) are deferred to the
+  ≥ 32 GiB machine. Background long-runs on this OS proved unreliable to kill
+  (a zombie corrupted one record — `docs/audit.md` C1); whole-file runs are now
+  foreground only.
 
 The whole-file sweep is **deferred to a higher-memory machine** (target: ≥ 32
 GiB RAM) and is driven by `scripts/reproduce.py` with no code changes. Every

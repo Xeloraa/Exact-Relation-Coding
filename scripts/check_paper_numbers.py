@@ -28,15 +28,27 @@ LEDGER = ROOT / "results" / "ledger.json"
 TABLES = ROOT / "paper" / "results_tables.md"
 PAPER = ROOT / "paper" / "deductive-coding.md"
 
-MARKER = re.compile(r"<!--\s*src:\s*([A-Za-z0-9_./-]+)\s*/\s*([A-Za-z0-9_]+)\s*=\s*(.+?)\s*-->")
+MARKER = re.compile(r"<!--\s*src:\s*([A-Za-z0-9_][A-Za-z0-9_./-]*)\s*/\s*([A-Za-z0-9_]+)\s*=\s*(.+?)\s*-->")
+# the literal token 'id/field' is used in prose to describe the marker syntax; skip it
+_PLACEHOLDER_IDS = {"id", "<id>", "experiment_id"}
 
 
-def _norm(v) -> str:
-    if isinstance(v, bool):
-        return str(v)
-    if isinstance(v, float):
-        return repr(round(v, 6))
-    return str(v)
+def _match(claimed: str, actual) -> bool:
+    claimed = claimed.strip()
+    if isinstance(actual, bool):
+        return claimed == str(actual)
+    if isinstance(actual, (int,)) and not isinstance(actual, bool):
+        try:
+            return int(claimed) == actual
+        except ValueError:
+            return False
+    if isinstance(actual, float):
+        try:
+            a = float(claimed)
+        except ValueError:
+            return False
+        return abs(a - actual) <= 1e-6 * max(1.0, abs(actual))
+    return claimed == str(actual)
 
 
 def check_tables_fresh() -> list[str]:
@@ -63,8 +75,10 @@ def check_markers() -> list[str]:
     problems = []
     n = 0
     for m in MARKER.finditer(PAPER.read_text(encoding="utf-8")):
-        n += 1
         exp_id, field, claimed = m.group(1), m.group(2), m.group(3)
+        if exp_id in _PLACEHOLDER_IDS:
+            continue
+        n += 1
         row = ledger.get(exp_id)
         if row is None:
             problems.append(f"marker [{exp_id}/{field}]: experiment_id not in ledger")
@@ -73,9 +87,9 @@ def check_markers() -> list[str]:
             problems.append(f"marker [{exp_id}/{field}]: field not in ledger row "
                             f"(have: {sorted(row)[:12]}...)")
             continue
-        if _norm(row[field]) != claimed.strip():
+        if not _match(claimed, row[field]):
             problems.append(f"marker [{exp_id}/{field}]: paper says {claimed!r} "
-                            f"but ledger has {_norm(row[field])!r}")
+                            f"but ledger has {row[field]!r}")
     print(f"paper markers checked: {n}")
     return problems
 

@@ -24,6 +24,12 @@ Nothing above changes a size, a baseline, a preset, the accounting rule, or the
 pre-registered threshold. A1–A2 add *stricter* validity gates; they can only
 turn a claimed positive into "not reportable", never the reverse.
 
+## Corrections to historical artifacts
+
+| id | what happened | correction |
+| --- | --- | --- |
+| C1 | An aborted `--mode whole` background run was not reliably killed on this OS; a zombie process finished `silesia_mozilla` (51 MB) and wrote `results/natural/nat_silesia_mozilla.json` using a **mix of code versions** (record stamped at the then-current commit `6cdedf5` but produced by pre-A1 code, so `composed_roundtrip` was empty). It was swept into commit `6cdedf5` by `git add -A`. | The record was **deleted** (commit removing it references this line). A clean re-run of `silesia_mozilla --mode whole` did not complete on the dev machine (OOM / time); mozilla and every Silesia member above ~10 MB are recorded as **whole-file infeasible on the dev machine** (`docs/environment_constraints.md` §2) and deferred to the ≥ 32 GiB machine. The only whole natural file with a clean, current, independently verified record is `silesia_dickens` (10.19 MB). Background long-runs are now avoided; whole-file runs are foreground with an explicit timeout. |
+
 ## Component-by-component
 
 ### Codec implementation (`src/deductive/codecs/gf2_codec.py`, `tabular_codec.py`, `passthrough.py`)
