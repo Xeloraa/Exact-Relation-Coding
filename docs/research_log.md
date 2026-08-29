@@ -117,3 +117,71 @@ Every JSON file includes payload, relation description, header, framing, CRC, le
 
 ### Theory discipline
 No claim that autoregressive models cannot represent parity. See `docs/theory.md`.
+
+## 2026-08-29 — Campaign hardening for publication
+
+Goal: make the evidence strong enough that a skeptical compression reviewer
+cannot dismiss the work on experimental weakness — without inflating novelty or
+manufacturing a positive.
+
+### Locked before any new corpus run
+- `docs/preregistration.md` (git commit `93f7157`): meaningful positive =
+  `G_pct >= 0.05` **and** `G_abs >= 1024` B **and** round-trip **and** real
+  deduction **and** non-prior-art corpus. Hypothesis outcomes POSITIVE /
+  NEGATIVE / INCONCLUSIVE fixed. Kill criterion = NEGATIVE on the full list
+  **and** one broader-detector attempt fails **and** the strongest run mixer
+  does not absorb the planted gap.
+- `docs/metric.md`: `G_abs = raw_best - composed_best`, over the full
+  post-downstream representation, `B = {gzip9,zlib9,bz2_9,xz9,zstd19,brotli11}`.
+- `docs/protocol.md`: RQ-A (discoverable) / RQ-B (reduces representation) /
+  RQ-C (survives composition) kept separate; corpora, baselines, excluded log.
+- `docs/environment_constraints.md`: dev machine 8 GiB / ~0.5 GiB free / no C
+  toolchain. cmix needs ~20–32 GiB (no memory-level flag) → not run. nncp needs
+  CUDA → not run. Whole-file corpora deferred to a >= 32 GiB machine.
+
+### Codec vectorisation (commit `1961135`, pure enablement)
+numpy packbits/unpackbits bulk bit I/O + GF(2) matmul in `reconstruct`.
+1 MiB planted round-trip 12.4 s → 2.1 s. **Byte-identical** to the pre-refactor
+codec, pinned by `tests/data/codec_reference.json` +
+`tests/test_codec_equivalence.py` (reference captured via `git stash`). Full
+suite 86 passed.
+
+### Controls (commit `261ed14`, `results/controls/`) — ALL GATES PASS
+positive planted GF(2) ×3 `G_pct` 0.48–0.50; null (iid/shuffled/1-flip)
+passthrough `|G_abs| <= 19`; corruption sweep `phi 0→5e-2` `G_abs`
+16213→13238→1402→−18→−18 (monotone, never < −64); prior-art affine FD +37880,
+CRC32 +16209 (labelled, not counted). New `synthetic.corrupted_gf2_code`.
+
+### Corpora (commits `730df5d`, `133bb60`)
+- `corpora.py`: resumable integrity-checked SDRBench loader (primary bundle
+  `exaalt-2869440`, six 11.48 MB little-endian f32 fields); UCI household-power
+  loader (text + parsed float64 columns); `load_silesia_member_whole`;
+  `pin_or_verify` → `results/corpus_manifest.json`, aborts on hash mismatch.
+- UCI "documented relation" residual is strictly positive (mean ≈ 17): it is
+  `total = metered + unmetered`, an approximate real-data structure — doubles as
+  the corrupted-structure case.
+- Dev-machine feasibility slices (`results/natural_slice/`, 256 KiB prefixes,
+  20 items): **0 meaningful positives**, 20/20 round-trip ok. GF(2) finds
+  constant-bit-plane relations (RQ-A) on text and f32 fields; container never
+  beats raw, composition worsens it (RQ-B, RQ-C false). Silesia binaries →
+  passthrough. Consistent with earlier Phase 4. **Not the pre-registered
+  answer.**
+
+### Reproduction (commit `8a0b43b`)
+`scripts/reproduce.py --mode {slice,whole}` → pytest+equivalence → downloads →
+controls → natural → phases → `results/REPRODUCE.md`.
+
+### Runbook — finish the campaign on a >= 32 GiB machine
+```
+git clone <repo> && cd deductive-coding && pip install -e ".[dev]"
+python scripts/reproduce.py --mode whole            # whole-file sweep
+# optional, if a cmix build + RAM are available:
+#   build cmix, put the binary on PATH, add a probe mirroring
+#   experiments/phase4/paq_probe.py, run on the 10 KiB planted seed 902.
+```
+Then fill `paper/deductive-coding.md` §8.3, §9, §12 from `results/natural/` and
+apply `docs/preregistration.md` §4 verbatim → one of A / B / C / D.
+
+### Standing verdict
+INCONCLUSIVE by the pre-registration. Infrastructure + controls + pre-registration
+complete; whole-file natural-corpus sweep and cmix not yet run.

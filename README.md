@@ -12,9 +12,38 @@ Repository: https://github.com/Xeloraa/deductive-coding
 
 ## Status
 
-Phase 0–4 have been run. Planted GF(2) shows a large **composed** deduction gap against gzip/zstd/xz/brotli, paq8l `-3`/`-8`, and paq8px v216 `-4`/`-8`. Packing independent bits before xz does not add a further win. Null tests do not invent savings. This repo's own source/docs, enwik8, local stdlib `.py`, all twelve Silesia prefixes, PNG/ZIP, and structured JSON/log text do **not** show a composed gap. Affine derived-column wins and CRC32-record wins are recorded and labeled as established techniques (FD elimination; checksum inversion), not as novelty.
+**Publication-quality campaign in progress.** The methodology is now locked and
+hardware-independent work is done; the whole-file / full-baseline sweep is
+deferred to a higher-memory machine.
 
-See `docs/results.md`. The project is not killed; it is also not a real-corpus success.
+- `docs/preregistration.md` — **git-locked** meaningful-positive threshold
+  (composed gain ≥ 5% of the strongest baseline **and** ≥ 1024 B, round-trip
+  exact, real deduction, non-prior-art corpus) and permanent kill criterion,
+  fixed before the natural-corpus runs.
+- `docs/metric.md` — formal composed-gain metric over the full post-downstream
+  representation. `docs/protocol.md` — protocol, the RQ-A/B/C claim separation,
+  corpora, baselines. `docs/environment_constraints.md` — why cmix/nncp and
+  whole-file corpora need a bigger machine.
+- `experiments/controls/run.py` — positive / null / corruption-sweep / labelled
+  prior-art battery, all gates **pass** (`results/controls/`).
+- `experiments/natural/run.py` — pre-registered corpus list (12 whole Silesia +
+  enwik8 + 6 SDRBench EXAALT f32 fields + UCI household power). Dev-machine
+  **feasibility slices** only so far (`results/natural_slice/`, 256 KiB
+  prefixes): 20/20 round-trip ok, 0 meaningful positives. **Not the answer** —
+  `--mode whole` on a ≥ 32 GiB machine is required (`docs/preregistration.md` §4).
+- `scripts/reproduce.py` — one command; writes `results/REPRODUCE.md`.
+- `paper/deductive-coding.md` — 12-section skeleton; Results/Analysis/verdict
+  `PENDING` the whole-file sweep.
+
+Prior established results unchanged: planted GF(2) shows a large **composed**
+deduction gap against gzip/zstd/xz/brotli, paq8l `-3`/`-8`, and paq8px v216
+`-4`/`-8`, scaling with rows. Null tests invent no savings. Silesia *prefixes*,
+enwik8, stdlib, PNG/ZIP, structured JSON/log text show **no** composed gap.
+Affine derived-column and CRC32-record wins are labelled established techniques
+(FD elimination; checksum inversion), not novelty. See `docs/results.md`.
+
+Current verdict: **INCONCLUSIVE by the pre-registration** until the whole-file
+sweep exists. The project is not killed and is not a real-corpus success.
 
 Derived-column elimination in databases is **established prior art**. This project does not claim that idea. See `docs/prior_art.md`.
 
