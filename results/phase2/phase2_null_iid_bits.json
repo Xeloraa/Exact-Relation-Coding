@@ -1,0 +1,140 @@
+{
+  "experiment_id": "phase2_null_iid_bits",
+  "phase": "phase2",
+  "dataset_id": "noise_bits_n4096_c128_s202",
+  "dataset_sha256": "907f057dda9208cee3089a075213f5497206d99fafae8e299e6c7eae3667bf78",
+  "dataset_bytes": 65536,
+  "seed": 202,
+  "config": {
+    "codec": "gf2_best"
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 524288,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 524288,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 524432,
+    "total_bytes": 65554
+  },
+  "total_encoded_bytes": 65554,
+  "roundtrip_ok": true,
+  "encode_seconds": 17.324128999985987,
+  "decode_seconds": 0.2233299000072293,
+  "discovery_seconds": 17.324128999985987,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 65574,
+      "seconds": 0.018973900005221367,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 65562,
+      "seconds": 0.05128889999468811,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 66182,
+      "seconds": 0.03520189999835566,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 65600,
+      "seconds": 0.23867829999653623,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 65546,
+      "seconds": 0.21384390001185238,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 65540,
+      "seconds": 0.32935519999591634,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 65592,
+      "seconds": 0.05356869997922331,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 65580,
+      "seconds": 0.0037644999974872917,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 66188,
+      "seconds": 0.04158020002068952,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 65620,
+      "seconds": 0.3458719000045676,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 65564,
+      "seconds": 0.42910290000145324,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 65559,
+      "seconds": 0.4608533999999054,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "passthrough",
+  "hypothesis": "IID bits: best encoding is passthrough or no smaller than raw+header.",
+  "verdict": "raw_gap-14 comp_gap-19",
+  "utc_timestamp": "2026-08-29T08:50:51.232351+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase2/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:50:51.597988+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

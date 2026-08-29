@@ -1,0 +1,141 @@
+{
+  "experiment_id": "phase2_fd_product_n2048_s404",
+  "phase": "phase2",
+  "dataset_id": "fd_product_n2048_s404",
+  "dataset_sha256": "ccb9166dc08c2e9c2a5f98cb2490f63adbfb34322af1275aea936d41f85153ea",
+  "dataset_bytes": 49152,
+  "seed": 404,
+  "config": {
+    "codec": "tabular_affine",
+    "fn": "product"
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 393216,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 393216,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 393360,
+    "total_bytes": 49170
+  },
+  "total_encoded_bytes": 49170,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.41861449999851175,
+  "decode_seconds": 0.13909429998602718,
+  "discovery_seconds": 0.41861449999851175,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 21944,
+      "seconds": 0.5731369999994058,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 21932,
+      "seconds": 0.541954899992561,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 19588,
+      "seconds": 0.022556499985512346,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 18548,
+      "seconds": 0.49459630000637844,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 20651,
+      "seconds": 0.29494350001914427,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 19683,
+      "seconds": 0.6501989999960642,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 21958,
+      "seconds": 0.16971680001006462,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 21946,
+      "seconds": 0.17596100000082515,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 19621,
+      "seconds": 0.008328700001584366,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 18380,
+      "seconds": 0.18995999998878688,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 20658,
+      "seconds": 0.1376968999975361,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 19686,
+      "seconds": 0.4665689999819733,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "passthrough (affine not smaller after overhead)",
+  "hypothesis": "C=A*B+1 is not affine; affine codec must not claim a relation.",
+  "verdict": "raw_gap-30622 comp_gap+168",
+  "utc_timestamp": "2026-08-29T08:51:00.719972+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase2/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:51:01.496250+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

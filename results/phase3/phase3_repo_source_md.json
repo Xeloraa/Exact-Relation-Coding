@@ -1,0 +1,147 @@
+{
+  "experiment_id": "phase3_repo_source_md",
+  "phase": "phase3",
+  "dataset_id": "repo_src_tests_docs_experiments",
+  "dataset_sha256": "6d75c5a7a911d13260cbd6ef22e3a693cde9a16fd30f29d21bf2b6cacbb106b0",
+  "dataset_bytes": 116597,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128
+    ]
+  },
+  "codec_kind": "GF2",
+  "n_relations": 2,
+  "n_independent": 126,
+  "recovered_bits": 14574,
+  "accounting": {
+    "payload_bits": 918162,
+    "relation_description_bits": 380,
+    "header_bits": 208,
+    "framing_bits": 2,
+    "crc_bits": 32,
+    "leftover_bits": 72,
+    "other_sideinfo_bits": 0,
+    "total_bits": 918856,
+    "total_bytes": 114857
+  },
+  "total_encoded_bytes": 114857,
+  "roundtrip_ok": true,
+  "encode_seconds": 23.900667799985968,
+  "decode_seconds": 2.2576811999897473,
+  "discovery_seconds": 23.900667799985968,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 30435,
+      "seconds": 0.02942299999995157,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 30423,
+      "seconds": 0.04361420002533123,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 26959,
+      "seconds": 0.033301399991614744,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 27444,
+      "seconds": 0.31679630000144243,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 27983,
+      "seconds": 0.340010899992194,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 26135,
+      "seconds": 0.6814497000013944,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 79161,
+      "seconds": 0.05085559998406097,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 79149,
+      "seconds": 0.0263754999905359,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 69965,
+      "seconds": 0.04570919999969192,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 71236,
+      "seconds": 0.26235299999825656,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 73064,
+      "seconds": 0.2944853999943007,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 71563,
+      "seconds": 1.348667000012938,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "in-repo text; not a public corpus",
+  "hypothesis": "Source/docs in this repo: if GF(2) deduction has a composed gap on ordinary text, that is evidence beyond planted codes. A loss is evidence that strong compressors already capture this data.",
+  "verdict": "raw_gap-88722 comp_gap-43830",
+  "utc_timestamp": "2026-08-29T08:55:43.592590+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase3/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:55:44.594180+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "experiment_id": "phase1_fd_affine_n8192_s21",
+  "phase": "phase1",
+  "dataset_id": "fd_affine_n8192_s21",
+  "dataset_sha256": "4f6c208becf02ec8d4ea5c77a4c922362a5ed886b84b550d547b400518e30ec7",
+  "dataset_bytes": 196608,
+  "seed": 21,
+  "config": {
+    "codec": "tabular_affine",
+    "fn": "affine",
+    "n_rows": 8192
+  },
+  "codec_kind": "TABULAR_AFFINE",
+  "n_relations": 1,
+  "n_independent": 2,
+  "recovered_bits": 524288,
+  "accounting": {
+    "payload_bits": 1048576,
+    "relation_description_bits": 105,
+    "header_bits": 208,
+    "framing_bits": 7,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1048928,
+    "total_bytes": 131116
+  },
+  "total_encoded_bytes": 131116,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.5142133999906946,
+  "decode_seconds": 0.43652219997602515,
+  "discovery_seconds": 0.5142133999906946,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 125378,
+      "seconds": 1.3503870000131428,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 125366,
+      "seconds": 1.6370678000093903,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 119570,
+      "seconds": 0.19002340000588447,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 108208,
+      "seconds": 0.36822010000469163,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 110898,
+      "seconds": 0.9677375000028405,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 120659,
+      "seconds": 2.726931599987438,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 81991,
+      "seconds": 0.4486869999964256,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 81979,
+      "seconds": 0.4656773000024259,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 76187,
+      "seconds": 0.05532779998611659,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 70328,
+      "seconds": 0.28881080000428483,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 71283,
+      "seconds": 0.36271270000725053,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 77849,
+      "seconds": 1.044471600005636,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "tabular_affine",
+  "hypothesis": "Blind affine discovery finds C=3A+5B+7 without being told.",
+  "verdict": "raw_gap-22908 comp_gap+37880",
+  "utc_timestamp": "2026-08-29T08:47:38.435403+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase1/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:47:38.626810+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "experiment_id": "phase1_intlin_n8192_x1_s31",
+  "phase": "phase1",
+  "dataset_id": "intlin_n8192_x1_s31",
+  "dataset_sha256": "457e7c4be845e80bb93ba18e72c6eeae01555fcf1b5f624eb763da9aeb737c8e",
+  "dataset_bytes": 262144,
+  "seed": 31,
+  "config": {
+    "codec": "tabular_affine",
+    "n_rows": 8192,
+    "n_cols": 4
+  },
+  "codec_kind": "TABULAR_AFFINE",
+  "n_relations": 1,
+  "n_independent": 3,
+  "recovered_bits": 524288,
+  "accounting": {
+    "payload_bits": 1572864,
+    "relation_description_bits": 121,
+    "header_bits": 208,
+    "framing_bits": 7,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1573232,
+    "total_bytes": 196654
+  },
+  "total_encoded_bytes": 196654,
+  "roundtrip_ok": true,
+  "encode_seconds": 1.2593985999992583,
+  "decode_seconds": 1.4480554000183474,
+  "discovery_seconds": 1.2593985999992583,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 164485,
+      "seconds": 2.1351167999964673,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 164473,
+      "seconds": 1.8738475999853108,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 156352,
+      "seconds": 0.13688249999540858,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 142032,
+      "seconds": 0.5323959999950603,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 152437,
+      "seconds": 0.4904779000207782,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 158498,
+      "seconds": 2.799998200003756,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 122875,
+      "seconds": 2.1722138000186533,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 122863,
+      "seconds": 0.5324104000173975,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 113661,
+      "seconds": 0.06410849999519996,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 105352,
+      "seconds": 0.48177519999444485,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 112735,
+      "seconds": 0.45482889999402687,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 116763,
+      "seconds": 2.2704302000056487,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "tabular_affine",
+  "hypothesis": "z=2x+3y+5 is discovered; extra independent column is kept.",
+  "verdict": "raw_gap-54622 comp_gap+36680",
+  "utc_timestamp": "2026-08-29T08:48:03.090161+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase1/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:48:03.284128+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

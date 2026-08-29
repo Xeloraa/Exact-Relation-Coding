@@ -1,0 +1,145 @@
+{
+  "experiment_id": "phase1_gf2_n16384_k32_p32_s13",
+  "phase": "phase1",
+  "dataset_id": "gf2_n16384_k32_p32_s13",
+  "dataset_sha256": "d57a867e3b23c41acac142802c60eb6c8a20782182a94e4c8e0ed1f9d2b40415",
+  "dataset_bytes": 131072,
+  "seed": 13,
+  "config": {
+    "n_rows": 16384,
+    "n_info": 32,
+    "n_parity": 32,
+    "seed": 13,
+    "codec": "gf2",
+    "n_cols": 64
+  },
+  "codec_kind": "GF2",
+  "n_relations": 32,
+  "n_independent": 32,
+  "recovered_bits": 524288,
+  "accounting": {
+    "payload_bits": 524288,
+    "relation_description_bits": 1088,
+    "header_bits": 208,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 525648,
+    "total_bytes": 65706
+  },
+  "total_encoded_bytes": 65706,
+  "roundtrip_ok": true,
+  "encode_seconds": 3.9633665999863297,
+  "decode_seconds": 1.7482087999815121,
+  "discovery_seconds": 3.9633665999863297,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 131130,
+      "seconds": 0.024832900002365932,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 131118,
+      "seconds": 0.03530369998770766,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 132046,
+      "seconds": 0.09446190000744537,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 131140,
+      "seconds": 0.23903169998084195,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 131084,
+      "seconds": 0.28869200000190176,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 131077,
+      "seconds": 0.21725059999153018,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 65749,
+      "seconds": 0.015286399982869625,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 65737,
+      "seconds": 0.006881899986183271,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 66350,
+      "seconds": 0.03979720000643283,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 65772,
+      "seconds": 0.05441379998228513,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 65716,
+      "seconds": 0.06178439999348484,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 65711,
+      "seconds": 0.18259630000102334,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "gf2",
+  "hypothesis": "Exact GF(2) parity bits are deductively recoverable. After relation-description cost, total size should beat gzip/zstd/xz on incompressible information bits.",
+  "verdict": "raw_gap+65371 comp_gap+65366",
+  "utc_timestamp": "2026-08-29T08:46:25.646635+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase1/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:46:26.138410+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

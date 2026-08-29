@@ -1,0 +1,141 @@
+{
+  "experiment_id": "phase2_corpus_builtin_csv",
+  "phase": "phase2",
+  "dataset_id": "builtin_csv",
+  "dataset_sha256": "67a1decda2eb5e719c3fbcfb5f9e26d4956a8e4657eda91e80bd4f57aede58df",
+  "dataset_bytes": 34,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "category": "csv"
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 272,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 272,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 416,
+    "total_bytes": 52
+  },
+  "total_encoded_bytes": 52,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.0252154000045266,
+  "decode_seconds": 0.00020280000171624124,
+  "discovery_seconds": 0.0252154000045266,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 54,
+      "seconds": 0.00026279999292455614,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 42,
+      "seconds": 2.750000567175448e-05,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 64,
+      "seconds": 0.00013180001405999064,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 92,
+      "seconds": 0.11868919999687932,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 43,
+      "seconds": 7.829998503439128e-05,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 37,
+      "seconds": 0.0021665999956894666,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 67,
+      "seconds": 0.014831800013780594,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 55,
+      "seconds": 4.129999433644116e-05,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 88,
+      "seconds": 0.00015440001152455807,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 108,
+      "seconds": 0.08094690000871196,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 61,
+      "seconds": 0.0001109000004362315,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 56,
+      "seconds": 0.003999300010036677,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "tiny CSV with c=a+b",
+  "hypothesis": "Tiny fixtures: record sizes; do not claim a real-corpus deduction gap.",
+  "verdict": "raw_gap-15 comp_gap-18",
+  "utc_timestamp": "2026-08-29T08:51:05.780785+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase2/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:51:05.998614+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

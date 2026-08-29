@@ -1,0 +1,141 @@
+{
+  "experiment_id": "phase0_gf2_tiny",
+  "phase": "phase0",
+  "dataset_id": "gf2_n128_k8_p8_s1",
+  "dataset_sha256": "60f2f2c650c65a59e3c2a0d364723a6842d010a1ec5aa028e561e3cd38becffd",
+  "dataset_bytes": 256,
+  "seed": 1,
+  "config": {
+    "codec": "gf2",
+    "n_cols": 16
+  },
+  "codec_kind": "GF2",
+  "n_relations": 8,
+  "n_independent": 8,
+  "recovered_bits": 1024,
+  "accounting": {
+    "payload_bits": 1024,
+    "relation_description_bits": 80,
+    "header_bits": 208,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1376,
+    "total_bytes": 172
+  },
+  "total_encoded_bytes": 172,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.0036019999824929982,
+  "decode_seconds": 0.0015417999820783734,
+  "discovery_seconds": 0.0036019999824929982,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 279,
+      "seconds": 0.00019389999215491116,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 267,
+      "seconds": 4.5199994929134846e-05,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 400,
+      "seconds": 0.00029990001348778605,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 316,
+      "seconds": 0.08744919998571277,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 266,
+      "seconds": 7.580002420581877e-05,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 260,
+      "seconds": 0.003807000000961125,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 189,
+      "seconds": 0.00025400001322850585,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 177,
+      "seconds": 3.589998232200742e-05,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 239,
+      "seconds": 0.0002803000097628683,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 232,
+      "seconds": 0.2962734999891836,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 178,
+      "seconds": 0.001295800000661984,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 176,
+      "seconds": 0.008952600008342415,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "gf2",
+  "hypothesis": "Tiny planted GF(2) code round-trips and discovery finds rank n_info.",
+  "verdict": "raw_gap+88 comp_gap+84",
+  "utc_timestamp": "2026-08-29T08:45:37.211617+00:00",
+  "git_commit": "UNCOMMITTED",
+  "command": "experiments/phase0/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T08:45:39.062072+00:00",
+    "git_commit": "UNCOMMITTED",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

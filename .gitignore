@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+*.so
+
+# Experiment working data (never commit large corpora)
+data/large/
+data/downloads/
+results/**/*.bin
+results/**/*.raw
+results/**/*.tmp
+results/**/*.zst
+results/**/*.xz
+results/**/*.gz
+results/**/*.bz2
+results/**/*.br
+!results/**/*.json
+!results/**/*.csv
+!results/**/*.md
+!results/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Coverage / caches
+.coverage
+htmlcov/
+.cache/
