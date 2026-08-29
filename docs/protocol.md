@@ -30,10 +30,19 @@ raw gain; B does not imply C; A implies neither.
    relations `z = Σ aᵢ xᵢ + b` solved on a few rows and verified with exact
    Python integers on every row; coefficients as zigzag varints, counted.
 
-Both are **axis-aligned**: relations are among whole bit-columns / whole table
-columns at a fixed period. The pre-registered kill criterion requires one
-attempt at a broader family before the general question is declared closed;
-that attempt is out of scope for this campaign and named as a follow-up.
+Both are **axis-aligned** and reshaped from bit 0: relations are among whole
+bit-columns / whole table columns at a fixed period and phase.
+
+3. **Bit-phase-offset extension** (`experiments/offset/run.py`; the kill
+   criterion's one bounded detector-broadening attempt) — GF(2) fixed-width, but
+   for each width also reshaping at every starting bit phase `p ∈ 0..w-1`
+   (coarse `p` for `w ∈ {128,256}`), carrying the skipped `p` bits as a counted
+   `prefix` field. Bounded (`Σ w` extra reshapes), no nonlinear search, no
+   learned permutation. `docs/kill_criterion_status.md` tracks the outcome.
+
+A *materially* broader family (non-axis-aligned linear via a searched/learned
+column permutation; low-degree polynomial relations) remains the named
+single follow-up, out of scope for this paper.
 
 ## 3. Baselines `B`
 
