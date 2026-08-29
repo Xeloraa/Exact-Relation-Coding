@@ -257,6 +257,40 @@ def verify_container(container: bytes, expected_sha256: str | None = None) -> di
     }
 
 
+# stdlib only -- not "our" code; the point is that the deductive DECODER here
+# shares nothing with src/deductive/.
+_COMPOSED = {
+    "gzip": (lambda d: __import__("gzip").compress(d, 9), lambda d: __import__("gzip").decompress(d)),
+    "bz2": (lambda d: __import__("bz2").compress(d, 9), lambda d: __import__("bz2").decompress(d)),
+    "lzma": (lambda d: __import__("lzma").compress(d), lambda d: __import__("lzma").decompress(d)),
+    "zlib": (lambda d: __import__("zlib").compress(d, 9), lambda d: __import__("zlib").decompress(d)),
+}
+
+
+def verify_composed(original: bytes, container: bytes, expected_sha256: str | None = None) -> dict:
+    """Independent end-to-end check of the full chain:
+
+        raw -> (main encoder produced `container`) -> compress -> decompress
+            -> INDEPENDENT decode -> raw
+
+    for each stdlib codec. The decode step is `verify_container` (shares nothing
+    with src/deductive). Returns {codec: True/"error: ..."} plus all_ok.
+    """
+    exp = expected_sha256 or hashlib.sha256(original).hexdigest()
+    out: dict = {}
+    oks = []
+    for name, (comp, decomp) in _COMPOSED.items():
+        try:
+            back = decomp(comp(container))
+            r = verify_container(back, exp)
+            out[name] = bool(r["ok"] and back == container)
+            oks.append(out[name])
+        except Exception as exc:  # noqa: BLE001
+            out[name] = f"error: {type(exc).__name__}: {exc}"
+    out["all_ok"] = bool(oks) and all(oks)
+    return out
+
+
 def _self_test() -> int:
     sys.path.insert(0, str(ROOT / "src"))
     from deductive import MAGIC as M, FORMAT_VERSION as V  # noqa: PLC0415
@@ -285,7 +319,13 @@ def _self_test() -> int:
     from deductive.codecs.gf2_codec import encode_bytes_gf2_offset  # noqa: PLC0415
     ds = gf2_linear_code(n_rows=700, n_info=16, n_parity=16, seed=13)
     for off in (1, 5, 13):
-        check(f"gf2_offset{off}", encode_bytes_gf2_offset(ds.data, 32, off).data, ds.data)
+        c_ = encode_bytes_gf2_offset(ds.data, 32, off).data
+        check(f"gf2_offset{off}", c_, ds.data)
+        comp = verify_composed(ds.data, c_)
+        print(f"  {'gf2_offset'+str(off)+' composed':34s} "
+              f"{'ok' if comp['all_ok'] else 'FAIL '+str(comp)}")
+        if not comp["all_ok"]:
+            fails.append(f"gf2_offset{off}_composed")
     nb = mixed_noise_bits(n_rows=256, n_cols=32, seed=1)
     check("passthrough", encode_passthrough(nb.data).data, nb.data)
     ft = exact_functional_table(n_rows=120, seed=6, fn="affine")

@@ -36,6 +36,9 @@ def _check(container: bytes, original: bytes):
     assert r["sha256_ok"], f"reconstruction hash mismatch: {r}"
     assert r["accounting_ok"], f"independent accounting {r['accounting_bits']} != {r['container_bits']}"
     assert r["ok"]
+    # full chain: raw -> encode -> artifact -> compress -> decompress -> INDEPENDENT decode -> raw
+    c = iv.verify_composed(original, container)
+    assert c["all_ok"], f"independent composed round-trip failed: {c}"
 
 
 @pytest.mark.parametrize("seed,w", [(1, 16), (2, 32), (902, 64), (7, 128)])

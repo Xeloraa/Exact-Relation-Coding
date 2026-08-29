@@ -48,6 +48,25 @@ row produced on the development machine that used a prefix is labelled
 `prefix=<bytes>` / `prefix_reason=MemoryError` in its result JSON. Prefixes are
 never presented as whole-file results.
 
+### Cheapest legitimate path to the missing compute — investigated 2026-08-29
+
+- **This machine, foreground, longer budget:** works up to ~10 MiB per Silesia
+  member (`xml` 5.3 MB → 1m54s; `mr`/`osdb` 10 MB → ~4 min). **Done for 8 of 12
+  Silesia members** (`dickens, xml, ooffice, reymont, sao, x-ray, mr, osdb`).
+- **A cloud routine (claude.ai RemoteTrigger):** the create API needs a
+  `job_config`/`session_request` schema that is not documented to this session;
+  and a claude.ai code container's RAM is not guaranteed to exceed this box's.
+  Not pursued — poor expected value against an already-decided NEGATIVE
+  conclusion and an unknown container spec.
+- **Remaining gap:** `samba` (21 MB), `nci` (34 MB), `webster` (41 MB),
+  `mozilla` (51 MB); `enwik8` whole (100 MB); the 6 SDRBench fields whole
+  (11.5 MB each); UCI whole (127 MB). These need a machine with > 8 GiB RAM
+  that this environment does not provide. The paper reports exactly which files
+  are whole and which are ≥ 256 KiB prefixes, and scopes the verdict
+  accordingly (`docs/preregistration.md` §4: coverage is "enough for a scoped
+  NEGATIVE" — 8/12 whole + every member as a slice + the offset extension — but
+  a top-venue reviewer would want the 4 giants; see `docs/venue_assessment.md`).
+
 ## 3. Consequence for context-mixing baselines
 
 | compressor | requirement | status on this machine | decision |
