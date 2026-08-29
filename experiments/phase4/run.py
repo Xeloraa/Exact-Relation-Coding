@@ -12,7 +12,15 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SCRIPTS = ("natural.py", "formats.py", "scaling.py", "structured_text.py", "silesia.py", "pack_pivots.py")
+SCRIPTS = (
+    "natural.py",
+    "formats.py",
+    "scaling.py",
+    "structured_text.py",
+    "silesia.py",
+    "pack_pivots.py",
+    "paq_probe.py",
+)
 
 
 def main() -> int:

@@ -77,17 +77,26 @@ xz/brotli on packed independent bits beats the accounted GF(2) container.
 ### Hypothesis 14
 Silesia prefixes have a GF(2) composed gap.
 
-**Result: falsified.** Four 512000-byte prefixes, all `roundtrip_ok`. Every composed gap is negative.
+**Result: falsified.** Eight 512000-byte prefixes, all `roundtrip_ok`. Every composed gap is negative.
 
-- dickens: GF2, 1 relation, DEDC 496043 vs bz2 140096, composed −114679. SHA-256 `3d2b8a388908b800ded23f8d2f6b3e181c9951fef6039649acd04d51ccd462f6`.
-- xml: GF2, 1 relation, DEDC 448037 vs bz2 15438, composed −24245.
-- x-ray: GF2, 4 relations, DEDC 480073 vs bz2 240711, composed −75917.
-- ooffice: passthrough, `n_relations==0`, DEDC 512018 vs xz 238012, composed −20 (`header_perturbation`, not deduction).
+- dickens: GF2, 1 relation, composed −114679.
+- xml: GF2, 1 relation, composed −24245.
+- x-ray: GF2, 4 relations, composed −75917.
+- ooffice: passthrough, composed −20 (header).
+- mozilla: passthrough, composed −149 (header).
+- mr: passthrough, composed −78 (header).
+- nci: GF2, 1 relation (ASCII plane), DEDC 448037 vs bz2 29853, composed −17833.
+- sao: passthrough, composed −20 (header).
 
-Negative composed gaps are falsification, not a near-miss. Do not claim novelty. Do not claim a real-corpus success. Dumps not committed.
+Negative composed gaps are falsification, not a near-miss. Do not claim novelty. Dumps not committed.
+
+### Hypothesis 15
+paq8l absorbs planted GF(2) XOR, so the gzip/xz gap is a weak-baseline artifact.
+
+**Result: rejected at paq8l -3** on 10 KiB (seed 902). paq(raw)=10299 vs DEDC 5291 vs paq(DEDC)=5331. Mixer-relative gap +4968, same order as gzip/xz +4949. Not paq8px and not `-8`.
 
 ### Decision
-Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. PAQ/cmix/bsc are not on this machine. Never commit dumps.
+Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. paq8l `-3` does not absorb it. Never commit dumps.
 
 ### Accounting
 Every JSON file includes payload, relation description, header, framing, CRC, leftover. Round-trip required. Never-worse passthrough when GF(2) is not strictly smaller.

@@ -12,7 +12,7 @@ Repository: https://github.com/Xeloraa/deductive-coding
 
 ## Status
 
-Phase 0–4 have been run. Planted GF(2) shows a large **composed** deduction gap against gzip/zstd/xz/brotli, and that gap scales with row count. Packing independent bits before xz does not add a further win. Null tests do not invent savings. This repo's own source/docs, enwik8, local stdlib `.py`, Silesia prefixes (text/XML/DICOM/DLL), PNG/ZIP, and structured JSON/log text do **not** show a composed gap. Affine derived-column wins and CRC32-record wins are recorded and labeled as established techniques (FD elimination; checksum inversion), not as novelty.
+Phase 0–4 have been run. Planted GF(2) shows a large **composed** deduction gap against gzip/zstd/xz/brotli **and** paq8l `-3`. Packing independent bits before xz does not add a further win. Null tests do not invent savings. This repo's own source/docs, enwik8, local stdlib `.py`, eight Silesia prefixes, PNG/ZIP, and structured JSON/log text do **not** show a composed gap. Affine derived-column wins and CRC32-record wins are recorded and labeled as established techniques (FD elimination; checksum inversion), not as novelty.
 
 See `docs/results.md`. The project is not killed; it is also not a real-corpus success.
 

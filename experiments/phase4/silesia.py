@@ -29,6 +29,10 @@ MEMBERS = (
     ("xml", "concatenated XML (tar)"),
     ("x-ray", "16-bit grayscale DICOM"),
     ("ooffice", "Windows DLL"),
+    ("mozilla", "UNIX executables and others, tar"),
+    ("mr", "3-D MRI image, DICOM"),
+    ("nci", "chemical database, text"),
+    ("sao", "star catalog, binary"),
 )
 PREFIX = 512_000
 HYPOTHESIS = (
