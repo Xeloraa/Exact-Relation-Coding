@@ -1,15 +1,17 @@
 # Exact-Relation Coding: does discovering algebraic relations help lossless compression after full accounting and composition?
 
-**Status: working draft.** Controls, planted-code, and mixer results are
-complete; the whole-file natural-corpus sweep is partial (2 of the
-pre-registered corpus list run so far, remainder needs a ≥ 32 GiB machine —
-`docs/environment_constraints.md`). The Results/Discussion tables come from
-`paper/results_tables.md`, regenerated from `results/ledger.json`; inline numbers
-carry HTML-comment markers of the form `src: <experiment>/<field> = <value>`
-checked by `scripts/check_paper_numbers.py`. The pre-registration
+**Status: working draft.** Controls, planted-code, mixer, and the
+bit-phase-offset detector extension are complete. The whole-file natural sweep
+covers **8 of 12 Silesia members** (the largest an 8 GiB machine runs in
+budget); the remaining 4 (21–51 MB) and whole enwik8 / SDRBench / UCI need a
+≥ 32 GiB machine (`docs/environment_constraints.md`) — until they run, the
+formal outcome is `INCONCLUSIVE-for-the-full-list` (`docs/preregistration.md`
+§4) while the coverage achieved is a clean, layered **NEGATIVE**. Results tables
+and figures are generated from `results/ledger.json`; inline numbers carry
+HTML-comment markers of the form `src: <experiment>/<field> = <value>` checked
+by `scripts/check_paper_numbers.py`. The pre-registration
 (`docs/preregistration.md`, git-locked) fixes the threshold and decision rule;
-this file restates but does not alter them. The Section 21 verdict is
-`INCONCLUSIVE` until the whole-file sweep completes.
+this file restates but does not alter them.
 
 Authorship and identity are the repository's existing ones; see the repository
 metadata. No AI system is an author or contributor.
@@ -426,14 +428,17 @@ scientifically useful content, not "the idea failed".
 
 ## 18. Limitations
 
-- **Detector scope.** Axis-aligned fixed-width GF(2) + integer affine only. A
-  negative is about these families; §17 shows structure at other periods is
-  missed by construction.
-- **Baseline ceiling.** cmix / nncp not run. The planted control bounds — but
-  does not eliminate — "a stronger mixer would absorb it".
-- **Whole-file sweep incomplete.** 2 of the pre-registered corpora run; the rest
-  need ≥ 32 GiB RAM. Until then the natural-corpus result is INCONCLUSIVE by the
-  pre-registration.
+- **Detector scope.** Axis-aligned fixed-width GF(2) + integer affine, extended
+  once (bounded) to every bit phase (§8.4). A negative is about these families;
+  §17 shows structure at a non-power-of-two *period* is still missed by
+  construction. A materially broader family (searched/learned column
+  permutation; low-degree polynomial) is the named single follow-up.
+- **Baseline ceiling.** cmix / nncp not run (hardware). The planted control
+  bounds — but does not eliminate — "a stronger mixer would absorb it".
+- **Whole-file sweep incomplete.** 8 of 12 Silesia members run whole (all ≤ 10
+  MB); the 4 largest (21–51 MB) and whole enwik8 / SDRBench / UCI need > 8 GiB.
+  Formal outcome INCONCLUSIVE-for-the-full-list until they run; the 8 whole +
+  20 prefixes + offset extension are a clean NEGATIVE for the coverage achieved.
 - **Corpus breadth.** Four corpus classes; the scientific class is one MD
   dataset (EXAALT, and its 6 fields are one simulation — effective n ≈ 1–2).
 - **A negative does not prove absence** — only that these detectors do not
