@@ -194,16 +194,16 @@ Same planted codes as scaling 10 KiB / 100 KiB. Pivot bits packed to bytes, then
 
 | experiment | raw | DEDC | best_stat | raw_gap | composed_gap | rels | kind |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| dickens (ASCII novels) | 512000 | 496043 | 140096 (bz2) | -355947 | **-114679** | 1 | GF2 |
-| xml (concatenated XML tar) | 512000 | 448037 | 15438 (bz2) | -432599 | **-24245** | 1 | GF2 |
-| x-ray (16-bit DICOM) | 512000 | 480073 | 240711 (bz2) | -239362 | **-75917** | 4 | GF2 |
+| dickens (ASCII novels) | 512000 | 496043 | 140096 (bz2_9) | -355947 | **-114679** | 1 | GF2 |
+| xml (concatenated XML tar) | 512000 | 448037 | 15438 (bz2_9) | -432599 | **-24245** | 1 | GF2 |
+| x-ray (16-bit DICOM) | 512000 | 480073 | 240711 (bz2_9) | -239362 | **-75917** | 4 | GF2 |
 | ooffice (Windows DLL) | 512000 | 512018 | 238012 (xz9) | -274006 | -20 | 0 | PASSTHROUGH |
 
 Prefix SHA-256: dickens `3d2b8a388908b800ded23f8d2f6b3e181c9951fef6039649acd04d51ccd462f6`; xml `1ae008042047777d47732811e4baef57ac075ee6d39a55d0cee925539fab9fc8`; x-ray `34d420201364c7b288ae907f72cf850e42c35bcff9ba5184c37030ec8e2e752c`; ooffice `dee624c889febeebcc4712ceee0006cd4a6bc044119584ba566980e529df2325`.
 
-Dickens/xml: one bit-plane (xml is an 8-column view, 7 independent — ASCII high bit). x-ray: four relations on a 64-column view (typical unused high bits in 16-bit samples). ooffice: full rank / never-worse passthrough. None of these is a composed win. bz2/xz already exploit the same sparsity plus the actual language/XML/DLL structure.
+Dickens/xml: one bit-plane (xml is an 8-column view, 7 independent — ASCII high bit). x-ray: four relations on a 64-column view (typical unused high bits in 16-bit samples). ooffice: `n_relations==0` passthrough; composed −20 is header perturbation, not deduction. None of these is a composed win. bz2/xz already exploit the same sparsity plus the actual language/XML/DLL structure.
 
-**Interpretation:** a public mixed corpus does not behave like planted GF(2). JSON: `results/phase4_silesia/`.
+**Interpretation:** all four composed gaps are negative. That is falsification of a Silesia GF(2) composed gap, not a success and not novelty. JSON: `results/phase4_silesia/`.
 
 ## Deduction-gap definitions (applied)
 
@@ -214,7 +214,7 @@ On affine tables / parsed CSV FD: raw negative, composed positive (prior art).
 ## What this does *not* show
 
 - No remaining Silesia members (mozilla, mr, nci, …) or packet captures.
-- No PAQ/cmix/bsc comparison (not installed).
+- No PAQ/cmix/bsc comparison (none of those binaries on PATH, Program Files, or this repo as of 2026-08-29).
 - No claim that neural compressors fail on parity.
 - No novelty claim for FD column drop or CRC inversion.
 - Local stdlib and `python.exe` hashes are machine-specific; enwik8 and Silesia prefix SHAs are from the public dumps (dumps not in git).

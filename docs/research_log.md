@@ -75,12 +75,19 @@ xz/brotli on packed independent bits beats the accounted GF(2) container.
 **Result: rejected.** 10 KiB: packed 5120 → best 5124; payload+description 5295 vs DEDC 5291. 100 KiB: 51200 → 51204; 51375 vs 51371. Pivots are incompressible; packing is not an extra win.
 
 ### Hypothesis 14
-Silesia 512 KB prefixes (dickens, xml, x-ray, ooffice) have a GF(2) composed gap.
+Silesia prefixes have a GF(2) composed gap.
 
-**Result: falsified.** dickens composed −114679 (1 rel); xml −24245 (1 rel, 8-bit plane); x-ray −75917 (4 rels); ooffice passthrough −20. bz2/xz win. Dump not committed.
+**Result: falsified.** Four 512000-byte prefixes, all `roundtrip_ok`. Every composed gap is negative.
+
+- dickens: GF2, 1 relation, DEDC 496043 vs bz2 140096, composed −114679. SHA-256 `3d2b8a388908b800ded23f8d2f6b3e181c9951fef6039649acd04d51ccd462f6`.
+- xml: GF2, 1 relation, DEDC 448037 vs bz2 15438, composed −24245.
+- x-ray: GF2, 4 relations, DEDC 480073 vs bz2 240711, composed −75917.
+- ooffice: passthrough, `n_relations==0`, DEDC 512018 vs xz 238012, composed −20 (`header_perturbation`, not deduction).
+
+Negative composed gaps are falsification, not a near-miss. Do not claim novelty. Do not claim a real-corpus success. Dumps not committed.
 
 ### Decision
-Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. Next: PAQ/cmix if present; never commit dumps.
+Do not kill. Do not claim a real-corpus success. Planted GF(2) remains the only large composed gap among measured byte strings that are not FD tables or checksums. PAQ/cmix/bsc are not on this machine. Never commit dumps.
 
 ### Accounting
 Every JSON file includes payload, relation description, header, framing, CRC, leftover. Round-trip required. Never-worse passthrough when GF(2) is not strictly smaller.
