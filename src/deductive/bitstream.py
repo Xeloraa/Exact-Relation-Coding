@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Mapping
 
+import numpy as np
+
 
 def _mask(nbits: int) -> int:
     if nbits >= 64:
@@ -43,8 +45,48 @@ class BitWriter:
                 self._acc_bits = 0
 
     def write_bytes(self, data: bytes) -> None:
+        if self._acc_bits == 0:
+            self._buf.extend(data)
+            self.nbits += 8 * len(data)
+            return
         for b in data:
             self.write_bits(b, 8)
+
+    def write_bit_array(self, bits) -> None:
+        """Write a sequence of 0/1 values, each into the next bit position.
+
+        Exactly equivalent to ``for b in bits: write_bits(int(b) & 1, 1)`` but
+        packs byte-aligned runs with numpy. LSB-first: ``bits[0]`` lands in the
+        lowest free bit of the current output byte.
+        """
+        arr = np.ascontiguousarray(np.asarray(bits, dtype=np.uint8).reshape(-1) & 1)
+        n = int(arr.size)
+        if n == 0:
+            return
+        self.nbits += n
+        pos = 0
+        if self._acc_bits:
+            take = min(8 - self._acc_bits, n)
+            for i in range(take):
+                self._acc |= int(arr[i]) << self._acc_bits
+                self._acc_bits += 1
+            if self._acc_bits == 8:
+                self._buf.append(self._acc)
+                self._acc = 0
+                self._acc_bits = 0
+            pos = take
+            if pos == n:
+                return
+        # byte-aligned from here
+        remaining = n - pos
+        full = remaining - (remaining % 8)
+        if full:
+            packed = np.packbits(arr[pos:pos + full], bitorder="little")
+            self._buf.extend(packed.tobytes())
+            pos += full
+        for i in range(pos, n):
+            self._acc |= int(arr[i]) << self._acc_bits
+            self._acc_bits += 1
 
     def pad_to_byte(self) -> int:
         if self._acc_bits == 0:
@@ -105,6 +147,42 @@ class BitReader:
 
     def read_bytes(self, nbytes: int) -> bytes:
         return bytes(self.read_bits(8) for _ in range(nbytes))
+
+    def read_bit_array(self, n: int) -> np.ndarray:
+        """Read ``n`` bits as a uint8 0/1 ndarray, LSB-first.
+
+        Exactly equivalent to ``np.array([read_bits(1) for _ in range(n)])`` but
+        unpacks byte-aligned runs with numpy.
+        """
+        if n < 0:
+            raise ValueError("n must be non-negative")
+        out = np.empty(n, dtype=np.uint8)
+        if n == 0:
+            return out
+        if self._pos_bits + n > self.nbits_total:
+            raise ValueError("unexpected end of bitstream")
+        idx = 0
+        misalign = self._pos_bits % 8
+        if misalign:
+            take = min(8 - misalign, n)
+            byte = self._data[self._pos_bits // 8]
+            for i in range(take):
+                out[idx] = (byte >> (misalign + i)) & 1
+                idx += 1
+            self._pos_bits += take
+        remaining = n - idx
+        full = remaining - (remaining % 8)
+        if full:
+            start = self._pos_bits // 8
+            seg = np.frombuffer(self._data, dtype=np.uint8, count=full // 8, offset=start)
+            out[idx:idx + full] = np.unpackbits(seg, bitorder="little")
+            idx += full
+            self._pos_bits += full
+        while idx < n:
+            out[idx] = (self._data[self._pos_bits // 8] >> (self._pos_bits % 8)) & 1
+            self._pos_bits += 1
+            idx += 1
+        return out
 
     def align_byte(self) -> int:
         rem = self._pos_bits % 8
@@ -196,6 +274,11 @@ class AccountedWriter:
     def write_bytes(self, category: str, data: bytes) -> None:
         self.accounting.add(category, 8 * len(data))
         self.writer.write_bytes(data)
+
+    def write_bit_array(self, category: str, bits) -> None:
+        arr = np.asarray(bits, dtype=np.uint8).reshape(-1)
+        self.accounting.add(category, int(arr.size))
+        self.writer.write_bit_array(arr)
 
     def finalize(self) -> tuple[bytes, Accounting]:
         data, pad = self.writer.finalize()

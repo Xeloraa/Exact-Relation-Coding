@@ -141,33 +141,31 @@ def encode_gf2_matrix(
     w.write_bits("header", flags, 8)
     w.write_bits("header", len(original), 64)
     w.write_bits("leftover", int(leftover_u8.size), 32)
-    for b in leftover_u8.tolist():
-        w.write_bits("leftover", int(b) & 1, 1)
+    w.write_bit_array("leftover", leftover_u8)
 
     if affine and aff is not None:
-        pivot_set = set(aff.real_pivot_indices)
-        for c in range(n_cols):
-            w.write_bits("relation", 1 if c in pivot_set else 0, 1)
-        for i in range(aff.n_relations):
-            for j in range(aff.coeff_width):
-                w.write_bits("relation", int(aff.coefficients[i, j]) & 1, 1)
+        pivot_cols = np.asarray(aff.real_pivot_indices, dtype=np.int64)
+        coeff_matrix = aff.coefficients
+    else:
+        assert basis is not None
+        pivot_cols = np.asarray(basis.pivot_indices, dtype=np.int64)
+        coeff_matrix = basis.coefficients
+
+    pivot_mask = np.zeros(n_cols, dtype=np.uint8)
+    if pivot_cols.size:
+        pivot_mask[pivot_cols] = 1
+    w.write_bit_array("relation", pivot_mask)
+    w.write_bit_array("relation", np.ascontiguousarray(coeff_matrix.astype(np.uint8) & 1).reshape(-1))
+
+    if affine and aff is not None:
         if aff.n_payload_pivots:
             pivot_bits = np.column_stack([bit[:, p] for p in aff.real_pivot_indices])
         else:
             pivot_bits = np.zeros((n_rows, 0), dtype=np.uint8)
     else:
-        assert basis is not None
-        pivot_set = set(basis.pivot_indices)
-        for c in range(n_cols):
-            w.write_bits("relation", 1 if c in pivot_set else 0, 1)
-        for i in range(basis.n_relations):
-            for j in range(basis.rank):
-                w.write_bits("relation", int(basis.coefficients[i, j]) & 1, 1)
         pivot_bits = extract_pivot_bits(bit, basis)
 
-    for r in range(n_rows):
-        for j in range(n_payload):
-            w.write_bits("payload", int(pivot_bits[r, j]) & 1, 1)
+    w.write_bit_array("payload", np.ascontiguousarray(pivot_bits.astype(np.uint8) & 1).reshape(-1))
 
     crc = zlib.crc32(original) & 0xFFFFFFFF
     w.write_bits("crc", crc, 32)
@@ -197,22 +195,16 @@ def decode_gf2(data: bytes) -> bytes:
     ones_is_pivot = bool(flags & 2)
     orig_len = r.read_bits(64)
     leftover_nbits = r.read_bits(32)
-    leftover = np.array([r.read_bits(1) for _ in range(leftover_nbits)], dtype=np.uint8)
-    pivot_mask = [r.read_bits(1) for _ in range(n_cols)]
-    pivot_indices = tuple(i for i, b in enumerate(pivot_mask) if b)
-    free_indices = tuple(i for i, b in enumerate(pivot_mask) if not b)
+    leftover = r.read_bit_array(leftover_nbits)
+    pivot_mask = r.read_bit_array(n_cols)
+    pivot_indices = tuple(int(i) for i in np.flatnonzero(pivot_mask))
+    free_indices = tuple(int(i) for i in np.flatnonzero(pivot_mask == 0))
     if len(pivot_indices) != n_pivots:
         raise ValueError("n_pivots does not match pivot mask")
     n_free = n_cols - n_pivots
     coeff_width = n_pivots + (1 if ones_is_pivot else 0)
-    coeffs = np.zeros((n_free, coeff_width), dtype=np.uint8)
-    for i in range(n_free):
-        for j in range(coeff_width):
-            coeffs[i, j] = r.read_bits(1)
-    pivot_bits = np.zeros((n_rows, n_pivots), dtype=np.uint8)
-    for row in range(n_rows):
-        for j in range(n_pivots):
-            pivot_bits[row, j] = r.read_bits(1)
+    coeffs = r.read_bit_array(n_free * coeff_width).reshape(n_free, coeff_width).astype(np.uint8)
+    pivot_bits = r.read_bit_array(n_rows * n_pivots).reshape(n_rows, n_pivots).astype(np.uint8)
     if affine:
         aff = GF2AffineBasis(
             n_rows=n_rows,
@@ -278,9 +270,17 @@ def encode_bytes_best_gf2(
     return best
 
 
+def passthrough_size(nbytes: int) -> int:
+    """Byte length of a passthrough container for an ``nbytes`` payload.
+
+    Layout is all whole-byte fields: magic(4) version(1) kind(1) len(8) crc(4)
+    then the payload verbatim. No bit padding is ever needed.
+    """
+    return nbytes + 18
+
+
 def never_worse(data: bytes, candidate: Encoded) -> Encoded:
     """Replace a candidate with passthrough if it is not strictly smaller."""
-    pt = encode_passthrough(data)
-    if len(candidate.data) < len(pt.data):
+    if len(candidate.data) < passthrough_size(len(data)):
         return candidate
-    return pt
+    return encode_passthrough(data)

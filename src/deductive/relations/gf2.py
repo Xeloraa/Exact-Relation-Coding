@@ -128,16 +128,20 @@ def reconstruct(n_rows: int, n_cols: int, pivot_bits: np.ndarray, basis: GF2Colu
     """Reconstruct the full 0/1 matrix from pivot column bits and the basis.
 
     pivot_bits: shape (n_rows, n_pivots)
+
+    Free columns are ``pivot_bits @ coeff.T`` over GF(2). uint8 matmul wraps
+    mod 256, and bit 0 of a wrapping uint8 sum is the XOR of the summands'
+    bit 0, so ``& 1`` recovers the exact GF(2) value. Identical results to the
+    per-column XOR loop; see tests/test_codec_equivalence.py.
     """
     out = np.zeros((n_rows, n_cols), dtype=np.uint8)
+    piv = np.ascontiguousarray((pivot_bits & 1).astype(np.uint8))
     for j, p in enumerate(basis.pivot_indices):
-        out[:, p] = pivot_bits[:, j] & 1
-    for i, f in enumerate(basis.free_indices):
-        acc = np.zeros(n_rows, dtype=np.uint8)
-        for j in range(len(basis.pivot_indices)):
-            if basis.coefficients[i, j]:
-                acc ^= out[:, basis.pivot_indices[j]]
-        out[:, f] = acc
+        out[:, p] = piv[:, j]
+    if basis.free_indices:
+        coeff = np.ascontiguousarray((basis.coefficients & 1).astype(np.uint8))  # (n_free, n_piv)
+        dep = (piv @ coeff.T) & 1  # (n_rows, n_free)
+        out[:, list(basis.free_indices)] = dep
     return out
 
 
@@ -237,18 +241,17 @@ def reconstruct_affine(
     aff: GF2AffineBasis,
 ) -> np.ndarray:
     out = np.zeros((n_rows, n_cols), dtype=np.uint8)
+    piv = np.ascontiguousarray((payload_bits & 1).astype(np.uint8))
     for j, p in enumerate(aff.real_pivot_indices):
-        out[:, p] = payload_bits[:, j] & 1
-    ones = np.ones(n_rows, dtype=np.uint8)
+        out[:, p] = piv[:, j]
     width = aff.coeff_width
-    for i, f in enumerate(aff.free_indices):
-        acc = np.zeros(n_rows, dtype=np.uint8)
-        for j, p in enumerate(aff.real_pivot_indices):
-            if aff.coefficients[i, j]:
-                acc ^= out[:, p]
-        if aff.ones_is_pivot and width and aff.coefficients[i, width - 1]:
-            acc ^= ones
-        out[:, f] = acc
+    if aff.free_indices:
+        coeff = np.ascontiguousarray((aff.coefficients & 1).astype(np.uint8))  # (n_free, width)
+        n_real = aff.n_payload_pivots
+        dep = (piv @ coeff[:, :n_real].T) & 1 if n_real else np.zeros((n_rows, len(aff.free_indices)), np.uint8)
+        if aff.ones_is_pivot and width:
+            dep = (dep + coeff[:, width - 1][np.newaxis, :]) & 1  # add the constant-1 column
+        out[:, list(aff.free_indices)] = dep
     return out
 
 
