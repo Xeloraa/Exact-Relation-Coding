@@ -1,0 +1,143 @@
+{
+  "experiment_id": "control_sweep_phi0.001",
+  "phase": "controls",
+  "dataset_id": "corrupt_gf2_n4096_k32_p32_phi0.001_s433",
+  "dataset_sha256": "24af15505213725b1c43d47a4313e28115866daff2eaa3cb65e5e1915ec450da",
+  "dataset_bytes": 32768,
+  "seed": 433,
+  "config": {
+    "control": "degradation",
+    "flip_fraction": 0.001,
+    "n_cols": 64,
+    "n_flipped": 131
+  },
+  "codec_kind": "GF2",
+  "n_relations": 6,
+  "n_independent": 122,
+  "recovered_bits": 12288,
+  "accounting": {
+    "payload_bits": 249856,
+    "relation_description_bits": 860,
+    "header_bits": 216,
+    "framing_bits": 4,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 251000,
+    "total_bytes": 31375
+  },
+  "total_encoded_bytes": 31375,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.1285695999977179,
+  "decode_seconds": 0.003938600013498217,
+  "discovery_seconds": 0.1285695999977179,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 32796,
+      "seconds": 0.0015346000145655125,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 32784,
+      "seconds": 0.0006595999875571579,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 33266,
+      "seconds": 0.005412799975601956,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 32828,
+      "seconds": 0.03250510001089424,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 32778,
+      "seconds": 0.0028830999799538404,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 32772,
+      "seconds": 0.01618080001208,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 31382,
+      "seconds": 0.0009368000028189272,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 31370,
+      "seconds": 0.0010372000106144696,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 31828,
+      "seconds": 0.005775800003902987,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 31436,
+      "seconds": 0.026684500015107915,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 31385,
+      "seconds": 0.0033918000117409974,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 31379,
+      "seconds": 0.0404180999903474,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "gf2 linear n_cols=128",
+  "hypothesis": "As exact structure is broken, composed gain must fall toward 0, never below -64.",
+  "verdict": "raw_gap+1397 comp_gap+1402",
+  "utc_timestamp": "2026-08-29T14:13:01.082599+00:00",
+  "git_commit": "1961135de7ad300747cd1be504d2b35cc2eaebc8-dirty",
+  "command": "experiments/controls/run.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T14:13:01.140743+00:00",
+    "git_commit": "1961135de7ad300747cd1be504d2b35cc2eaebc8-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

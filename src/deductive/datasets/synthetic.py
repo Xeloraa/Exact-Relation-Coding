@@ -74,6 +74,60 @@ def gf2_linear_code(
     )
 
 
+def corrupted_gf2_code(
+    *,
+    n_rows: int,
+    n_info: int,
+    n_parity: int,
+    seed: int,
+    flip_fraction: float,
+) -> SyntheticDataset:
+    """Planted GF(2) linear code with a fraction of parity bits flipped.
+
+    flip_fraction == 0 reproduces `gf2_linear_code` exactly (same seed, same
+    bytes). For flip_fraction > 0, exactly round(flip_fraction * n_rows *
+    n_parity) parity cells are chosen without replacement and inverted, so the
+    global linear relations no longer hold on every row. Used to measure how
+    the composed gain degrades as exact structure is broken (never below
+    header perturbation, per the never-worse guard).
+    """
+    base = gf2_linear_code(n_rows=n_rows, n_info=n_info, n_parity=n_parity, seed=seed)
+    if flip_fraction <= 0:
+        return SyntheticDataset(
+            dataset_id=f"corrupt_gf2_n{n_rows}_k{n_info}_p{n_parity}_phi0_s{seed}",
+            data=base.data,
+            seed=seed,
+            meta={**base.meta, "flip_fraction": 0.0, "n_flipped": 0, "source": base.dataset_id},
+        )
+    bits = np.unpackbits(np.frombuffer(base.data, dtype=np.uint8), bitorder="little")
+    n_cols = n_info + n_parity
+    used = n_rows * n_cols
+    matrix = bits[:used].reshape(n_rows, n_cols).copy()
+    tail = bits[used:]
+    rng = _rng(seed * 7919 + 1)
+    n_parity_cells = n_rows * n_parity
+    n_flip = int(round(flip_fraction * n_parity_cells))
+    n_flip = max(1, min(n_flip, n_parity_cells))
+    flat_idx = rng.choice(n_parity_cells, size=n_flip, replace=False)
+    rows = flat_idx // n_parity
+    cols = n_info + (flat_idx % n_parity)
+    matrix[rows, cols] ^= 1
+    out_bits = np.concatenate([matrix.reshape(-1), tail]) if tail.size else matrix.reshape(-1)
+    data = np.packbits(out_bits.astype(np.uint8), bitorder="little").tobytes()
+    return SyntheticDataset(
+        dataset_id=f"corrupt_gf2_n{n_rows}_k{n_info}_p{n_parity}_phi{flip_fraction:g}_s{seed}",
+        data=data,
+        seed=seed,
+        meta={
+            **base.meta,
+            "flip_fraction": float(flip_fraction),
+            "n_flipped": int(n_flip),
+            "n_parity_cells": int(n_parity_cells),
+            "source": base.dataset_id,
+        },
+    )
+
+
 def exact_functional_table(
     *,
     n_rows: int,
