@@ -130,18 +130,16 @@ def section_offset(rows):
     out = ["\n## Bit-phase-offset detector extension (kill criterion §7.2)\n",
            "For each file: offset-search `G_abs` vs the phase-0 value; whether any "
            "bit phase helped, and whether it crossed the pre-registered 0.05 threshold.\n"]
-    # phase-0 lookup by base dataset id
-    p0 = {}
-    for r in rows:
-        if r["phase"] in ("natural", "natural_slice"):
-            p0[(r["dataset_id"] or "").split("@")[0]] = r.get("composition_gap_bytes")
-    hdr = ["dataset_id", "bytes", "kind", "rels", "G_abs (offset)", "G_abs (phase0)",
+    # phase-0 lookup keyed on the exact dataset_id (slice ids carry @sliceN, whole don't)
+    p0 = {r["dataset_id"]: r.get("composition_gap_bytes")
+          for r in rows if r["phase"] in ("natural", "natural_slice")}
+    hdr = ["dataset_id", "scope", "bytes", "kind", "rels", "G_abs (offset)", "G_abs (phase0)",
            "offset helped?", "crosses 0.05?", "round-trip"]
     body = []
-    for r in sorted(off, key=lambda r: r["dataset_id"]):
-        base = (r["dataset_id"] or "").split("@")[0]
+    for r in sorted(off, key=lambda r: r["experiment_id"]):
+        scope = "whole" if (r["experiment_id"] or "").endswith("_whole") else "slice"
         g_off = r.get("composition_gap_bytes")
-        g_p0 = p0.get(base)
+        g_p0 = p0.get(r["dataset_id"])
         helped = "yes" if (g_off is not None and g_p0 is not None and g_off > g_p0 + 64) else "no"
         crosses = "yes" if ((r.get("composition_gap_pct") or -1) >= 0.05
                             and (g_off or -1) >= 1024 and r["codec_kind"] != "PASSTHROUGH") else "no"

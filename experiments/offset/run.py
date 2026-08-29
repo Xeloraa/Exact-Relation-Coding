@@ -92,6 +92,7 @@ def main(argv: list[str] | None = None) -> int:
     for exp_id, ds_id, data, note, scope in corpus_items(args.mode, args.slice_bytes):
         if args.only and not any(tok in exp_id for tok in args.only):
             continue
+        exp_id = f"{exp_id}_{scope}"   # distinct records for slice vs whole (no file collision)
         if data is None:
             print(f"SKIP {exp_id}: {note}")
             continue
