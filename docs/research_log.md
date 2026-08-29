@@ -185,3 +185,77 @@ apply `docs/preregistration.md` §4 verbatim → one of A / B / C / D.
 ### Standing verdict
 INCONCLUSIVE by the pre-registration. Infrastructure + controls + pre-registration
 complete; whole-file natural-corpus sweep and cmix not yet run.
+
+## 2026-08-29 — Publication-grade hardening pass
+
+Goal: make it hard for a skeptical reviewer to find a methodological flaw,
+without inflating claims or manufacturing a positive.
+
+### Adversarial implementation audit (`docs/audit.md`, findings A1-A7; correction C1)
+- **A1** composed round-trip `decode(c^-1(c(D(x))))==x` now verified for every
+  codec in `run_codec_experiment` (`verify_composed_roundtrip`); `full` 6-codec
+  check <=4 MB, fast subset above. 0 failures across 95 ledger rows.
+- **A2** matched-codec-set gap (`composition_gap_matched_*`), both available
+  codec sets recorded; reportable positive needs matched sets or matched-gap
+  >= threshold. Pre-registered primary metric untouched.
+- **A3** `encode_bytes_best_gf2` surfaces per-config failures (was `except:
+  continue`). **A4** `decode_gf2` rejects unknown flag bits. **A5** dead branch.
+- **A6** `verification/independent_verify.py`: shared-nothing second decoder
+  (own bit reader / parse / plain-Python XOR / int reconstruction / independent
+  accounting). Self-test (4 kinds) + `tests/test_independent_verify.py`; run on
+  the 10 MB dickens container (sha256_ok, accounting_ok).
+- **A7** `tests/test_properties.py`: 400 randomised bit-I/O trials vs the
+  per-bit loop, 60 `reconstruct` trials vs per-column XOR, `column_basis` vs
+  planted ground truth. **620 tests pass** (was 86).
+- **C1** an un-killed background `--mode whole` zombie wrote a mixed-code-version
+  `silesia_mozilla` record (swept into 6cdedf5). Deleted; clean re-run did not
+  complete on the dev machine. Whole-file runs are now foreground only.
+
+### Controls expanded (`experiments/controls/run.py`, all gates PASS)
+representation-change null (40 i.i.d. -> 0 false positives from the 12-way min);
+metadata-cost (null overhead == 18 B exactly; positive container bits == sum of
+categories to the bit); composition-order (5 codecs); non-aligned period W=48
+(default widths -> PASSTHROUGH, width-48 -> 24 relations: direct demo of the
+axis-aligned limit); framing (every container byte-closed).
+
+### Auditability
+`scripts/build_ledger.py` -> `results/ledger.{json,csv}` (95 rows, every
+quantity, 0 failures). `scripts/regen_tables.py` -> `paper/results_tables.md`
+(no hand-typed numbers). `scripts/check_paper_numbers.py` fails on staleness or
+a bad `src:` marker (16 markers resolve). `scripts/reproduce.py` chains all of
+it + the independent verifier.
+
+### Prior art pass 2 (`docs/prior_art.md`)
+Brevis (arXiv 2608.02162, Aug 2026: program synthesis for bit-exact tensor
+compression, real +30% composed win on model checkpoints) is the closest new
+work; does NOT occupy blind GF(2)/affine on arbitrary bytes (different family,
+learned prior) but means the *general* idea is not novel. Ancheta syndrome-
+source-coding (1976): compressing a single source via a linear code's syndrome
+is classical. TICC / US 8,700,579 / anisotropic columnar / inexact-FD-with-
+exceptions: FD space fully occupied. Verdict unchanged.
+
+### Rename (`docs/naming.md`)
+"Deductive Coding" -> **Exact-Relation Coding** ("deductive coding" is
+qualitative-research jargon; "deductive compression" is a 2026 semantic/lossy
+line). Package path `src/deductive/` and `DEDC` magic kept as legacy.
+
+### Statistics (`docs/statistics.md`)
+Measurements are deterministic -> repeated-run stats meaningless; unit of
+analysis is the file; SDRBench's 6 EXAALT fields are one simulation (effective
+n ~ 1-2, no CI); no inferential CI/p-value claimed; headline is per-file max
+G_pct vs the 5% threshold; layered L1-L6 reporting for a negative.
+
+### Paper (`paper/deductive-coding.md`)
+Full 24-section technical paper. Inline numbers ledger-checked. Results S15.2
+and the S21 verdict PENDING the whole-file sweep.
+
+### One whole natural file done
+`silesia_dickens` (10 192 446 B, SHA-pinned): GF(2), 25 relations, container
+9 197 882 B, `G_abs` -2 645 016 B (-94.5%). RQ-A yes, RQ-B/RQ-C no. Round-trip
++ composed round-trip + independent decode all pass. First non-slice natural
+result; strongly negative, consistent with the slices.
+
+### Standing verdict (unchanged)
+INCONCLUSIVE by the pre-registration. The evidence *quality* is now high; the
+evidence *coverage* (whole-file natural sweep: 1 of ~19) is the remaining gap,
+and it is a hardware limit, not a method limit.
