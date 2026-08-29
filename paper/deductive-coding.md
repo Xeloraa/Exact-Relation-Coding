@@ -168,12 +168,12 @@ description-per-recovered-bit ratio.
 ## 7. Exact bit-accounting model
 
 `AccountedWriter` attributes every written bit to exactly one of
-{`header`, `relation`, `payload`, `leftover`, `crc`, `framing`}. `finalize()`
-raises unless
+{`header`, `relation`, `payload`, `leftover`, `crc`, `framing`} (plus `prefix`
+for the §8.4 offset codec). `finalize()` raises unless
 
 ```
-8·|D(x)|  =  header + relation + payload + leftover + crc + framing
-framing   =  (−(header + relation + payload + leftover + crc)) mod 8   ∈ [0,7]
+8·|D(x)|  =  header + relation + payload + leftover + prefix + crc + framing
+framing   =  (−(header + relation + payload + leftover + prefix + crc)) mod 8   ∈ [0,7]
 ```
 
 so a container with an unaccounted bit cannot be emitted. `crc32(x)` (32 bits)
