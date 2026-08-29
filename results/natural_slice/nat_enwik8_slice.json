@@ -1,0 +1,152 @@
+{
+  "experiment_id": "nat_enwik8_slice",
+  "phase": "natural_slice",
+  "dataset_id": "enwik8@slice262144",
+  "dataset_sha256": "0cdfd008d5327addbf5b118b4a8d616a8cc2971627727b10bfb20e97920881e7",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "category": "text",
+    "acquisition": "dev_machine_feasibility_slice",
+    "prefix": 262144,
+    "prefix_reason": "dev_machine_feasibility_slice"
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 2097152,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 2097152,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 2097296,
+    "total_bytes": 262162
+  },
+  "total_encoded_bytes": 262162,
+  "roundtrip_ok": true,
+  "encode_seconds": 1.9315485999977682,
+  "decode_seconds": 0.22036380000645295,
+  "discovery_seconds": 1.9315485999977682,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 90519,
+      "seconds": 0.030357300012838095,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 90507,
+      "seconds": 0.02348800000618212,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 75951,
+      "seconds": 0.03313149997848086,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 79120,
+      "seconds": 0.10792710000532679,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 81801,
+      "seconds": 0.09193860000232235,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 73306,
+      "seconds": 0.6423688999784645,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 90548,
+      "seconds": 0.016071499994723126,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 90536,
+      "seconds": 0.017999400006374344,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 75918,
+      "seconds": 0.02112029999261722,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 79164,
+      "seconds": 0.09177280002040789,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 81821,
+      "seconds": 0.1024866999941878,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 73345,
+      "seconds": 0.5727697999973316,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "zip enwik8.zip prefix 262144 | acquisition=dev_machine_feasibility_slice",
+  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
+  "verdict": "raw_gap-188856 no_deduction header_perturbation-39",
+  "utc_timestamp": "2026-08-29T14:29:36.510580+00:00",
+  "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T14:29:36.555896+00:00",
+    "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

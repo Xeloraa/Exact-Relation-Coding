@@ -1,0 +1,152 @@
+{
+  "experiment_id": "nat_sdrbench_exaalt_yy_slice",
+  "phase": "natural_slice",
+  "dataset_id": "sdrbench_exaalt2869440_yy.f32@slice262144",
+  "dataset_sha256": "faa41a228bd98532d74417ab24464a9dd7009ecdbc2d7c6c35e22d75f22b77b6",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "category": "scientific_f32",
+    "acquisition": "dev_machine_feasibility_slice",
+    "prefix": 262144,
+    "prefix_reason": "dev_machine_feasibility_slice"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 29,
+  "n_independent": 227,
+  "recovered_bits": 237568,
+  "accounting": {
+    "payload_bits": 1859584,
+    "relation_description_bits": 6868,
+    "header_bits": 216,
+    "framing_bits": 4,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1866736,
+    "total_bytes": 233342
+  },
+  "total_encoded_bytes": 233342,
+  "roundtrip_ok": true,
+  "encode_seconds": 2.4260424000094645,
+  "decode_seconds": 0.09229110000887886,
+  "discovery_seconds": 2.4260424000094645,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 220881,
+      "seconds": 0.013762900023721159,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 220869,
+      "seconds": 0.013210499979322776,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 187128,
+      "seconds": 0.026591200003167614,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 187944,
+      "seconds": 0.0973093000066001,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 205318,
+      "seconds": 0.051545900001656264,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 217730,
+      "seconds": 0.7160911000100896,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 232700,
+      "seconds": 0.007817100005922839,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 232688,
+      "seconds": 0.00792499998351559,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 231418,
+      "seconds": 0.027893399994354695,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 232900,
+      "seconds": 0.07018969999626279,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 232539,
+      "seconds": 0.026364500023191795,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 233347,
+      "seconds": 0.19421269997837953,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "sdrbench exaalt-2869440:SDRBENCH-EXAALT-2869440/yy.f32 (11477760 B, dtype <f4) [prefix 262144] | acquisition=dev_machine_feasibility_slice",
+  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
+  "verdict": "raw_gap-46214 comp_gap-44290",
+  "utc_timestamp": "2026-08-29T14:29:59.202724+00:00",
+  "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T14:29:59.247412+00:00",
+    "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

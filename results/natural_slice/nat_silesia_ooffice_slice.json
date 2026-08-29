@@ -1,0 +1,152 @@
+{
+  "experiment_id": "nat_silesia_ooffice_slice",
+  "phase": "natural_slice",
+  "dataset_id": "silesia_ooffice@slice262144",
+  "dataset_sha256": "41a8f0abe06c5c9e88665870be089e57c9b065bb3c27ac838cca48bcb793cb19",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "category": "silesia",
+    "acquisition": "dev_machine_feasibility_slice",
+    "prefix": 262144,
+    "prefix_reason": "dev_machine_feasibility_slice"
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 2097152,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 2097152,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 2097296,
+    "total_bytes": 262162
+  },
+  "total_encoded_bytes": 262162,
+  "roundtrip_ok": true,
+  "encode_seconds": 2.026534799981164,
+  "decode_seconds": 0.14231870000367053,
+  "discovery_seconds": 2.026534799981164,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 142495,
+      "seconds": 0.02184199998737313,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 142483,
+      "seconds": 0.022630499996012077,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 132783,
+      "seconds": 0.020634899992728606,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 123528,
+      "seconds": 0.09272019998752512,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 130469,
+      "seconds": 0.07310609999694861,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 125697,
+      "seconds": 0.8022740000160411,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 142502,
+      "seconds": 0.02194410000811331,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 142490,
+      "seconds": 0.024832199997035787,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 132775,
+      "seconds": 0.023600099986651912,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 123544,
+      "seconds": 0.10336239999742247,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 130499,
+      "seconds": 0.08465480001177639,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 125707,
+      "seconds": 0.8117347999941558,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "zip silesia.zip:ooffice prefix 262144 | acquisition=dev_machine_feasibility_slice",
+  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
+  "verdict": "raw_gap-138634 no_deduction header_perturbation-16",
+  "utc_timestamp": "2026-08-29T14:29:02.672097+00:00",
+  "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T14:29:02.718868+00:00",
+    "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "experiment_id": "nat_silesia_xml_slice",
+  "phase": "natural_slice",
+  "dataset_id": "silesia_xml@slice262144",
+  "dataset_sha256": "f2bbde07c2061c09fa41e4d4998c07847fbcc23d4ab166ca105a7f66ac8cd37b",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "category": "silesia",
+    "acquisition": "dev_machine_feasibility_slice",
+    "prefix": 262144,
+    "prefix_reason": "dev_machine_feasibility_slice"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 1,
+  "n_independent": 7,
+  "recovered_bits": 262144,
+  "accounting": {
+    "payload_bits": 1835008,
+    "relation_description_bits": 15,
+    "header_bits": 216,
+    "framing_bits": 1,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1835304,
+    "total_bytes": 229413
+  },
+  "total_encoded_bytes": 229413,
+  "roundtrip_ok": true,
+  "encode_seconds": 2.2781675000151154,
+  "decode_seconds": 0.010056600003736094,
+  "discovery_seconds": 2.2781675000151154,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 16115,
+      "seconds": 0.010445899999467656,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 16103,
+      "seconds": 0.010468599997693673,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 11559,
+      "seconds": 0.0235677000018768,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 13060,
+      "seconds": 0.06754109999747016,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 12994,
+      "seconds": 0.15678310001385398,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 11799,
+      "seconds": 0.38597370000206865,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 35710,
+      "seconds": 0.005534100026125088,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 35698,
+      "seconds": 0.00567899999441579,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 29853,
+      "seconds": 0.01775249998900108,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 28924,
+      "seconds": 0.06613089999882504,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 29993,
+      "seconds": 0.12050300001283176,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 29240,
+      "seconds": 0.38304250000510365,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "zip silesia.zip:xml prefix 262144 | acquisition=dev_machine_feasibility_slice",
+  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
+  "verdict": "raw_gap-217854 comp_gap-17365",
+  "utc_timestamp": "2026-08-29T14:29:32.345637+00:00",
+  "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T14:29:32.392554+00:00",
+    "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

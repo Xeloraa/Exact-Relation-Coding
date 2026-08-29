@@ -1,0 +1,152 @@
+{
+  "experiment_id": "nat_silesia_dickens_slice",
+  "phase": "natural_slice",
+  "dataset_id": "silesia_dickens@slice262144",
+  "dataset_sha256": "becc366f2948cfbaefb219df19f54b101a842737428b01c7538b871a35c3edf4",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "category": "silesia",
+    "acquisition": "dev_machine_feasibility_slice",
+    "prefix": 262144,
+    "prefix_reason": "dev_machine_feasibility_slice"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 31,
+  "n_independent": 225,
+  "recovered_bits": 253952,
+  "accounting": {
+    "payload_bits": 1843200,
+    "relation_description_bits": 7231,
+    "header_bits": 216,
+    "framing_bits": 1,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1850712,
+    "total_bytes": 231339
+  },
+  "total_encoded_bytes": 231339,
+  "roundtrip_ok": true,
+  "encode_seconds": 2.751548100000946,
+  "decode_seconds": 0.1634403999778442,
+  "discovery_seconds": 2.751548100000946,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 98593,
+      "seconds": 0.05239949998212978,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 98581,
+      "seconds": 0.02735180000308901,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 77252,
+      "seconds": 0.020750600000610575,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 85788,
+      "seconds": 0.10759869997855276,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 86981,
+      "seconds": 0.13133830000879243,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 82527,
+      "seconds": 0.4926026999892201,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 161864,
+      "seconds": 0.011042700003599748,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 161852,
+      "seconds": 0.010721099999500439,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 125079,
+      "seconds": 0.017994699999690056,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 140600,
+      "seconds": 0.08018759998958558,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 143068,
+      "seconds": 0.055695499991998076,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 141049,
+      "seconds": 0.6412581000186037,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "zip silesia.zip:dickens prefix 262144 | acquisition=dev_machine_feasibility_slice",
+  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
+  "verdict": "raw_gap-154087 comp_gap-47827",
+  "utc_timestamp": "2026-08-29T14:28:46.488618+00:00",
+  "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T14:28:46.679345+00:00",
+    "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

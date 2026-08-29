@@ -1,0 +1,152 @@
+{
+  "experiment_id": "nat_silesia_nci_slice",
+  "phase": "natural_slice",
+  "dataset_id": "silesia_nci@slice262144",
+  "dataset_sha256": "6f129b33bdf149bcdab85d1402a4f6aa4e81c0733f5fe76bb6f82bead260759e",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "category": "silesia",
+    "acquisition": "dev_machine_feasibility_slice",
+    "prefix": 262144,
+    "prefix_reason": "dev_machine_feasibility_slice"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 1,
+  "n_independent": 7,
+  "recovered_bits": 262144,
+  "accounting": {
+    "payload_bits": 1835008,
+    "relation_description_bits": 15,
+    "header_bits": 216,
+    "framing_bits": 1,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1835304,
+    "total_bytes": 229413
+  },
+  "total_encoded_bytes": 229413,
+  "roundtrip_ok": true,
+  "encode_seconds": 1.7738441999827046,
+  "decode_seconds": 0.010164000006625429,
+  "discovery_seconds": 1.7738441999827046,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 22000,
+      "seconds": 0.01643849999527447,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 21988,
+      "seconds": 0.01817799999844283,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 14563,
+      "seconds": 0.026570999994874,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 15944,
+      "seconds": 0.12798279998241924,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 15907,
+      "seconds": 0.2429491999791935,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 14884,
+      "seconds": 0.5103279999748338,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 40579,
+      "seconds": 0.01490939999348484,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 40567,
+      "seconds": 0.015276700025424361,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 25628,
+      "seconds": 0.023043000022880733,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 26752,
+      "seconds": 0.09741380001651123,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 28846,
+      "seconds": 0.12821580001036637,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 26987,
+      "seconds": 0.46645820001140237,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "zip silesia.zip:nci prefix 262144 | acquisition=dev_machine_feasibility_slice",
+  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
+  "verdict": "raw_gap-214850 comp_gap-11065",
+  "utc_timestamp": "2026-08-29T14:28:58.202719+00:00",
+  "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T14:28:58.249360+00:00",
+    "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

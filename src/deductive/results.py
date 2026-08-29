@@ -75,7 +75,12 @@ class ExperimentRecord:
         return best - self.total_encoded_bytes
 
     def composition_gap_bytes(self) -> int | None:
-        """min_c |c(raw)| - min_c |c(deductive_container)|, if measured."""
+        """min_c |c(raw)| - min_c |c(deductive_container)|, if measured.
+
+        This is G_abs in docs/metric.md S4: positive means the deductive
+        pre-pass reduced the size achievable by the strongest available stock
+        compressor, after full accounting.
+        """
         raw_sizes = [b.bytes for b in self.baselines if b.available]
         composed = []
         for key, val in self.composition.items():
@@ -90,6 +95,25 @@ class ExperimentRecord:
         if not raw_sizes or not composed:
             return None
         return min(raw_sizes) - min(composed)
+
+    def raw_best_bytes(self) -> int | None:
+        """min_c |c(raw)| over available baselines (raw_best in metric.md)."""
+        return self.best_baseline_bytes()
+
+    def composition_gap_pct(self) -> float | None:
+        """G_pct in docs/metric.md S4: G_abs / raw_best, signed fraction."""
+        g = self.composition_gap_bytes()
+        base = self.raw_best_bytes()
+        if g is None or not base:
+            return None
+        return g / base
+
+    def raw_gap_bytes(self) -> int | None:
+        """raw_best - |D(x)|: deduction vs stock compressors with NO composition."""
+        base = self.raw_best_bytes()
+        if base is None:
+            return None
+        return base - self.total_encoded_bytes
 
 
 def write_json(path: Path, record: ExperimentRecord) -> None:
@@ -121,7 +145,9 @@ def append_csv(path: Path, record: ExperimentRecord) -> None:
         "discovery_seconds": record.discovery_seconds,
         "best_baseline_bytes": record.best_baseline_bytes(),
         "deduction_gap_bytes": record.deduction_gap_bytes(),
+        "raw_gap_bytes": record.raw_gap_bytes(),
         "composition_gap_bytes": record.composition_gap_bytes(),
+        "composition_gap_pct": record.composition_gap_pct(),
         "verdict": record.verdict,
         "git_commit": record.git_commit,
         "utc_timestamp": record.utc_timestamp,

@@ -1,0 +1,152 @@
+{
+  "experiment_id": "nat_silesia_x-ray_slice",
+  "phase": "natural_slice",
+  "dataset_id": "silesia_x-ray@slice262144",
+  "dataset_sha256": "51c0a846c6cbe121f3f734d32100d60fd8bdd5b79ea9506d72608665e5fef7b1",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "category": "silesia",
+    "acquisition": "dev_machine_feasibility_slice",
+    "prefix": 262144,
+    "prefix_reason": "dev_machine_feasibility_slice"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 58,
+  "n_independent": 198,
+  "recovered_bits": 475136,
+  "accounting": {
+    "payload_bits": 1622016,
+    "relation_description_bits": 11740,
+    "header_bits": 216,
+    "framing_bits": 4,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1634040,
+    "total_bytes": 204255
+  },
+  "total_encoded_bytes": 204255,
+  "roundtrip_ok": true,
+  "encode_seconds": 2.6071052000042982,
+  "decode_seconds": 0.13980820000870153,
+  "discovery_seconds": 2.6071052000042982,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 182634,
+      "seconds": 0.012212500005261973,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 182622,
+      "seconds": 0.011413900007028133,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 129632,
+      "seconds": 0.017464400007156655,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 137292,
+      "seconds": 0.07931529998313636,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 165393,
+      "seconds": 0.10620989999733865,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 141029,
+      "seconds": 0.9157672000001185,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 200852,
+      "seconds": 0.009908000007271767,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 200840,
+      "seconds": 0.009380200004670769,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 195367,
+      "seconds": 0.022337500005960464,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 197184,
+      "seconds": 0.05663570002070628,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 199308,
+      "seconds": 0.03166490001603961,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 187361,
+      "seconds": 0.7113645999925211,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "zip silesia.zip:x-ray prefix 262144 | acquisition=dev_machine_feasibility_slice",
+  "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
+  "verdict": "raw_gap-74623 comp_gap-57729",
+  "utc_timestamp": "2026-08-29T14:29:28.597214+00:00",
+  "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+  "command": "experiments/natural/run.py --mode slice --slice-bytes 262144",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T14:29:28.644002+00:00",
+    "git_commit": "730df5d11d30354ead50fa5b6a0dc3077f821111-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}
