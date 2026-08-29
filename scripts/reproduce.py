@@ -83,6 +83,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--slice-bytes", type=int, default=262_144)
     ap.add_argument("--skip-download", action="store_true")
     ap.add_argument("--skip-phases", action="store_true", help="skip legacy phase0..4")
+    ap.add_argument("--offset-whole", action="store_true",
+                    help="run the bit-offset extension whole-file too (needs a big machine)")
     args = ap.parse_args(argv)
 
     steps: list[dict] = []
@@ -109,9 +111,13 @@ def main(argv: list[str] | None = None) -> int:
     steps.append(_run([sys.executable, str(ROOT / "experiments" / "natural" / "run.py"),
                        "--mode", args.mode, "--slice-bytes", str(args.slice_bytes)], f"natural ({args.mode})"))
 
+    # offset extension: slice-only by default -- the whole-file phase sweep
+    # (~240 discovery passes/file) does not finish a 10 MB file on 8 GiB.
+    # Pass --offset-whole on a bigger machine.
+    _off_mode = "whole" if args.offset_whole else "slice"
     steps.append(_run([sys.executable, str(ROOT / "experiments" / "offset" / "run.py"),
-                       "--mode", args.mode, "--slice-bytes", str(args.slice_bytes)],
-                      f"offset extension ({args.mode})"))
+                       "--mode", _off_mode, "--slice-bytes", str(args.slice_bytes)],
+                      f"offset extension ({_off_mode})"))
 
     if not args.skip_phases:
         for phase in ("phase0", "phase1", "phase2", "phase3", "phase4"):

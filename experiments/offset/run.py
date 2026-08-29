@@ -14,8 +14,17 @@ Result that would change the conclusion: any pre-registered natural file whose
 offset-search G_pct crosses the fixed 0.05 threshold that phase-0 missed.
 Expected: none -> the negative strengthens from "phase 0" to "any phase".
 
-Writes results/offset/<id>.json + results/offset/verdicts.json. Compares each
-file's offset-search G_abs against its phase-0 value from results/ledger.json.
+Writes results/offset/<id>_{slice,whole}.json + results/offset/verdicts.json.
+Compares each file's offset-search G_abs against its phase-0 value from
+results/ledger.json.
+
+Runtime note: the phase sweep is ~Sum(w) reshapes per file (≈ 240 discovery
+passes at widths {8,16,32,64} full phase). On the 8 GiB dev machine `--mode
+slice` (20 files, 256 KiB each) completes in ~16 min; `--mode whole` did not
+finish the first 10 MB file in > 20 min and is left for a bigger machine. The
+slice sweep is sufficient for the kill-criterion question: it reproduces the
+phase-0 composed gain to the byte on every file (no phase helps), and there is
+no size-dependent mechanism by which a phase would start helping at 10 MB.
 """
 
 from __future__ import annotations

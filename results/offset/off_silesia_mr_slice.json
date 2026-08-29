@@ -1,0 +1,182 @@
+{
+  "experiment_id": "off_silesia_mr_slice",
+  "phase": "offset",
+  "dataset_id": "silesia_mr@slice262144",
+  "dataset_sha256": "288236c90013320462fbe5864774054b26334be4ee59a8bde8a9797fbc9148f7",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "detector": "bit_offset_search",
+    "width_offsets": [
+      [
+        8,
+        null
+      ],
+      [
+        16,
+        null
+      ],
+      [
+        32,
+        null
+      ],
+      [
+        64,
+        null
+      ],
+      [
+        128,
+        8
+      ],
+      [
+        256,
+        8
+      ]
+    ],
+    "acquisition": "slice",
+    "prereg_threshold": {
+      "G_pct": 0.05,
+      "G_abs": 1024
+    }
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 2097152,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 2097152,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 2097296,
+    "total_bytes": 262162
+  },
+  "total_encoded_bytes": 262162,
+  "roundtrip_ok": true,
+  "encode_seconds": 55.09611820001737,
+  "decode_seconds": 0.3345170000102371,
+  "discovery_seconds": 55.09611820001737,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 79021,
+      "seconds": 0.16402859997469932,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 79009,
+      "seconds": 0.16116970000439323,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 55898,
+      "seconds": 0.036065399996005,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 61252,
+      "seconds": 0.18352709998725913,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 70559,
+      "seconds": 0.19867849998991005,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 62355,
+      "seconds": 1.410264600010123,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 79037,
+      "seconds": 0.15555339999264106,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 79025,
+      "seconds": 0.1568138999864459,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 56017,
+      "seconds": 0.02809710000292398,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 61568,
+      "seconds": 0.20084169998881407,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 70601,
+      "seconds": 0.18717920000199229,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 63022,
+      "seconds": 1.3820516999985557,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "composed_roundtrip": {
+    "mode": "full",
+    "gzip9": true,
+    "zlib9": true,
+    "bz2_9": true,
+    "xz9": true,
+    "zstd19": true,
+    "brotli11": true,
+    "all_ok": true,
+    "n_codecs_checked": 6
+  },
+  "notes": "zip silesia.zip:mr prefix 262144 | detector=bit_offset_search",
+  "hypothesis": "Trying every bit phase offset per width. If the phase-0 negative were a framing artifact, some offset would cross the 0.05 threshold.",
+  "verdict": "raw_gap-206264 no_deduction header_perturbation-119",
+  "utc_timestamp": "2026-08-29T16:50:59.711157+00:00",
+  "git_commit": "299a7f1922aa18d0e4204c576c2eb791c4cf3a4a",
+  "command": "experiments/offset/run.py --mode slice",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T16:50:59.763981+00:00",
+    "git_commit": "299a7f1922aa18d0e4204c576c2eb791c4cf3a4a",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

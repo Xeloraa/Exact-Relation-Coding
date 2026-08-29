@@ -98,8 +98,8 @@ Whole-file experiments run: 8 of the pre-registered corpus list. Remaining rows 
 
 For each file: offset-search `G_abs` vs the phase-0 value; whether any bit phase helped, and whether it crossed the pre-registered 0.05 threshold.
 
-| dataset_id | bytes | kind | rels | G_abs (offset) | G_abs (phase0) | offset helped? | crosses 0.05? | round-trip |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| dataset_id | scope | bytes | kind | rels | G_abs (offset) | G_abs (phase0) | offset helped? | crosses 0.05? | round-trip |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | enwik8@slice262144 | 262144 | PASSTHROUGH | 0 | -39 | -39 | no | no | True |
 | sdrbench_exaalt2869440_vx.f32@slice262144 | 262144 | GF2 | 3 | -10819 | -10819 | no | no | True |
 | sdrbench_exaalt2869440_vy.f32@slice262144 | 262144 | GF2 | 3 | -10816 | -10816 | no | no | True |

@@ -1,0 +1,182 @@
+{
+  "experiment_id": "off_uci_household_power_text_slice",
+  "phase": "offset",
+  "dataset_id": "uci_household_power_text@slice262144",
+  "dataset_sha256": "9f1454454bcc7ef097b21c8a931794c89eda2df9b66a8424b176466e11535fc4",
+  "dataset_bytes": 262144,
+  "seed": null,
+  "config": {
+    "detector": "bit_offset_search",
+    "width_offsets": [
+      [
+        8,
+        null
+      ],
+      [
+        16,
+        null
+      ],
+      [
+        32,
+        null
+      ],
+      [
+        64,
+        null
+      ],
+      [
+        128,
+        8
+      ],
+      [
+        256,
+        8
+      ]
+    ],
+    "acquisition": "slice",
+    "prereg_threshold": {
+      "G_pct": 0.05,
+      "G_abs": 1024
+    }
+  },
+  "codec_kind": "GF2",
+  "n_relations": 60,
+  "n_independent": 196,
+  "recovered_bits": 491520,
+  "accounting": {
+    "payload_bits": 1605632,
+    "relation_description_bits": 12016,
+    "header_bits": 216,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1617928,
+    "total_bytes": 202241
+  },
+  "total_encoded_bytes": 202241,
+  "roundtrip_ok": true,
+  "encode_seconds": 40.43653129998711,
+  "decode_seconds": 0.14383489999454468,
+  "discovery_seconds": 40.43653129998711,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 42249,
+      "seconds": 0.05851329999859445,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 42237,
+      "seconds": 0.058767000009538606,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 28521,
+      "seconds": 0.017307599977357313,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 28160,
+      "seconds": 0.12629960000049323,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 32706,
+      "seconds": 0.22012109999195673,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 29390,
+      "seconds": 0.5065401000028942,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 83220,
+      "seconds": 0.018799099983880296,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 83208,
+      "seconds": 0.01755850002518855,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 57988,
+      "seconds": 0.016146100009791553,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 58208,
+      "seconds": 0.08941760001471266,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 68053,
+      "seconds": 0.08096870000008494,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 60019,
+      "seconds": 0.45520440000109375,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "composed_roundtrip": {
+    "mode": "full",
+    "gzip9": true,
+    "zlib9": true,
+    "bz2_9": true,
+    "xz9": true,
+    "zstd19": true,
+    "brotli11": true,
+    "all_ok": true,
+    "n_codecs_checked": 6
+  },
+  "notes": "uci household power household_power_consumption.txt (prefix 262144, 262144 B) | detector=bit_offset_search",
+  "hypothesis": "Trying every bit phase offset per width. If the phase-0 negative were a framing artifact, some offset would cross the 0.05 threshold.",
+  "verdict": "raw_gap-174081 comp_gap-29828",
+  "utc_timestamp": "2026-08-29T17:03:52.173768+00:00",
+  "git_commit": "299a7f1922aa18d0e4204c576c2eb791c4cf3a4a",
+  "command": "experiments/offset/run.py --mode slice",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T17:03:52.219313+00:00",
+    "git_commit": "299a7f1922aa18d0e4204c576c2eb791c4cf3a4a",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

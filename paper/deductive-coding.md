@@ -333,14 +333,18 @@ Full table: `paper/results_tables.md` § Controls (generated). Every gate passes
 ### 14.2 Bit-phase-offset extension (kill-criterion follow-up)
 
 `experiments/offset/run.py` re-runs the detector with the §8.4 phase sweep on
-every pre-registered natural file (whole where feasible, else ≥ 256 KiB
-prefix). For each file the offset-search `G_abs` is compared against the
-phase-0 value from `results/ledger.json`. Outcome (`results/offset/verdicts.json`,
-in `paper/results_tables.md`): **no file crosses the 0.05 threshold**, and the
-offset search does not beat phase-0 by more than header perturbation on any
-file. The axis-aligned negative is robust to bit phase — it is not an artifact
-of reshaping from bit 0. This is the one bounded detector-broadening attempt the
-kill criterion requires; it does not rescue the hypothesis.
+all 20 pre-registered natural files at 256 KiB (the whole-file phase sweep —
+≈ 240 discovery passes/file — does not finish a 10 MB file on the 8 GiB machine
+and is left for a bigger one; there is no size-dependent mechanism by which a
+phase would begin helping at 10 MB when it does not at 256 KiB). For each file
+the offset-search `G_abs` is compared against the phase-0 value from
+`results/ledger.json`. Outcome (`results/offset/verdicts.json`, table in
+`paper/results_tables.md`): on **every one of the 20 files** the offset-search
+composed gain **equals the phase-0 value to the byte** — no bit phase helps, no
+file crosses the 0.05 threshold. The axis-aligned negative is robust to bit
+phase; it is not an artifact of reshaping from bit 0. This is the one bounded
+detector-broadening attempt the kill criterion requires; it does not rescue the
+hypothesis.
 
 ## 15. Results
 
@@ -396,7 +400,7 @@ corpora (whole where available):
 | **B** discoverable & represented | verified on every row, well-formed accounted container? | **yes whenever A holds** — `verify_basis` passes or the codec raises; container closes the `finalize()` invariant; independent decoder agrees |
 | **C** reduces total cost (pre-composition) | `\|D(x)\| < raw_best`? | **no** — description + header + framing + CRC exceed the recovered bits; the container is *larger* than `raw_best` on every file |
 | **D** survives strong downstream compressor | `G_abs > 0`? | **no**, usually large-negative (`dickens` −94 %) |
-| **E** occurs naturally at meaningful scale | any non-prior-art file ≥ threshold? | **no** — 0 of all natural files (whole + prefix + offset extension) |
+| **E** occurs naturally at meaningful scale | any non-prior-art file ≥ threshold? | **no** — 0 of all natural files (8 whole + 20 prefix; offset extension: 0 of 20) |
 | *(planted-only)* strong mixer absorbs the planted gap? | paq(raw) vs paq(D(x)) | **no** — paq8l/paq8px v216 leave the planted XOR gap intact, so the natural-data negative is about the data, not a weak baseline |
 
 The redundancy the detector finds in natural data is real (RQ-A/B) but trivial
