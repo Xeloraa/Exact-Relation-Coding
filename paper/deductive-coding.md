@@ -78,16 +78,19 @@ primary quantity, and we count every metadata bit inside the container.
 **Contributions.**
 1. A formal composed-gain metric over the full post-downstream representation (§7).
 2. Two prior-free exact-relation detectors with a bit-exact ledger, a structural
-   never-worse fallback, an independent decoder, and composed round-trip checks (§8–9).
+   never-worse fallback, an independent (shared-nothing) decoder verified through
+   the full compress→decompress→decode chain, and composed round-trip checks (§8–9, §19).
 3. A pre-registered per-file threshold and a permanent kill criterion, fixed
-   before the natural-corpus runs (§11).
+   before the natural-corpus runs (§11); its one bounded detector-broadening
+   attempt — a bit-phase-offset search — carried out (§8.4, §14.2).
 4. A control battery that makes a negative *informative*: positive (planted),
    null (i.i.d./shuffled/near-relation), a corruption sweep, a
    representation-change false-positive estimate, a metadata-cost check, a
    composition-order check, and a non-aligned-period scope control (§14).
 5. A scoped empirical answer: large composed gain on planted codes; on the
-   natural corpora measured so far, gains fail at the "reduces representation"
-   layer and every layer after it (§15–16).
+   natural corpora measured (8/12 Silesia whole + 12 slices + 6 SDRBench fields
+   + telemetry + the offset extension), gains fail at RQ-C and every layer after
+   it, robustly to bit phase (§15–16).
 
 ## 3. Research questions
 
