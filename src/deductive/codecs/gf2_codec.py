@@ -124,6 +124,10 @@ def encode_gf2_matrix(
         if have < needed:
             raise ValueError("matrix+leftover shorter than original")
 
+    if n_rel == 0:
+        # Full column rank: relation description cannot omit symbols.
+        return encode_passthrough(original)
+
     w = AccountedWriter()
     write_preamble(w, Kind.GF2)
     w.write_bits("header", n_rows, 32)

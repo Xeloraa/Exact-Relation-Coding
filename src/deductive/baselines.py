@@ -7,6 +7,7 @@ Missing compressors are recorded as unavailable rather than skipped silently.
 from __future__ import annotations
 
 import bz2
+import gc
 import gzip
 import io
 import lzma
@@ -84,6 +85,7 @@ def run_baselines(data: bytes, *, skip_slow: bool = False) -> list[BaselineSize]
             )
             continue
         try:
+            gc.collect()
             out, seconds = _timed(lambda fn=fn: fn(data))
             results.append(BaselineSize(name=name, bytes=len(out), seconds=seconds, available=True))
         except Exception as exc:  # noqa: BLE001 — record unavailability honestly

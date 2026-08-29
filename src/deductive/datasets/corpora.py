@@ -7,12 +7,16 @@ automated tests (source snippets, JSON, CSV, logs).
 
 from __future__ import annotations
 
+import io
 import json
 import sqlite3
+import struct
+import sys
 import tempfile
-from pathlib import Path
-
+import zipfile
+import zlib
 from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass(frozen=True)
@@ -107,3 +111,149 @@ CTU-13 NetFlow (tabular / FD control; format-awareness trap):
 Place downloads under data/downloads/ (gitignored) and point experiments
 at those paths.
 """
+
+
+def _repo_root() -> Path:
+    return Path(__file__).resolve().parents[3]
+
+
+def downloads_dir() -> Path:
+    d = _repo_root() / "data" / "downloads"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def make_png(width: int = 32, height: int = 32, seed: int = 0) -> bytes:
+    """Minimal RGB PNG. Chunk CRCs are present; a general bit-matrix should not parse PNG."""
+    import numpy as np
+
+    rng = np.random.default_rng(seed)
+    pixels = rng.integers(0, 256, size=(height, width, 3), dtype=np.uint8)
+    raw = bytearray()
+    for y in range(height):
+        raw.append(0)
+        raw.extend(pixels[y].tobytes())
+    compressed = zlib.compress(bytes(raw), 9)
+
+    def chunk(tag: bytes, data: bytes) -> bytes:
+        crc = zlib.crc32(tag + data) & 0xFFFFFFFF
+        return struct.pack(">I", len(data)) + tag + data + struct.pack(">I", crc)
+
+    ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+    return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr) + chunk(b"IDAT", compressed) + chunk(b"IEND", b"")
+
+
+# DOS date/time in the ZIP local header; must be fixed or SHA-256 changes every run.
+_ZIP_STORED_MTIME = (2026, 8, 29, 0, 0, 0)
+
+
+def make_zip_stored(files: dict[str, bytes]) -> bytes:
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", compression=zipfile.ZIP_STORED) as zf:
+        for name, data in files.items():
+            info = zipfile.ZipInfo(filename=name, date_time=_ZIP_STORED_MTIME)
+            info.compress_type = zipfile.ZIP_STORED
+            info.create_system = 0
+            info.external_attr = 0
+            zf.writestr(info, data)
+    return buf.getvalue()
+
+
+def make_sqlite_fd(*, n_rows: int, seed: int) -> bytes:
+    """SQLite table with an exact derived column c = a + b. FD / format trap."""
+    import numpy as np
+
+    rng = np.random.default_rng(seed)
+    a = rng.integers(0, 10_000, size=n_rows)
+    b = rng.integers(0, 10_000, size=n_rows)
+    c = a + b
+    with tempfile.NamedTemporaryFile(suffix=".sqlite", delete=False) as tmp:
+        path = tmp.name
+    try:
+        con = sqlite3.connect(path)
+        cur = con.cursor()
+        cur.execute("create table t (a integer, b integer, c integer)")
+        cur.executemany("insert into t values (?,?,?)", zip(map(int, a), map(int, b), map(int, c)))
+        con.commit()
+        con.close()
+        return Path(path).read_bytes()
+    finally:
+        Path(path).unlink(missing_ok=True)
+
+
+def make_csv_fd(*, n_rows: int, seed: int) -> bytes:
+    import numpy as np
+
+    rng = np.random.default_rng(seed)
+    a = rng.integers(0, 10_000, size=n_rows)
+    b = rng.integers(0, 10_000, size=n_rows)
+    lines = ["a,b,c"]
+    for x, y in zip(a, b):
+        lines.append(f"{int(x)},{int(y)},{int(x + y)}")
+    return ("\n".join(lines) + "\n").encode("ascii")
+
+
+def python_stdlib_sample(*, max_bytes: int = 400_000) -> bytes | None:
+    """Concatenate .py files from the local standard library. Not uploaded to git."""
+    lib = Path(sys.base_prefix) / "Lib"
+    if not lib.is_dir():
+        return None
+    chunks: list[bytes] = []
+    total = 0
+    for path in sorted(lib.glob("*.py")):
+        try:
+            data = path.read_bytes()
+        except OSError:
+            continue
+        chunks.append(data)
+        chunks.append(b"\n")
+        total += len(data) + 1
+        if total >= max_bytes:
+            break
+    blob = b"".join(chunks)[:max_bytes]
+    return blob or None
+
+
+def local_pe_sample(*, max_bytes: int = 512_000) -> bytes | None:
+    """Prefix of the running Python interpreter (PE/ELF). Not uploaded to git."""
+    path = Path(sys.executable)
+    if not path.is_file():
+        return None
+    data = path.read_bytes()[:max_bytes]
+    return data or None
+
+
+def load_enwik8_prefix(n_bytes: int = 1_000_000) -> tuple[bytes | None, str]:
+    """Load a prefix of enwik8 from data/downloads if present. Never commits the dump."""
+    root = downloads_dir()
+    for name in ("enwik8", "enwik8.txt"):
+        path = root / name
+        if path.is_file():
+            data = path.read_bytes()[:n_bytes]
+            return data, f"local {path.name} prefix {len(data)}"
+    zpath = root / "enwik8.zip"
+    if zpath.is_file():
+        with zipfile.ZipFile(zpath) as zf:
+            names = zf.namelist()
+            target = "enwik8" if "enwik8" in names else names[0]
+            with zf.open(target) as f:
+                data = f.read(n_bytes)
+            return data, f"zip {zpath.name} prefix {len(data)}"
+    return None, "enwik8 not present under data/downloads/"
+
+
+def try_download_enwik8_zip(timeout: int = 60) -> str:
+    """Best-effort download. Failures are recorded, not retried forever."""
+    import urllib.request
+
+    dest = downloads_dir() / "enwik8.zip"
+    if dest.is_file() and dest.stat().st_size > 1_000_000:
+        return f"already have {dest}"
+    url = "http://mattmahoney.net/dc/enwik8.zip"
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as resp:
+            dest.write_bytes(resp.read())
+        return f"downloaded {dest.stat().st_size} bytes"
+    except Exception as exc:  # noqa: BLE001
+        return f"download failed: {type(exc).__name__}: {exc}"
+

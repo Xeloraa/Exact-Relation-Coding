@@ -1,0 +1,142 @@
+{
+  "experiment_id": "phase4_natural_enwik8_1mb",
+  "phase": "phase4_natural",
+  "dataset_id": "enwik8_prefix_1mb",
+  "dataset_sha256": "369b688978f649681136198fb96db14c1616756260c55fb4b65e9bc049552cad",
+  "dataset_bytes": 1000000,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "category": "text",
+    "n_bytes": 1000000
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 8000000,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 8000000,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 8000144,
+    "total_bytes": 1000018
+  },
+  "total_encoded_bytes": 1000018,
+  "roundtrip_ok": true,
+  "encode_seconds": 141.92083109999658,
+  "decode_seconds": 8.702813199983211,
+  "discovery_seconds": 141.92083109999658,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 355791,
+      "seconds": 1.1673106999951415,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 355779,
+      "seconds": 0.6616676000121515,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 281323,
+      "seconds": 1.0005807999987155,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 290692,
+      "seconds": 2.6895985000010114,
+      "available": true,
+      "notes": "filled_after_MemoryError_gc_retry"
+    },
+    {
+      "name": "zstd19",
+      "bytes": 300075,
+      "seconds": 4.688967499998398,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 281012,
+      "seconds": 31.299675099988235,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 355816,
+      "seconds": 0.5725986999750603,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 355804,
+      "seconds": 0.5912988999916706,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 281496,
+      "seconds": 0.9913438000075985,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 290744,
+      "seconds": 3.1539186999725644,
+      "available": true,
+      "notes": "filled_after_MemoryError_gc_retry"
+    },
+    "zstd19": {
+      "bytes": 300109,
+      "seconds": 4.464552999997977,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 281092,
+      "seconds": 25.771676100004697,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "local enwik8 prefix 1000000; xz9 MemoryError on first pass after GF(2); filled on gc.collect retry",
+  "hypothesis": "enwik8 1MB prefix: experimental control; composed gap expected negative.",
+  "verdict": "raw_gap-719006 no_deduction header_perturbation-80",
+  "utc_timestamp": "2026-08-29T10:28:33.500713+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/natural.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T10:28:36.543376+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

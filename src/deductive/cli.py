@@ -14,7 +14,7 @@ def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="deductive", description="Deductive Coding research runner")
     p.add_argument(
         "command",
-        choices=("phase0", "phase1", "phase2", "phase3", "all"),
+        choices=("phase0", "phase1", "phase2", "phase3", "phase4", "all"),
         help="experiment phase to run",
     )
     args = p.parse_args(argv)
@@ -23,6 +23,7 @@ def main(argv: list[str] | None = None) -> int:
         "phase1": ROOT / "experiments" / "phase1" / "run.py",
         "phase2": ROOT / "experiments" / "phase2" / "run.py",
         "phase3": ROOT / "experiments" / "phase3" / "run.py",
+        "phase4": ROOT / "experiments" / "phase4" / "run.py",
     }
     commands = list(mapping) if args.command == "all" else [args.command]
     for name in commands:

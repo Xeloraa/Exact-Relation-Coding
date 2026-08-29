@@ -74,3 +74,16 @@ FD-only tools do **not** trip this trigger for the GF(2)-on-bytes question. They
 ## Search log
 
 - 2026-08-29: constraint-based compression; Corra; Wolpe FD pre-pass; US 8,150,888; precomp; Slepian–Wolf; MeLLoC; grammar compression; PAQ mixing; Daikon. No tool found that states a corpus-level deduction gap for general bytes with GF(2) discovery and full accounting.
+- 2026-08-29: PNG/ZIP/gzip CRC32 (PNG spec, zlib `crc32`, precomp); SQLite pager / unused-page zeros vs columnar FD. Same verdict: FD elimination occupied; CRC inversion occupied; live question remains a composed gap on arbitrary bytes.
+
+## 2026-08-29 — CRC32, PNG vs GF(2), SQLite pager
+
+**CRC inversion is occupied.** PNG chunk CRCs (ISO 3309 / ITU-T V.42 CRC-32 over type+data; PNG specification), gzip trailers, and ZIP local/central CRC-32 of uncompressed payload are published checksums. zlib’s `crc32` is the usual implementation. Precomp (and format-aware PNG/ZIP recompressors) already invert known streams and drop reconstructible CRCs. A per-record CRC32 that a blind affine GF(2) basis recovers is the same checksum, not a new phenomenon. Label it format-aware; do not cite it as novelty on “real files.”
+
+**Parsing PNG is not a whole-file GF(2) matrix.** Chunk layout, `IHDR`/`IDAT`/`IEND`, per-chunk CRC fields, and deflate-inside-`IDAT` are a typed parse plus a known codec. Precomp-style wins on PNG/ZIP/gzip are that parse. Treating the entire file as bit-columns and discovering a GF(2) basis is a different mechanism: no chunk grammar, no zlib stream finder. Even if both omit CRC bits, the description is not “we parsed PNG.” Rediscovering CRCs, lengths, or deflate by either route stays labeled occupied.
+
+**SQLite pager zeros are not columnar FD.** The SQLite file is a header plus fixed-size pages (pager). Unused page bytes and never-written pages are typically zero. A GF(2) pass that collapses that sparsity is format structure; xz already encodes long zero runs. Columnar FD elimination (drop a table column that is an exact function of others; Corra / US 8,150,888 / Wolpe 2026) is a schema-shaped relation on *cells*, not pager slack. A SQLite raw-size shrink that then loses on composition is a format-awareness trap, not derived-column compression and not a general-byte deduction gap.
+
+**Phase 4 measurement (2026-08-29):** whole-file GF(2) on generated PNG 48×48, stored ZIP, and a 4000-row SQLite FD file was passthrough (`n_relations==0`). Composed gaps were negative (header perturbation or xz/brotli on the raw file). That is the predicted format-awareness trap, not a counterexample to occupancy of CRC inversion / pager sparsity.
+
+**Verdict unchanged.** FD elimination occupied. CRC inversion occupied. The live question is still whether discovered exact relations on *arbitrary* bytes yield a composed deduction gap after full description cost, outside format-aware and FD-shaped data.

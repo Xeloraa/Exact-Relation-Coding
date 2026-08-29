@@ -1,0 +1,142 @@
+{
+  "experiment_id": "phase4_natural_stdlib_py",
+  "phase": "phase4_natural",
+  "dataset_id": "python_stdlib_py_prefix",
+  "dataset_sha256": "a01713a2ee043fc28e0564c7f291b27420b27707c1bc193b3b869e84107f3541",
+  "dataset_bytes": 400000,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "category": "source_code",
+    "max_bytes": 400000
+  },
+  "codec_kind": "GF2",
+  "n_relations": 1,
+  "n_independent": 7,
+  "recovered_bits": 400000,
+  "accounting": {
+    "payload_bits": 2800000,
+    "relation_description_bits": 15,
+    "header_bits": 216,
+    "framing_bits": 1,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 2800296,
+    "total_bytes": 350037
+  },
+  "total_encoded_bytes": 350037,
+  "roundtrip_ok": true,
+  "encode_seconds": 248.17207000000053,
+  "decode_seconds": 24.507443100010278,
+  "discovery_seconds": 248.17207000000053,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 89041,
+      "seconds": 0.3044532999920193,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 89029,
+      "seconds": 0.4892056999960914,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 76863,
+      "seconds": 0.3005473999946844,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 77204,
+      "seconds": 1.4455825999903027,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 78927,
+      "seconds": 1.480594699998619,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 74546,
+      "seconds": 6.823420600005193,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 169365,
+      "seconds": 0.13176869999733754,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 169353,
+      "seconds": 0.1557203000120353,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 139723,
+      "seconds": 0.16170820000115782,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 146160,
+      "seconds": 1.059165300015593,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 149359,
+      "seconds": 1.2609563999867532,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 147727,
+      "seconds": 8.134172199992463,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "not uploaded; local stdlib sample",
+  "hypothesis": "Local CPython Lib/*.py: composed gap vs xz/brotli should be negative.",
+  "verdict": "raw_gap-275491 comp_gap-65177",
+  "utc_timestamp": "2026-08-29T10:22:00.749485+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/natural.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T10:22:08.632306+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

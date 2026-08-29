@@ -1,0 +1,148 @@
+{
+  "experiment_id": "phase4_structured_log_fd_n2000",
+  "phase": "phase4_structured",
+  "dataset_id": "log_lines_fd_n2000_s802",
+  "dataset_sha256": "c27486f53b76bcf43f0ae1184cd9ea07fb0aeeea20eee761a0a12fbab0653623",
+  "dataset_bytes": 106618,
+  "seed": 802,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64
+    ],
+    "n_rows": 2000,
+    "label": "format_FD_trap_structured_text"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 1,
+  "n_independent": 7,
+  "recovered_bits": 106618,
+  "accounting": {
+    "payload_bits": 746326,
+    "relation_description_bits": 15,
+    "header_bits": 216,
+    "framing_bits": 3,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 746624,
+    "total_bytes": 93328
+  },
+  "total_encoded_bytes": 93328,
+  "roundtrip_ok": true,
+  "encode_seconds": 10.585014300013427,
+  "decode_seconds": 0.5046050999953877,
+  "discovery_seconds": 10.585014300013427,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 17251,
+      "seconds": 0.010311499994713813,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 17239,
+      "seconds": 0.00883919998886995,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 12573,
+      "seconds": 0.006761500000720844,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 12228,
+      "seconds": 0.04951499999151565,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 12203,
+      "seconds": 0.05286709999199957,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 12543,
+      "seconds": 0.1741743000166025,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 24320,
+      "seconds": 0.00430549998418428,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 24308,
+      "seconds": 0.0032451000006403774,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 17355,
+      "seconds": 0.005628500017337501,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 19228,
+      "seconds": 0.041482399974484,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 21132,
+      "seconds": 0.03325889998814091,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 18269,
+      "seconds": 0.1444191999908071,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "in-memory log lines; total=n*2 (weak FD); not a corpus file LABEL: format+FD trap; exact integer FD lives in parsed JSON/log text, not GF(2) on UTF-8. LABEL: GF2 raw shrink is not a composed win.",
+  "hypothesis": "gzip/xz crush this structured text; composed gap negative. Any GF(2) raw shrink is not a composed win (format+FD trap).",
+  "verdict": "raw_gap-81125 comp_gap-5152",
+  "utc_timestamp": "2026-08-29T09:55:11.167510+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/structured_text.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T09:55:11.250174+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

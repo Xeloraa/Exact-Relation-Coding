@@ -10,7 +10,16 @@ from deductive.datasets.synthetic import (
     near_relation_bits,
     shuffled_bits,
 )
-from deductive.datasets.corpora import builtin_corpora
+from deductive.datasets.corpora import (
+    builtin_corpora,
+    load_enwik8_prefix,
+    local_pe_sample,
+    make_csv_fd,
+    make_png,
+    make_sqlite_fd,
+    make_zip_stored,
+    python_stdlib_sample,
+)
 
 __all__ = [
     "SyntheticDataset",
@@ -22,4 +31,11 @@ __all__ = [
     "near_relation_bits",
     "shuffled_bits",
     "builtin_corpora",
+    "make_png",
+    "make_zip_stored",
+    "make_csv_fd",
+    "make_sqlite_fd",
+    "python_stdlib_sample",
+    "local_pe_sample",
+    "load_enwik8_prefix",
 ]

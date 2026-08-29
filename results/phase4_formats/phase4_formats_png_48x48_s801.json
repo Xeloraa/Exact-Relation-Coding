@@ -1,0 +1,149 @@
+{
+  "experiment_id": "phase4_formats_png_48x48_s801",
+  "phase": "phase4",
+  "dataset_id": "png_48x48_s801",
+  "dataset_sha256": "bb418717e87ace0a49a3c2c96d84e7b040dfe6d7b20fc89a607e9b30a85a6773",
+  "dataset_bytes": 7028,
+  "seed": 801,
+  "config": {
+    "codec": "gf2_best",
+    "widths": [
+      8,
+      16,
+      32,
+      64,
+      128
+    ],
+    "category": "png",
+    "label": "format_awareness_trap"
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 56224,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 56224,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 56368,
+    "total_bytes": 7046
+  },
+  "total_encoded_bytes": 7046,
+  "roundtrip_ok": true,
+  "encode_seconds": 2.4899575999879744,
+  "decode_seconds": 0.39455879997694865,
+  "discovery_seconds": 2.4899575999879744,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 7051,
+      "seconds": 0.0005365000106394291,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 7039,
+      "seconds": 0.0003882000164594501,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 7513,
+      "seconds": 0.0034638000070117414,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 7088,
+      "seconds": 0.39984909998020157,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 7038,
+      "seconds": 0.004083899984834716,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 7032,
+      "seconds": 0.2650285999989137,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 7069,
+      "seconds": 0.00041039998177438974,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 7057,
+      "seconds": 0.00021719999494962394,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 7554,
+      "seconds": 0.003244099993025884,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 7108,
+      "seconds": 0.029554100008681417,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 7056,
+      "seconds": 0.0012348000018391758,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 7050,
+      "seconds": 0.4147886999999173,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "LABEL: format-awareness / per-chunk CRC32; general GF(2) is not a PNG parser. Any raw shrink is sparsity in headers/padding, not novelty.",
+  "hypothesis": "General bit-matrix GF(2) does not invert PNG/ZIP CRCs (variable layout), so the composed gap vs xz/brotli is negative. SQLite may shrink due to zeros (seen already on tiny sqlite) but xz still wins \u2014 label format/sparsity.",
+  "verdict": "raw_gap-14 no_deduction header_perturbation-18",
+  "utc_timestamp": "2026-08-29T10:02:07.474711+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/formats.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T10:02:24.758945+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

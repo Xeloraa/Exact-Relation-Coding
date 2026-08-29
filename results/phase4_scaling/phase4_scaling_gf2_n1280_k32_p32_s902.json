@@ -1,0 +1,146 @@
+{
+  "experiment_id": "phase4_scaling_gf2_n1280_k32_p32_s902",
+  "phase": "phase4",
+  "dataset_id": "gf2_n1280_k32_p32_s902",
+  "dataset_sha256": "c78ca4eb1e539975d9aa8b76779a790da3ab91af027b14de14c2d22c1f4b97d6",
+  "dataset_bytes": 10240,
+  "seed": 902,
+  "config": {
+    "n_rows": 1280,
+    "n_info": 32,
+    "n_parity": 32,
+    "seed": 902,
+    "codec": "gf2",
+    "n_cols": 64,
+    "size_label": "10KiB"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 32,
+  "n_independent": 32,
+  "recovered_bits": 40960,
+  "accounting": {
+    "payload_bits": 40960,
+    "relation_description_bits": 1088,
+    "header_bits": 216,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 42328,
+    "total_bytes": 5291
+  },
+  "total_encoded_bytes": 5291,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.9509306999971159,
+  "decode_seconds": 0.5559512999898288,
+  "discovery_seconds": 0.9509306999971159,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 10263,
+      "seconds": 0.0004126999992877245,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 10251,
+      "seconds": 0.00029239998548291624,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 10710,
+      "seconds": 0.004269800003385171,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 10300,
+      "seconds": 0.3166629000043031,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 10250,
+      "seconds": 0.001886499987449497,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 10244,
+      "seconds": 0.3179172000091057,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 5314,
+      "seconds": 0.00038029998540878296,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 5302,
+      "seconds": 0.00016270001651719213,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 5845,
+      "seconds": 0.00290389999281615,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 5352,
+      "seconds": 0.3460117999929935,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 5301,
+      "seconds": 0.0009685000113677233,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 5295,
+      "seconds": 0.2406129000009969,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "gf2",
+  "hypothesis": "Exact planted GF(2) parity is deductively recoverable. Relation description is independent of n_rows; recovered bits and the composed gap should scale with n_rows.",
+  "verdict": "raw_gap+4953 comp_gap+4949",
+  "utc_timestamp": "2026-08-29T10:07:38.634298+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/scaling.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T10:07:41.672834+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

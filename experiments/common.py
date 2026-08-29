@@ -95,11 +95,6 @@ def _verdict(record: ExperimentRecord) -> str:
         if cgap:
             parts.append(f"header_perturbation{cgap:+d}")
         return " ".join(parts)
-    if record.codec_kind == "PASSTHROUGH" or record.n_relations == 0:
-        parts.append("no_deduction")
-        if cgap:
-            parts.append(f"header_perturbation{cgap:+d}")
-        return " ".join(parts)
     if cgap is None:
         parts.append("no_composition")
     elif cgap > 0:

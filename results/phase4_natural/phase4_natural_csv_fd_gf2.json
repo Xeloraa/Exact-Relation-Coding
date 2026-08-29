@@ -1,0 +1,142 @@
+{
+  "experiment_id": "phase4_natural_csv_fd_gf2",
+  "phase": "phase4_natural",
+  "dataset_id": "csv_fd_n8000_s701",
+  "dataset_sha256": "e3399b0a8a8f8c822b63a1fa071cbc1f385ea9d5df8ec8b02e68419627d9a60e",
+  "dataset_bytes": 122204,
+  "seed": 701,
+  "config": {
+    "codec": "gf2_best",
+    "category": "csv",
+    "label": "FD_in_text"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 15,
+  "n_independent": 49,
+  "recovered_bits": 229125,
+  "accounting": {
+    "payload_bits": 748475,
+    "relation_description_bits": 799,
+    "header_bits": 216,
+    "framing_bits": 6,
+    "crc_bits": 32,
+    "leftover_bits": 64,
+    "other_sideinfo_bits": 0,
+    "total_bits": 749592,
+    "total_bytes": 93699
+  },
+  "total_encoded_bytes": 93699,
+  "roundtrip_ok": true,
+  "encode_seconds": 86.85620469998685,
+  "decode_seconds": 5.628878399991663,
+  "discovery_seconds": 86.85620469998685,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 58775,
+      "seconds": 0.017231400008313358,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 58763,
+      "seconds": 0.1431338000111282,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 50904,
+      "seconds": 0.015961900004185736,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 54092,
+      "seconds": 0.48359139999956824,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 55302,
+      "seconds": 0.5636632000096142,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 51818,
+      "seconds": 1.0275859000103083,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 85263,
+      "seconds": 0.00859770001261495,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 85251,
+      "seconds": 0.007884899998316541,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 72657,
+      "seconds": 0.1397892000095453,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 80148,
+      "seconds": 0.314127899997402,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 82444,
+      "seconds": 0.16983679999248125,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 77838,
+      "seconds": 2.8141150000155903,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "LABEL: FD-in-text / format trap if any composed win",
+  "hypothesis": "Text CSV with c=a+b: gzip/xz see the text; GF(2) on bytes should not beat composition.",
+  "verdict": "raw_gap-42795 comp_gap-21753",
+  "utc_timestamp": "2026-08-29T10:24:13.636054+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/natural.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T10:24:16.840537+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

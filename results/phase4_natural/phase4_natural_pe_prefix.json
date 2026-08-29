@@ -1,0 +1,142 @@
+{
+  "experiment_id": "phase4_natural_pe_prefix",
+  "phase": "phase4_natural",
+  "dataset_id": "python_executable_prefix",
+  "dataset_sha256": "91566dc8bb9a336c36c607ee0d5a5135e54ddce2418e2cd7728a49c8f098904a",
+  "dataset_bytes": 104928,
+  "seed": null,
+  "config": {
+    "codec": "gf2_best",
+    "category": "binary",
+    "max_bytes": 256000
+  },
+  "codec_kind": "PASSTHROUGH",
+  "n_relations": 0,
+  "n_independent": 839424,
+  "recovered_bits": 0,
+  "accounting": {
+    "payload_bits": 839424,
+    "relation_description_bits": 0,
+    "header_bits": 112,
+    "framing_bits": 0,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 839568,
+    "total_bytes": 104946
+  },
+  "total_encoded_bytes": 104946,
+  "roundtrip_ok": true,
+  "encode_seconds": 10.25548640001216,
+  "decode_seconds": 0.7197332999785431,
+  "discovery_seconds": 10.25548640001216,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 54617,
+      "seconds": 0.0169095000019297,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 54605,
+      "seconds": 0.14443539999774657,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 57234,
+      "seconds": 0.021866700000828132,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 51104,
+      "seconds": 0.38939870000467636,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 52977,
+      "seconds": 0.5371879999875091,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 51354,
+      "seconds": 5.0229409000021406,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 54629,
+      "seconds": 0.12441509999916889,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 54617,
+      "seconds": 0.015104699996300042,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 57258,
+      "seconds": 0.13549250000505708,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 51128,
+      "seconds": 0.33253739998326637,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 52985,
+      "seconds": 0.2965559000149369,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 51313,
+      "seconds": 2.527876500011189,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "not uploaded; sys.executable prefix",
+  "hypothesis": "PE/ELF interpreter prefix: general GF(2) should lose to xz on composition.",
+  "verdict": "raw_gap-53842 no_deduction header_perturbation-24",
+  "utc_timestamp": "2026-08-29T10:22:30.679209+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/natural.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T10:22:33.151061+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

@@ -18,7 +18,7 @@ The hypothesis is empirical. It can fail because:
 
 CRC32 of the original byte string is stored and counted. It is not required for reconstruction of a trusted stream; it is included because a real container needs integrity and this project forbids hidden metadata.
 
-Passthrough is the never-worse fallback: original bytes plus counted header and CRC. A candidate encoding is not reported as a win unless it is strictly smaller than this fallback **and** compared against gzip, zlib, bz2, xz, zstd, and brotli on the same raw bytes.
+Passthrough is the never-worse fallback: original bytes plus counted header and CRC. A candidate encoding is not reported as a win unless it is strictly smaller than this fallback **and** compared against gzip, zlib, bz2, xz, zstd, and brotli on the same raw bytes. If GF(2) discovery finds no relations (`n_rel==0`), the encoder returns passthrough after the original byte string is already in hand — it does not emit an empty relation list.
 
 ## Discovery
 

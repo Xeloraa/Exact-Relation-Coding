@@ -1,0 +1,142 @@
+{
+  "experiment_id": "phase4_natural_csv_fd_tabular",
+  "phase": "phase4_natural",
+  "dataset_id": "csv_fd_n8000_s701_int64",
+  "dataset_sha256": "2d580f451c37fe8c2f9e1b6f52e978957ad4b5eea7801b1e288e3ff6dc2b564b",
+  "dataset_bytes": 192000,
+  "seed": 701,
+  "config": {
+    "codec": "tabular_affine",
+    "label": "FD_elimination_prior_art",
+    "n_cols": 3
+  },
+  "codec_kind": "TABULAR_AFFINE",
+  "n_relations": 1,
+  "n_independent": 2,
+  "recovered_bits": 512000,
+  "accounting": {
+    "payload_bits": 1024000,
+    "relation_description_bits": 105,
+    "header_bits": 208,
+    "framing_bits": 7,
+    "crc_bits": 32,
+    "leftover_bits": 0,
+    "other_sideinfo_bits": 0,
+    "total_bits": 1024352,
+    "total_bytes": 128044
+  },
+  "total_encoded_bytes": 128044,
+  "roundtrip_ok": true,
+  "encode_seconds": 2.9879426999832503,
+  "decode_seconds": 1.6769407000101637,
+  "discovery_seconds": 2.9879426999832503,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 62317,
+      "seconds": 1.5306563999911305,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 62305,
+      "seconds": 1.8883568000164814,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 44124,
+      "seconds": 0.017047800007276237,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 43436,
+      "seconds": 1.2001813999959268,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 55561,
+      "seconds": 1.638438199996017,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 56862,
+      "seconds": 7.880415899999207,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 40176,
+      "seconds": 1.1805472999985795,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 40164,
+      "seconds": 1.825977700005751,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 27876,
+      "seconds": 0.01732279997668229,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 28396,
+      "seconds": 0.9711990999931004,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 35869,
+      "seconds": 0.835448500001803,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 40853,
+      "seconds": 2.617787399998633,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "LABEL: functional-dependency column elimination; prior art",
+  "hypothesis": "Parsed int64 table of the same CSV: composition win is FD elimination, not novel.",
+  "verdict": "raw_gap-84608 comp_gap+15560",
+  "utc_timestamp": "2026-08-29T10:24:44.969528+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/natural.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T10:24:46.661579+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

@@ -42,6 +42,36 @@ Per-record CRC32 is a GF(2) (affine) relation that gzip/xz will not invert.
 ### Decision
 Do not kill. Synthetic mechanism is real. General-text gap is not. CRC and FD wins are real and pre-occupied. Affine GF(2) is implemented and still a checksum when it hits CRC32. Continue only with experiments that distinguish “planted linear code / FD table / checksum” from “arbitrary bytes.” Next: local enwik8 if available; never commit copyrighted dumps.
 
+## 2026-08-29 — Phase 4 natural / formats / scaling
+
+### Hypothesis 8
+A 1 MB enwik8 prefix, local CPython stdlib `.py`, or the running interpreter prefix has a GF(2) composed gap.
+
+**Result: falsified.** enwik8 prefix: passthrough, brotli 281012 vs DEDC 1000018, composed −80 (header). Stdlib: one 8-bit-plane relation (ASCII high bit), DEDC 350037 vs brotli 74546, composed −65177. PE stub: passthrough, composed −24.
+
+### Hypothesis 9
+Whole-file GF(2) inverts PNG/ZIP CRC32 or yields a composed gap on a larger SQLite FD file.
+
+**Result: rejected.** PNG/ZIP/SQLite 4000-row: `n_relations==0`, passthrough, negative composed gaps of header size or xz/brotli dominance. General bit-matrix is not a format parser.
+
+### Hypothesis 10
+JSON/log text with an exact derived field, or CSV `c=a+b` as *bytes*, shows a composed GF(2) gap.
+
+**Result: falsified for GF(2) on text** (JSON composed −11194; logs −5152; CSV text −21753). **Confirmed for parsed int64 CSV**, composed +15560, **labeled FD elimination / prior art.**
+
+### Hypothesis 11
+Planted GF(2) composed gap scales with rows; relation description does not.
+
+**Result: confirmed.** 1 KiB → 256 KiB, description 1088 bits, composed +343 … +127829.
+
+### Hypothesis 12
+Homogeneous GF(2) misses `XOR(all) XOR 1`; affine recovers it.
+
+**Result: confirmed** on 1280×33 (homogeneous passthrough; affine 1 relation, composed +116). Control, not a corpus claim.
+
+### Decision
+Do not kill. Do not claim a real-corpus success. The unanswered question is still a composed gap on arbitrary bytes that are not planted linear codes, declared FD tables, or known checksums. Next: Silesia if local; never commit dumps.
+
 ### Accounting
 Every JSON file includes payload, relation description, header, framing, CRC, leftover. Round-trip required. Never-worse passthrough when GF(2) is not strictly smaller.
 

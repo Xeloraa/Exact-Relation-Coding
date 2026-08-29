@@ -1,0 +1,146 @@
+{
+  "experiment_id": "phase4_scaling_gf2_affine_parity_n1280_k32_s910_affine",
+  "phase": "phase4",
+  "dataset_id": "gf2_affine_parity_n1280_k32_s910",
+  "dataset_sha256": "098c5289141b45c3c1f8579449d3ab1961df0f8b7da42bff424d905b8305770c",
+  "dataset_bytes": 5280,
+  "seed": 910,
+  "config": {
+    "codec": "gf2_affine",
+    "n_rows": 1280,
+    "n_info": 32,
+    "n_parity": 1,
+    "n_cols": 33,
+    "affine": true,
+    "size_label": "affine10_aff"
+  },
+  "codec_kind": "GF2",
+  "n_relations": 1,
+  "n_independent": 32,
+  "recovered_bits": 1280,
+  "accounting": {
+    "payload_bits": 40960,
+    "relation_description_bits": 66,
+    "header_bits": 216,
+    "framing_bits": 6,
+    "crc_bits": 32,
+    "leftover_bits": 32,
+    "other_sideinfo_bits": 0,
+    "total_bits": 41312,
+    "total_bytes": 5164
+  },
+  "total_encoded_bytes": 5164,
+  "roundtrip_ok": true,
+  "encode_seconds": 0.21504059998551384,
+  "decode_seconds": 0.1011984999931883,
+  "discovery_seconds": 0.21504059998551384,
+  "baselines": [
+    {
+      "name": "gzip9",
+      "bytes": 5303,
+      "seconds": 0.0003042000171262771,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zlib9",
+      "bytes": 5291,
+      "seconds": 0.0001737999846227467,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "bz2_9",
+      "bytes": 5780,
+      "seconds": 0.002550999983213842,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "xz9",
+      "bytes": 5340,
+      "seconds": 0.07531209997250699,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "zstd19",
+      "bytes": 5290,
+      "seconds": 0.0008734000148251653,
+      "available": true,
+      "notes": ""
+    },
+    {
+      "name": "brotli11",
+      "bytes": 5284,
+      "seconds": 0.04805439998744987,
+      "available": true,
+      "notes": ""
+    }
+  ],
+  "composition": {
+    "gzip9": {
+      "bytes": 5187,
+      "seconds": 0.00038189999759197235,
+      "available": true,
+      "notes": ""
+    },
+    "zlib9": {
+      "bytes": 5175,
+      "seconds": 0.000172399973962456,
+      "available": true,
+      "notes": ""
+    },
+    "bz2_9": {
+      "bytes": 5671,
+      "seconds": 0.015247900009853765,
+      "available": true,
+      "notes": ""
+    },
+    "xz9": {
+      "bytes": 5224,
+      "seconds": 0.06545720002031885,
+      "available": true,
+      "notes": ""
+    },
+    "zstd19": {
+      "bytes": 5174,
+      "seconds": 0.0009460999863222241,
+      "available": true,
+      "notes": ""
+    },
+    "brotli11": {
+      "bytes": 5168,
+      "seconds": 0.06469349999679253,
+      "available": true,
+      "notes": ""
+    }
+  },
+  "notes": "control: planted affine parity XOR(all info) XOR 1",
+  "hypothesis": "Affine GF(2) (implicit ones) should recover the constant-offset parity.",
+  "verdict": "raw_gap+120 comp_gap+116",
+  "utc_timestamp": "2026-08-29T10:08:13.933701+00:00",
+  "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+  "command": "experiments/phase4/scaling.py",
+  "machine": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\vivi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "cpu_count": 4,
+    "machine": "AMD64",
+    "node": "xXx",
+    "utc_timestamp": "2026-08-29T10:08:14.534196+00:00",
+    "git_commit": "aea7e6c079bc54aa2fa4dd95815dd107e0bc050d-dirty",
+    "package_versions": {
+      "python": "3.13.6",
+      "gzip": "stdlib",
+      "bz2": "stdlib",
+      "lzma": "stdlib",
+      "zlib": "stdlib",
+      "numpy": "2.2.6",
+      "zstandard": "0.25.0",
+      "brotli": "1.2.0"
+    }
+  }
+}

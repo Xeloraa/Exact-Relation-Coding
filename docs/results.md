@@ -1,8 +1,8 @@
 # Results
 
 Measured 2026-08-29 on Windows 11, Python 3.13.6, numpy 2.2.6, zstandard 0.25.0, brotli 1.2.0.
-Git commit at measurement time: **UNCOMMITTED** (this file is part of the first commit that freezes the code that produced the JSON).
-Commands: `python -m pytest tests`; `python experiments/phase0/run.py`; `python experiments/phase1/run.py`; `python experiments/phase2/run.py`; `python experiments/phase3/run.py`.
+Git commit at measurement time: see each JSON `git_commit` field (phase 4 was `aea7e6c-dirty`).
+Commands: `python -m pytest tests`; `python experiments/phase0/run.py`; `python experiments/phase1/run.py`; `python experiments/phase2/run.py`; `python experiments/phase3/run.py`; `python experiments/phase4/run.py`.
 Machine: Intel 4-core, `results/phase0/environment.json`.
 
 All listed experiments had `roundtrip_ok=true` (`decode(encode(x))==x`).
@@ -14,10 +14,11 @@ Full ledgers: `results/phase*/**.json` and `summary.csv`.
 
 1. **Planted GF(2) linear codes: yes, a large composed deduction gap.** Strong byte compressors leave XOR parity bits almost untouched. After counting relation description, header, CRC, and padding, omitting those bits still wins, and compressing the container does not close the gap.
 2. **Nulls: no invented net savings** on iid bits, shuffled planted codes, near-relations with flipped bits, or non-affine exact functions under the affine codec.
-3. **Ordinary source/docs text: no.** GF(2) on this repo's own files slightly shrinks raw size and then **loses badly** to xz/brotli, including after composition.
-4. **Affine derived columns: composition win, labeled prior art** (functional-dependency elimination). The uncompressed DEDC container loses to xz; `deduce then xz` beats `xz` alone.
+3. **Ordinary source/docs/enwik8/stdlib text: no.** GF(2) on this repo, local CPython `Lib/*.py`, and a 1 MB enwik8 prefix does not yield a composed gap. Statistical codecs still dominate.
+4. **Affine derived columns: composition win, labeled prior art** (functional-dependency elimination). The uncompressed DEDC container loses to xz; `deduce then xz` beats `xz` alone. Same pattern on a parsed CSV `c=a+b` table in Phase 4.
+5. **PNG / ZIP / SQLite as whole-file bit matrices: no composed gap.** General GF(2) does not invert per-chunk CRCs. Passthrough / `n_relations==0` composed deltas are header perturbation.
 
-The project is **not killed**. The synthetic mechanism works. The live question is whether any *natural* byte corpus behaves like (1) rather than (3). FD tables behave like (4) and must not be sold as a new phenomenon.
+The project is **not killed**. The synthetic mechanism works and scales. No measured *arbitrary-byte* corpus behaves like (1). FD tables and checksums behave like (4) and must not be sold as a new phenomenon.
 
 ## Phase 0
 
@@ -115,20 +116,83 @@ Affine 32k SHA-256: `bccec2f031a0794a41def665582cb5ae8cf96fb59b15e4173d81bf56b51
 
 gzip/zstd/xz/brotli all stay at ~raw size: the CRC bits look random. Homogeneous deduction recovers 31/32 CRC bits; affine GF(2) recovers all 32. **Label: known checksum, not a general-corpus discovery.** Do not cite this as novelty on “real files.”
 
+## Phase 4 — natural bytes, format traps, scaling
+
+JSON ledgers: `results/phase4_natural/`, `results/phase4_formats/`, `results/phase4_scaling/`, `results/phase4_structured/`. `summary.csv` may contain duplicate reruns; the JSON file for each `experiment_id` is canonical. Large dumps stay under `data/downloads/` (gitignored).
+
+`n_relations==0` in `encode_gf2_matrix` materializes the original bytes, then returns passthrough (`tests/test_corpora.py::test_n_rel_zero_equals_passthrough_size`). Composed deltas on those rows are header perturbation, not deduction.
+
+### A. Natural / local bytes (dumps not committed)
+
+| experiment | raw | DEDC | best_stat | raw_gap | composed_gap | rels | kind |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| CPython `Lib/*.py` prefix (local) | 400000 | 350037 | 74546 (brotli11) | -275491 | **-65177** | 1 | GF2 |
+| `sys.executable` prefix (local PE stub) | 104928 | 104946 | 51104 (xz9) | -53842 | -24 | 0 | PASSTHROUGH |
+| enwik8 first 1 MB | 1000000 | 1000018 | 281012 (brotli11) | -719006 | -80 | 0 | PASSTHROUGH |
+| CSV text `c=a+b`, 8000 rows (GF2 on bytes) | 122204 | 93699 | 50904 (bz2) | -42795 | **-21753** | 15 | GF2 |
+| same CSV as int64 table (tabular affine) | 192000 | 128044 | 43436 (xz9) | -84608 | **+15560** | 1 | TABULAR_AFFINE |
+
+enwik8 1 MB prefix SHA-256: `369b688978f649681136198fb96db14c1616756260c55fb4b65e9bc049552cad`. xz-9 raised `MemoryError` immediately after GF(2) discovery on a 4-core machine; a later `gc.collect()` retry gave xz 290692 (worse than brotli). Best-stat and the composed gap therefore use brotli. The dump is not in git.
+
+Stdlib GF(2): 8-bit view, 7 independent columns, 400000 recovered bits — a zero high bit on mostly-ASCII source, not a deep relation. gzip/brotli already use that. The PE sample is a 102 KiB Windows `python.exe` launcher, not a full interpreter image.
+
+**Interpretation:** on these byte strings, general GF(2) does not beat composition. The only composed win in this block is the *parsed* integer table, which is FD column elimination (prior art). GF(2) on the same relation *as text* loses to bz2/xz.
+
+### B. Format-awareness traps (not a parser)
+
+| experiment | raw | DEDC | best_stat | raw_gap | composed_gap | rels | kind |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| PNG 48×48 RGB (chunk CRCs present) | 7028 | 7046 | 7032 (brotli11) | -14 | -18 | 0 | PASSTHROUGH |
+| ZIP stored (8 KiB random + text; fixed mtime) | 8431 | 8449 | 8343 (brotli11) | -106 | -15 | 0 | PASSTHROUGH |
+| SQLite `c=a+b`, 4000 rows | 69632 | 69650 | 30796 (brotli11) | -38854 | -246 | 0 | PASSTHROUGH |
+
+ZIP SHA-256 with frozen DOS mtime `(2026,8,29,0,0,0)`: `17a5a7760809830d3a17587d001e95313d7508f7c632bda29b217d8d7e00b0cd`. A whole-file bit matrix does not invert PNG/ZIP CRC32 at variable layout offsets. The larger SQLite file is passthrough at the tried widths (unlike the 8 KiB builtin fixture, which shrank zeros and still lost to xz). Label: format / sparsity, not a general-corpus gap.
+
+### C. Structured text with an exact `sum` field (FD-in-text)
+
+| experiment | raw | DEDC | best_stat | raw_gap | composed_gap | rels |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| JSON array, 2000 records | 81457 | 62503 | 16167 (brotli11) | -46336 | **-11194** | 15 |
+| log lines, 2000 records | 106618 | 93328 | 12203 (zstd19) | -81125 | **-5152** | 1 |
+
+GF(2) can shrink the raw container. gzip/xz/brotli still win on composition. Label: text FD / format trap.
+
+### D. Planted GF(2) scaling (fixed width, not `encode_bytes_best_gf2`)
+
+Relation description stays **1088 bits** while recovered bits scale with `n_rows`. Round-trip OK on all rows.
+
+| size | raw | DEDC | recovered_bits | best_stat | composed_gap | encode_s |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 KiB (128×64) | 1024 | 683 | 4096 | 1028 | **+343** | 0.28–0.60 |
+| 10 KiB (1280×64) | 10240 | 5291 | 40960 | 10244 | **+4949** | 0.95–1.94 |
+| 100 KiB (12800×64) | 102400 | 51371 | 409600 | 102405 | **+51030** | 4.6–23 |
+| 256 KiB (32000×64) | 256000 | 128171 | 1024000 | 256005 | **+127829** | 8.6–52 |
+
+Affine control, 1280 rows × 32 info + parity `XOR(all) XOR 1` (5280 bytes):
+
+| view | rels | DEDC | composed_gap |
+| --- | ---: | ---: | ---: |
+| homogeneous GF(2) | 0 | 5298 (passthrough) | -18 |
+| affine GF(2) | 1 | 5164 | **+116** |
+
+Homogeneous discovery correctly misses the constant offset. Affine recovery is the planted affine bit, not a natural-corpus claim.
+
 ## Deduction-gap definitions (applied)
 
 On planted GF(2) 1 MiB: `deduction_gap_raw ≈ +523731`, `deduction_gap_composed ≈ +523726`.
-On repo text: both large **negative**.
-On affine tables: raw negative, composed positive (prior art).
+On repo text, stdlib, enwik8, PNG/ZIP, structured JSON/logs: both large **negative** (or header-sized on passthrough).
+On affine tables / parsed CSV FD: raw negative, composed positive (prior art).
 
 ## What this does *not* show
 
-- No enwik8 / Silesia / binaries / packet captures yet (not downloaded; not committed).
+- No Silesia / packet captures / other public corpora beyond a local 1 MB enwik8 prefix.
 - No PAQ/cmix/bsc comparison (not installed).
 - No claim that neural compressors fail on parity.
-- No novelty claim for FD column drop.
+- No novelty claim for FD column drop or CRC inversion.
+- Local stdlib and `python.exe` hashes are machine-specific; enwik8 prefix SHA is from the public dump.
 
 ## Next experiments (ordered by how much they change the conclusion)
 
-1. Local enwik8 and a binary/object file, not committed.
-2. Whether packing independent bits before xz changes anything (it should not, on planted GF(2), because those bits are already nearly incompressible).
+1. Silesia (or another public binary/text mix), still not committed.
+2. Whether packing independent bits before xz changes anything on planted GF(2) (it should not: those bits are already nearly incompressible).
+3. PAQ/cmix if a binary is available; if they absorb the planted-GF(2) composed gap, that weakens the “statistical codecs leave XOR unused” claim relative to the strongest mixers.

@@ -1,4 +1,4 @@
-"""Run pytest then phase 0–3 experiments."""
+"""Run pytest then phase 0–4 experiments."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ def main() -> int:
     r = subprocess.call([sys.executable, "-m", "pytest", str(ROOT / "tests")], cwd=str(ROOT))
     if r != 0:
         return r
-    for phase in ("phase0", "phase1", "phase2", "phase3"):
+    for phase in ("phase0", "phase1", "phase2", "phase3", "phase4"):
         script = ROOT / "experiments" / phase / "run.py"
         print(f"===== {phase} =====")
         r = subprocess.call([sys.executable, str(script)], cwd=str(ROOT))
