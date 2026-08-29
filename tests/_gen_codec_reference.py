@@ -71,6 +71,14 @@ def cases():
     ds = gf2_linear_code(n_rows=400, n_info=12, n_parity=12, seed=5)
     yield "gf2_affine_fixed_n400_s5_w24", lambda ds=ds: encode_bytes_gf2(ds.data, 24, affine=True)
 
+    # bit-phase-offset codec (flags bit2, `prefix` field). Added 2026-08-29
+    # with the detector-scope extension; the phase-0 cases above are unchanged.
+    from deductive.codecs.gf2_codec import encode_bytes_gf2_offset  # noqa: PLC0415
+    ds = gf2_linear_code(n_rows=700, n_info=16, n_parity=16, seed=13)
+    for _off in (1, 7, 19):
+        yield (f"gf2_offset_n700_s13_w32_off{_off}",
+               lambda ds=ds, _o=_off: encode_bytes_gf2_offset(ds.data, 32, _o))
+
     def _affine_offset():
         rng = np.random.default_rng(11)
         info = rng.integers(0, 2, size=(256, 8), dtype=np.uint8)
@@ -111,9 +119,21 @@ def _digest(data: bytes) -> dict:
 
 
 def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--only-new", action="store_true",
+                    help="keep existing frozen entries; only add cases not already present "
+                         "(use when appending cases without disturbing pre-vectorisation hashes)")
+    args = ap.parse_args()
+
     ref = {"_meta": {"full_hex_max": FULL_HEX_MAX}}
+    if args.only_new and OUT.is_file():
+        ref = json.loads(OUT.read_text(encoding="utf-8"))
     timings = []
+    added = 0
     for name, make in cases():
+        if args.only_new and name in ref:
+            continue
         t0 = time.perf_counter()
         enc = make()
         enc_s = time.perf_counter() - t0
@@ -125,10 +145,11 @@ def main() -> int:
         entry["reconstruction_sha256"] = hashlib.sha256(recon).hexdigest()
         entry["reconstruction_len"] = len(recon)
         ref[name] = entry
+        added += 1
         timings.append((name, len(enc.data), enc_s, dec_s))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(ref, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"wrote {OUT} with {len(ref) - 1} cases")
+    print(f"wrote {OUT} with {len(ref) - 1} cases ({added} (re)generated)")
     for name, nbytes, es, dsec in timings:
         print(f"  {name:34s} {nbytes:>9d} B  enc {es:>7.3f}s  dec {dsec:>7.3f}s")
     return 0
