@@ -71,9 +71,73 @@ Kill or narrow the novelty claim if we find a general-purpose tool that:
 
 FD-only tools do **not** trip this trigger for the GF(2)-on-bytes question. They **do** trip it for “we invented derived-column compression.”
 
+## 2026-08-29 (audit pass 2) — closest new work
+
+### Brevis: "Lossless Tensor Compression as Program Synthesis" (arXiv 2608.02162, Aug 2026)
+
+The nearest thing to this project's *mechanism* that also reports a real
+composed win.
+
+| axis | Brevis | this repo |
+| --- | --- | --- |
+| what is discovered | a self-contained **DSL program** (reversible operators: repeated regions, strides, float-field splits) that reconstructs the tensor bit-exactly | a GF(2) column basis / integer affine relation set |
+| discovery method | bounded A* search guided by a **production prior learned from a sample of similar tensors** | blind Gaussian elimination / affine solve on the single input, no prior |
+| data | neural-network checkpoints (language / audio / image models) | arbitrary byte corpora |
+| accounting | archive is self-contained and executed for decode; measured vs zstd/gzip and vs ZipNN/DFloat11 | bit-level ledger; measured vs `B` and (planted only) paq8l/paq8px |
+| result | **+30.87%** smaller than general compressors on 2.13 TB of checkpoints | large composed gap on *planted* GF(2); **no** composed gain on the natural corpora tested |
+
+**Effect on our claims.** Brevis shows the general idea — discover exact
+structure, transmit a reconstruction recipe, beat general compressors after full
+accounting — is alive in 2026 and *can* win **on a favourable domain**
+(checkpoints are dense with exact structure: repeats, low rank, quantisation
+grids). It does **not** occupy "blind GF(2)/affine discovery on arbitrary
+bytes": different relation family (DSL programs vs linear algebra), and it
+relies on a learned prior over a tensor population rather than single-input
+blind discovery. It *does* mean our novelty statement must be narrow: we do not
+claim "exact-structure discovery as a lossless pre-pass" as new (Brevis; and
+grammar compression long before). We study one specific, prior-free,
+axis-aligned linear family and report where it does and does not yield a
+composed gain.
+
+### Syndrome-source-coding — the pure idea is ~50 years old
+
+Ancheta, "Syndrome-source-coding and its universal generalization" (IEEE T-IT,
+1976): treat the source as an error pattern, transmit its syndrome `Hx` under a
+linear code; if the source is a coset leader it decompresses exactly. "In the
+absence of side information a Slepian–Wolf coder becomes an entropy coder."
+So compressing a *single* source by exploiting that it lies near a known linear
+code is classical. The only axis on which this project is not already covered is
+**discovering** the code from the data with its description cost charged on the
+same channel — a thin distinction, and one that only matters if that discovery
+yields a composed gain on data nobody hand-picked. Our measurements say it does
+not, on the corpora tested.
+
+### Other 2024–2026 points (do not change the verdict)
+
+- **TICC: Transparent Inter-Column Compression** (2017); **US 8,700,579**
+  "data compression in a relational database"; **anisotropic columnar
+  compression** (US 11,562,085): more inter-column / FD-shaped compression prior
+  art. Reinforces: FD / derived-column elimination is thoroughly occupied.
+- **Inexact FD with stored exceptions** (RSSI / Infobright-style data packs;
+  restated in recent DB-compression patents): "store the relation plus the
+  exceptional records." This is exactly what a rigorous *approximate*-relation
+  extension of this project would be — already prior art; our corruption sweep
+  and the UCI approximate relation are framed accordingly, not as novelty.
+- **2026 AIT Data Compression Challenge** (arXiv 2606.17712): 117 compressors;
+  the standard reversible-preprocessing toolbox is enumerated (BWT, MTF, RLE,
+  delta, BCJ, YCoCg-R, wavelet lifting, dictionary/text filters). Blind
+  algebraic-relation discovery is **not** in it — consistent with "not a
+  known-useful pre-pass", i.e. a negative here is unsurprising, not novel.
+- **StateSMix** (Mamba/SSM + sparse n-gram mixing, 2026), **Nacrith** (ensemble
+  context mixing, 2026), **"Lossless data compression by large models"**
+  (Nat. Mach. Intell., 2025): the statistical frontier keeps moving; none was
+  run here. The paper says "the strongest context-mixing compressors we could
+  run (paq8l, paq8px v216)" and nothing stronger.
+
 ## Search log
 
 - 2026-08-29: constraint-based compression; Corra; Wolpe FD pre-pass; US 8,150,888; precomp; Slepian–Wolf; MeLLoC; grammar compression; PAQ mixing; Daikon. No tool found that states a corpus-level deduction gap for general bytes with GF(2) discovery and full accounting.
+- 2026-08-29 (pass 2): Brevis (tensor program synthesis, 2608.02162); Ancheta syndrome-source-coding (1976) + universal generalisation; TICC; US 8,700,579; anisotropic columnar compression; 2026 AIT challenge preprocessing survey; StateSMix / Nacrith / LLM-as-compressor. Verdict unchanged: the *general* idea is not novel (Brevis, grammar compression, syndrome coding); the specific prior-free axis-aligned GF(2)/affine family with full accounting and a pre-registered composed test on public corpora is the contribution, and it is a **negative** on every natural corpus measured. FD elimination and CRC inversion remain occupied.
 - 2026-08-29: PNG/ZIP/gzip CRC32 (PNG spec, zlib `crc32`, precomp); SQLite pager / unused-page zeros vs columnar FD. Same verdict: FD elimination occupied; CRC inversion occupied; live question remains a composed gap on arbitrary bytes.
 - 2026-08-29: local PATH, Program Files, user folders, and this repo — no `paq8px` / `zpaq` / `cmix` / `bsc` on PATH. `paq8l.exe` was later obtained from mattmahoney.net `paq8l.zip` (gitignored). 10 KiB planted GF(2): `-3` paq(raw)=10299 vs DEDC 5291; `-8` paq(raw)=10321 vs DEDC 5291. Mixer does not absorb XOR at either level.
 - 2026-08-29: `paq8px.exe` v216 from github.com/hxim/paq8px Releases (gitignored). Same 10 KiB planted GF(2): `-4` paq(raw)=10262 vs paq(DEDC)=5289 (gap +4973); `-8` 10261 vs 5288 (gap +4973). Current mixer does not absorb XOR. Still no cmix.

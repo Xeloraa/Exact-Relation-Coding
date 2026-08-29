@@ -76,6 +76,13 @@
     "category": "silesia",
     "acquisition_mode": "slice"
   },
+  "silesia_mr": {
+    "sha256": "68637ed52e3e4860174ed2dc0840ac77d5f1a60abbcb13770d5754e3774d53e6",
+    "bytes": 9970564,
+    "source": "zip silesia.zip:mr whole 9970564",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_mr@slice262144": {
     "sha256": "288236c90013320462fbe5864774054b26334be4ee59a8bde8a9797fbc9148f7",
     "bytes": 262144,
