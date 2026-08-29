@@ -103,6 +103,8 @@ def main(argv: list[str] | None = None) -> int:
                   "corpus downloads (best-effort)")
         steps.append(dl)
 
+    steps.append(_run([sys.executable, str(ROOT / "verification" / "independent_verify.py"), "--self-test"],
+                      "independent verifier self-test"))
     steps.append(_run([sys.executable, str(ROOT / "experiments" / "controls" / "run.py")], "controls"))
     steps.append(_run([sys.executable, str(ROOT / "experiments" / "natural" / "run.py"),
                        "--mode", args.mode, "--slice-bytes", str(args.slice_bytes)], f"natural ({args.mode})"))
@@ -111,8 +113,15 @@ def main(argv: list[str] | None = None) -> int:
         for phase in ("phase0", "phase1", "phase2", "phase3", "phase4"):
             steps.append(_run([sys.executable, str(ROOT / "experiments" / phase / "run.py")], phase))
 
+    steps.append(_run([sys.executable, str(ROOT / "scripts" / "build_ledger.py")], "build ledger"))
+    steps.append(_run([sys.executable, str(ROOT / "scripts" / "regen_tables.py")], "regen paper tables"))
+    steps.append(_run([sys.executable, str(ROOT / "scripts" / "check_paper_numbers.py")], "check paper numbers"))
+    steps.append(_run([sys.executable, str(ROOT / "verification" / "independent_verify.py"),
+                       "--ledger", str(ROOT / "results" / "ledger.json")], "independent verify ledger"))
+
     _write_report(steps, args)
-    return 0 if all(s["returncode"] == 0 for s in steps if s["label"] != "controls" or True) else 1
+    # controls / natural exit non-zero on a real gate failure; treat every step as load-bearing
+    return 0 if all(s["returncode"] == 0 for s in steps) else 1
 
 
 def _write_report(steps: list[dict], args, aborted: str | None = None) -> None:

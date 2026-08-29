@@ -1,4 +1,8 @@
-# Deductive Coding
+# Exact-Relation Coding
+
+*(formerly "Deductive Coding" — renamed to avoid the qualitative-research and
+2026 semantic-compression senses of that term; see `docs/naming.md`. The Python
+package path `src/deductive/` and the `DEDC` container magic are kept as legacy.)*
 
 Research repository for a single question:
 
@@ -31,9 +35,26 @@ deferred to a higher-memory machine.
   **feasibility slices** only so far (`results/natural_slice/`, 256 KiB
   prefixes): 20/20 round-trip ok, 0 meaningful positives. **Not the answer** —
   `--mode whole` on a ≥ 32 GiB machine is required (`docs/preregistration.md` §4).
-- `scripts/reproduce.py` — one command; writes `results/REPRODUCE.md`.
-- `paper/deductive-coding.md` — 12-section skeleton; Results/Analysis/verdict
-  `PENDING` the whole-file sweep.
+- `scripts/reproduce.py` — one command: pytest+equivalence+properties+independent
+  verifier → downloads → controls → natural → phases → ledger → paper tables →
+  number check → ledger verify; writes `results/REPRODUCE.md`.
+- `docs/audit.md` — from-scratch adversarial implementation audit (findings
+  A1–A7 fixed; correction C1). `docs/adversarial_review.md` — every credible
+  reviewer objection with disposition. `docs/statistics.md` — why conventional
+  statistics mostly do not apply here and what is reported instead.
+- `verification/independent_verify.py` — shared-nothing second decoder +
+  independent accounting re-derivation (run in CI and over the ledger).
+- `results/ledger.{json,csv}` — one row per experiment, every quantity;
+  **0** accounting / round-trip / composed-round-trip failures across 95 rows.
+- `paper/deductive-coding.md` — full 24-section technical paper; inline numbers
+  ledger-checked; Results §15.2 and the §21 verdict `PENDING` the whole-file
+  sweep. `paper/results_tables.md` — generated, no hand-typed numbers.
+
+**One clean whole natural file is done:** Silesia `dickens` (10.19 MB) —
+GF(2) finds 25 relations, container is larger than raw, `G_abs` ≈ −2.6 MB
+(−94%), round-trip + composed round-trip + independent decode all pass.
+Every other whole-file corpus is deferred (dev machine tops out ~10 MB
+foreground; `docs/environment_constraints.md`).
 
 Prior established results unchanged: planted GF(2) shows a large **composed**
 deduction gap against gzip/zstd/xz/brotli, paq8l `-3`/`-8`, and paq8px v216
