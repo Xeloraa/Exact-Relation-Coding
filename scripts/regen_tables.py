@@ -123,6 +123,40 @@ def section_natural(rows):
     return "\n".join(out)
 
 
+def section_offset(rows):
+    off = [r for r in rows if r["phase"] == "offset"]
+    if not off:
+        return ""
+    out = ["\n## Bit-phase-offset detector extension (kill criterion §7.2)\n",
+           "For each file: offset-search `G_abs` vs the phase-0 value; whether any "
+           "bit phase helped, and whether it crossed the pre-registered 0.05 threshold.\n"]
+    # phase-0 lookup by base dataset id
+    p0 = {}
+    for r in rows:
+        if r["phase"] in ("natural", "natural_slice"):
+            p0[(r["dataset_id"] or "").split("@")[0]] = r.get("composition_gap_bytes")
+    hdr = ["dataset_id", "bytes", "kind", "rels", "G_abs (offset)", "G_abs (phase0)",
+           "offset helped?", "crosses 0.05?", "round-trip"]
+    body = []
+    for r in sorted(off, key=lambda r: r["dataset_id"]):
+        base = (r["dataset_id"] or "").split("@")[0]
+        g_off = r.get("composition_gap_bytes")
+        g_p0 = p0.get(base)
+        helped = "yes" if (g_off is not None and g_p0 is not None and g_off > g_p0 + 64) else "no"
+        crosses = "yes" if ((r.get("composition_gap_pct") or -1) >= 0.05
+                            and (g_off or -1) >= 1024 and r["codec_kind"] != "PASSTHROUGH") else "no"
+        body.append([r["dataset_id"], _g(r, "dataset_bytes"), r["codec_kind"], _g(r, "n_relations"),
+                     g_off, g_p0, helped, crosses, _g(r, "roundtrip_ok")])
+    out.append(tbl(hdr, body))
+    n_cross = sum(1 for r in body if r[7] == "yes")
+    n_help = sum(1 for r in body if r[6] == "yes")
+    out.append(f"\n**{n_cross} of {len(body)} files cross the threshold; "
+               f"{n_help} improve on phase-0 by > header noise.** "
+               + ("The axis-aligned negative is robust to bit phase." if n_cross == 0
+                  else "INVESTIGATE — a phase may be a framing artifact."))
+    return "\n".join(out)
+
+
 def section_priorart(rows):
     out = ["\n## Prior-art sanity cases (labelled; never counted toward the hypothesis)\n"]
     pa = [r for r in rows if "priorart" in (r["experiment_id"] or "")
@@ -157,6 +191,7 @@ def main() -> int:
         section_controls(rows),
         section_planted(rows),
         section_natural(rows),
+        section_offset(rows),
         section_priorart(rows),
         "",
     ]
