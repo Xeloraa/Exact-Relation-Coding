@@ -37,49 +37,49 @@
   },
   "total_encoded_bytes": 229413,
   "roundtrip_ok": true,
-  "encode_seconds": 2.2452102999959607,
-  "decode_seconds": 0.009973400010494515,
-  "discovery_seconds": 2.2452102999959607,
+  "encode_seconds": 3.141155899997102,
+  "decode_seconds": 0.017530599987367168,
+  "discovery_seconds": 3.141155899997102,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 22000,
-      "seconds": 0.019869299983838573,
+      "seconds": 0.05513970000902191,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 21988,
-      "seconds": 0.016343099996447563,
+      "seconds": 0.019602299988036975,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 14563,
-      "seconds": 0.029065299982903525,
+      "seconds": 0.043284199986374006,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 15944,
-      "seconds": 0.06913899999926798,
+      "seconds": 0.09363089999533258,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 15907,
-      "seconds": 0.16007600000011735,
+      "seconds": 0.2471030000015162,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 14884,
-      "seconds": 0.5021310999873094,
+      "seconds": 0.7377916999976151,
       "available": true,
       "notes": ""
     }
@@ -87,37 +87,37 @@
   "composition": {
     "gzip9": {
       "bytes": 40579,
-      "seconds": 0.015324400010285899,
+      "seconds": 0.01791569998022169,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 40567,
-      "seconds": 0.014526499988278374,
+      "seconds": 0.020872399996733293,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 25628,
-      "seconds": 0.023353899974608794,
+      "seconds": 0.02964990001055412,
       "available": true,
       "notes": ""
     },
     "xz9": {
       "bytes": 26752,
-      "seconds": 0.1045977000030689,
+      "seconds": 0.10928659999626689,
       "available": true,
       "notes": ""
     },
     "zstd19": {
       "bytes": 28846,
-      "seconds": 0.1329097999841906,
+      "seconds": 0.13487809998332523,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 26987,
-      "seconds": 0.472756200004369,
+      "seconds": 0.4969608999963384,
       "available": true,
       "notes": ""
     }
@@ -136,8 +136,8 @@
   "notes": "zip silesia.zip:nci prefix 262144 | acquisition=dev_machine_feasibility_slice",
   "hypothesis": "Blind GF(2) fixed-width discovery on this corpus yields a composed size reduction after full accounting (docs/metric.md).",
   "verdict": "raw_gap-214850 comp_gap-11065",
-  "utc_timestamp": "2026-08-29T15:24:22.962310+00:00",
-  "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
+  "utc_timestamp": "2026-08-29T17:28:39.589359+00:00",
+  "git_commit": "6f3947df77e9849414bea439d7df49d3b6e6d1fa-dirty",
   "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\natural\\run.py\" --mode slice --slice-bytes 262144",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
@@ -147,8 +147,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T15:24:23.013392+00:00",
-    "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
+    "utc_timestamp": "2026-08-29T17:28:39.642243+00:00",
+    "git_commit": "6f3947df77e9849414bea439d7df49d3b6e6d1fa-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

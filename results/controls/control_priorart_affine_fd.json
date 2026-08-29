@@ -27,49 +27,49 @@
   },
   "total_encoded_bytes": 131116,
   "roundtrip_ok": true,
-  "encode_seconds": 0.12058869999600574,
-  "decode_seconds": 0.11435950000304729,
-  "discovery_seconds": 0.12058869999600574,
+  "encode_seconds": 0.13047540001571178,
+  "decode_seconds": 0.12375790000078268,
+  "discovery_seconds": 0.13047540001571178,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 125378,
-      "seconds": 0.212032299983548,
+      "seconds": 0.224131099996157,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 125366,
-      "seconds": 0.2200396999833174,
+      "seconds": 0.22455970000009984,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 119570,
-      "seconds": 0.01785040000686422,
+      "seconds": 0.01879729999927804,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 108208,
-      "seconds": 0.07091860001673922,
+      "seconds": 0.07469270000001416,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 110898,
-      "seconds": 0.060113899991847575,
+      "seconds": 0.06355319998692721,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 120659,
-      "seconds": 0.6877707999956328,
+      "seconds": 0.7092908000049647,
       "available": true,
       "notes": ""
     }
@@ -77,37 +77,37 @@
   "composition": {
     "gzip9": {
       "bytes": 81991,
-      "seconds": 0.14886710001155734,
+      "seconds": 0.17836269998224452,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 81979,
-      "seconds": 0.15096480000647716,
+      "seconds": 0.23089139998774044,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 76187,
-      "seconds": 0.010155600000871345,
+      "seconds": 0.012584600015543401,
       "available": true,
       "notes": ""
     },
     "xz9": {
       "bytes": 70328,
-      "seconds": 0.07062179999775253,
+      "seconds": 0.08345050000934862,
       "available": true,
       "notes": ""
     },
     "zstd19": {
       "bytes": 71283,
-      "seconds": 0.11126289999810979,
+      "seconds": 0.09363300001132302,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 77849,
-      "seconds": 0.45539149999967776,
+      "seconds": 0.4893704999994952,
       "available": true,
       "notes": ""
     }
@@ -126,8 +126,8 @@
   "notes": "LABEL: functional-dependency elimination (Corra / US 8,150,888 / Wolpe 2026)",
   "hypothesis": "Derived-column FD elimination. Any composed gain here is PRIOR ART, not hypothesis support.",
   "verdict": "raw_gap-22908 comp_gap+37880",
-  "utc_timestamp": "2026-08-29T15:23:52.583611+00:00",
-  "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
+  "utc_timestamp": "2026-08-29T17:28:03.017647+00:00",
+  "git_commit": "85818fcd4c97508122ac8c87504a527f53f145b8-dirty",
   "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\controls\\run.py\"",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
@@ -137,8 +137,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T15:23:52.632685+00:00",
-    "git_commit": "e7af4dfbb9549afb64aac80c10821e8143067d6f-dirty",
+    "utc_timestamp": "2026-08-29T17:28:03.080526+00:00",
+    "git_commit": "85818fcd4c97508122ac8c87504a527f53f145b8-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

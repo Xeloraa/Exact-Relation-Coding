@@ -56,49 +56,49 @@
   },
   "total_encoded_bytes": 229413,
   "roundtrip_ok": true,
-  "encode_seconds": 40.830899799999315,
-  "decode_seconds": 0.010376899997936562,
-  "discovery_seconds": 40.830899799999315,
+  "encode_seconds": 41.823484599997755,
+  "decode_seconds": 0.011167899996507913,
+  "discovery_seconds": 41.823484599997755,
   "baselines": [
     {
       "name": "gzip9",
       "bytes": 72353,
-      "seconds": 0.052028700010851026,
+      "seconds": 0.05328699998790398,
       "available": true,
       "notes": ""
     },
     {
       "name": "zlib9",
       "bytes": 72341,
-      "seconds": 0.04939339999691583,
+      "seconds": 0.04852700000628829,
       "available": true,
       "notes": ""
     },
     {
       "name": "bz2_9",
       "bytes": 53158,
-      "seconds": 0.019384699990041554,
+      "seconds": 0.019372699985979125,
       "available": true,
       "notes": ""
     },
     {
       "name": "xz9",
       "bytes": 62048,
-      "seconds": 0.10559650001232512,
+      "seconds": 0.10245149998809211,
       "available": true,
       "notes": ""
     },
     {
       "name": "zstd19",
       "bytes": 63402,
-      "seconds": 0.11066110001411289,
+      "seconds": 0.10167780000483617,
       "available": true,
       "notes": ""
     },
     {
       "name": "brotli11",
       "bytes": 62041,
-      "seconds": 0.476304199983133,
+      "seconds": 0.4614869999932125,
       "available": true,
       "notes": ""
     }
@@ -106,37 +106,37 @@
   "composition": {
     "gzip9": {
       "bytes": 112606,
-      "seconds": 0.013263000000733882,
+      "seconds": 0.013438299996778369,
       "available": true,
       "notes": ""
     },
     "zlib9": {
       "bytes": 112594,
-      "seconds": 0.013810500007821247,
+      "seconds": 0.014038699999218807,
       "available": true,
       "notes": ""
     },
     "bz2_9": {
       "bytes": 78146,
-      "seconds": 0.019030800001928583,
+      "seconds": 0.019059999991441146,
       "available": true,
       "notes": ""
     },
     "xz9": {
       "bytes": 93984,
-      "seconds": 0.08656219998374581,
+      "seconds": 0.08803579999948852,
       "available": true,
       "notes": ""
     },
     "zstd19": {
       "bytes": 97283,
-      "seconds": 0.0703145999868866,
+      "seconds": 0.07403399999020621,
       "available": true,
       "notes": ""
     },
     "brotli11": {
       "bytes": 95089,
-      "seconds": 0.5205952000105754,
+      "seconds": 0.4798787000181619,
       "available": true,
       "notes": ""
     }
@@ -155,9 +155,9 @@
   "notes": "zip silesia.zip:reymont prefix 262144 | detector=bit_offset_search",
   "hypothesis": "Trying every bit phase offset per width. If the phase-0 negative were a framing artifact, some offset would cross the 0.05 threshold.",
   "verdict": "raw_gap-176255 comp_gap-24988",
-  "utc_timestamp": "2026-08-29T16:54:35.191702+00:00",
-  "git_commit": "299a7f1922aa18d0e4204c576c2eb791c4cf3a4a",
-  "command": "experiments/offset/run.py --mode slice",
+  "utc_timestamp": "2026-08-29T17:35:05.485401+00:00",
+  "git_commit": "6f3947df77e9849414bea439d7df49d3b6e6d1fa-dirty",
+  "command": "\"C:\\Users\\vivi\\detuctive coding\\experiments\\offset\\run.py\" --mode slice --slice-bytes 262144",
   "machine": {
     "platform": "Windows-11-10.0.22631-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
@@ -166,8 +166,8 @@
     "cpu_count": 4,
     "machine": "AMD64",
     "node": "xXx",
-    "utc_timestamp": "2026-08-29T16:54:35.237265+00:00",
-    "git_commit": "299a7f1922aa18d0e4204c576c2eb791c4cf3a4a",
+    "utc_timestamp": "2026-08-29T17:35:05.546547+00:00",
+    "git_commit": "6f3947df77e9849414bea439d7df49d3b6e6d1fa-dirty",
     "package_versions": {
       "python": "3.13.6",
       "gzip": "stdlib",

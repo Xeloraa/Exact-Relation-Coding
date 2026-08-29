@@ -1,7 +1,7 @@
 # REPRODUCE
 
-- generated: 2026-08-29T15:25:54.590576+00:00
-- git commit: 258db917ae1991b7954b1ed0cceed98666a09f5d-dirty
+- generated: 2026-08-29T17:44:15.417236+00:00
+- git commit: 6f3947df77e9849414bea439d7df49d3b6e6d1fa-dirty
 - mode: slice (slice-bytes 262144)
 
 ## Machine
@@ -22,7 +22,7 @@
     "brotli": "1.2.0"
   },
   "ram_total_mib": 8025,
-  "ram_avail_mib": 1877
+  "ram_avail_mib": 1106
 }
 ```
 
@@ -30,14 +30,16 @@
 
 | step | returncode | seconds |
 | --- | ---: | ---: |
-| pytest + codec-equivalence | 0 | 2.69 |
-| independent verifier self-test | 0 | 0.39 |
-| controls | 0 | 20.22 |
-| natural (slice) | 0 | 113.08 |
-| build ledger | 0 | 0.19 |
-| regen paper tables | 0 | 0.09 |
-| check paper numbers | 0 | 0.21 |
-| independent verify ledger | 0 | 0.1 |
+| pytest + codec-equivalence | 0 | 5.12 |
+| independent verifier self-test | 0 | 0.88 |
+| controls | 0 | 23.76 |
+| natural (slice) | 0 | 120.25 |
+| offset extension (slice) | 0 | 833.77 |
+| build ledger | 0 | 2.55 |
+| regen paper tables | 0 | 0.15 |
+| make figures | 0 | 5.08 |
+| check paper numbers | 0 | 0.31 |
+| independent verify ledger | 0 | 0.15 |
 
 ## Corpus manifest (SHA-256 pins)
 
@@ -141,6 +143,13 @@
     "category": "silesia",
     "acquisition_mode": "slice"
   },
+  "silesia_ooffice": {
+    "sha256": "e7ee013880d34dd5208283d0d3d91b07f442e067454276095ded14f322a656eb",
+    "bytes": 6152192,
+    "source": "zip silesia.zip:ooffice whole 6152192",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_ooffice@slice262144": {
     "sha256": "41a8f0abe06c5c9e88665870be089e57c9b065bb3c27ac838cca48bcb793cb19",
     "bytes": 262144,
@@ -148,12 +157,26 @@
     "category": "silesia",
     "acquisition_mode": "slice"
   },
+  "silesia_osdb": {
+    "sha256": "60f027179302ca3ad87c58ac90b6be72ec23588aaa7a3b7fe8ecc0f11def3fa3",
+    "bytes": 10085684,
+    "source": "zip silesia.zip:osdb whole 10085684",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_osdb@slice262144": {
     "sha256": "dfafdca22a0cc7b551554126b88105a632275c0251164b07ca47633e97d91a11",
     "bytes": 262144,
     "source": "zip silesia.zip:osdb prefix 262144",
     "category": "silesia",
     "acquisition_mode": "slice"
+  },
+  "silesia_reymont": {
+    "sha256": "0eac0114a3dfe6e2ee1f345a0f79d653cb26c3bc9f0ed79238af4933422b7578",
+    "bytes": 6627202,
+    "source": "zip silesia.zip:reymont whole 6627202",
+    "category": "silesia",
+    "acquisition_mode": "whole"
   },
   "silesia_reymont@slice262144": {
     "sha256": "63949f06bead1d6e40964427389b88df91aaf71e8f908e2e40fb968db3d8f682",
@@ -169,6 +192,13 @@
     "category": "silesia",
     "acquisition_mode": "slice"
   },
+  "silesia_sao": {
+    "sha256": "c2d0ea2cc59d4c21b7fe43a71499342a00cbe530a1d5548770e91ecd6214adcc",
+    "bytes": 7251944,
+    "source": "zip silesia.zip:sao whole 7251944",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_sao@slice262144": {
     "sha256": "2e897282e031856af823048d977bddaf54869d43dea72ba544bec003d353db3a",
     "bytes": 262144,
@@ -183,12 +213,26 @@
     "category": "silesia",
     "acquisition_mode": "slice"
   },
+  "silesia_x-ray": {
+    "sha256": "7de9fce1405dc44ae5e6813ed21cd5751e761bd4265655a005d39b9685d1c9ad",
+    "bytes": 8474240,
+    "source": "zip silesia.zip:x-ray whole 8474240",
+    "category": "silesia",
+    "acquisition_mode": "whole"
+  },
   "silesia_x-ray@slice262144": {
     "sha256": "51c0a846c6cbe121f3f734d32100d60fd8bdd5b79ea9506d72608665e5fef7b1",
     "bytes": 262144,
     "source": "zip silesia.zip:x-ray prefix 262144",
     "category": "silesia",
     "acquisition_mode": "slice"
+  },
+  "silesia_xml": {
+    "sha256": "0e82e54e695c1938e4193448022543845b33020c8be6bf3bf3ead2224903e08c",
+    "bytes": 5345280,
+    "source": "zip silesia.zip:xml whole 5345280",
+    "category": "silesia",
+    "acquisition_mode": "whole"
   },
   "silesia_xml@slice262144": {
     "sha256": "f2bbde07c2061c09fa41e4d4998c07847fbcc23d4ab166ca105a7f66ac8cd37b",
