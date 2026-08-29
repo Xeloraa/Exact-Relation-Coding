@@ -53,15 +53,40 @@ actually used for the corpora.
 
 | id | source | obtain | licence / redistribution |
 | --- | --- | --- | --- |
-| `silesia/<member>` | Silesia corpus, 12 members, **whole files** | `src/deductive/datasets/corpora.py::try_download_silesia_*` | public benchmark corpus; bytes not committed to git |
-| `enwik8` | `http://mattmahoney.net/dc/enwik8.zip`, first 10^8 B | `try_download_enwik8_zip` | Wikipedia text, CC BY-SA; bytes not committed |
-| `sdrbench/<field>` | SDRBench (sdrbench.github.io) scientific reduction benchmark, raw `float32` binary field | `try_download_sdrbench_field` | public scientific benchmark; cite dataset; bytes not committed |
-| `uci_household_power` | UCI ML Repository #235, Individual Household Electric Power Consumption | `try_download_uci_household_power` | UCI, open for research; bytes not committed |
+| `silesia_<member>` | Silesia corpus, 12 members, **whole files** | `corpora.py::try_download_silesia_zip` + `load_silesia_member_whole` | public benchmark corpus; bytes not committed to git |
+| `enwik8` | `http://mattmahoney.net/dc/enwik8.zip`, first 10^8 B | `try_download_enwik8_zip` + `load_enwik8_prefix` | Wikipedia text, CC BY-SA; bytes not committed |
+| `sdrbench_exaalt2869440_{vx,vy,vz,xx,yy,zz}.f32` | SDRBench EXAALT bundle `SDRBENCH-EXAALT-2869440.tar.gz`: six little-endian IEEE-754 `float32` arrays, 2,869,440 values (11.48 MB) each — MD position (xx,yy,zz) and velocity (vx,vy,vz) components | `try_download_sdrbench_bundle("exaalt-2869440")` + `load_sdrbench_field` | SDRBench public benchmark (Zhao et al. 2021); host `g-d0cd3f.fd635.8443.data.globus.org`; bytes not committed |
+| `uci_household_power_text` | UCI ML Repository #235, `household_power_consumption.txt` (~127 MB, ~2.08 M rows, `;`-separated) | `try_download_uci_household_power` + `load_uci_household_power_text` | UCI, open for research (Hebrail & Berard); bytes not committed |
+
+`sdrbench/*` in `docs/preregistration.md` §5 is realised as the six
+`exaalt-2869440` fields above: they are exactly "≥1 SDRBench scientific field,
+IEEE-754 float32 arrays". EXAALT was chosen over CESM-ATM / Hurricane-ISABEL /
+NYX only because those bundles are 0.5–20 GB and exceed the dev-machine size
+guard; the heavy-sweep machine may add one by raising `max_mb`. The concrete
+choice was fixed before any `load_sdrbench_field` result was inspected.
+
+The `uci_household_power` "documented relation" (`Global_active_power*1000/60`
+vs `Sub_metering_1+2+3`) is **approximate**: the residual is the strictly
+positive un-metered household load (measured mean ≈ 17, std ≈ 15 over the first
+5000 clean rows). It therefore also serves as a real-data instance of the
+corrupted-structure control (`docs/protocol.md` §5): `total = metered +
+unmetered`, not an exact functional dependency.
 
 Everything under `data/downloads/` is gitignored. Each corpus is pinned by
-SHA-256 in `results/corpus_manifest.json` after first download; a later run that
-sees a different hash aborts with a mismatch error rather than silently
-proceeding.
+SHA-256 in `results/corpus_manifest.json` on first sight
+(`corpora.py::pin_or_verify`); a later run that produces different bytes for
+the same id raises `RuntimeError` rather than silently proceeding. Slice-mode
+runs pin under a distinct `<id>@slice<N>` key and write to `results/natural_slice/`
+so they never collide with the whole-file pins.
+
+**Excluded / deferred corpora log.**
+- SDRBench CESM-ATM, Hurricane-ISABEL, NYX, Miranda, S3D bundles — deferred, not
+  excluded: download size (0.5–20 GB) over the dev-machine guard. Scriptable on
+  the heavy-sweep machine via `try_download_sdrbench_bundle(name, max_mb=...)`.
+- SDRBench via the `g-8d6b0…` Globus host string seen in one search result —
+  dead (404); the working host is `g-d0cd3f…`, taken from `datasets.html`.
+- Burtscher FP `.fpc` / `.spdp` datasets — not used: distributed only in
+  FPC/SPDP-compressed form, needing a C decompressor absent on the dev machine.
 
 **Whole-file vs prefix.** Whole file whenever the running machine completes
 discovery + all baselines within memory and a 30-min per-configuration budget.
