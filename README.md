@@ -56,9 +56,12 @@ deferred to a higher-memory machine.
   `raw→encode→compress→decompress→decode→raw` chain).
 - `results/ledger.{json,csv}` — one row per experiment; **0** accounting /
   round-trip / composed-round-trip failures.
-- `paper/deductive-coding.md` — full technical paper (abstract … conclusion +
-  reproducibility + exact commands); RQ-A..E hierarchy; inline numbers
-  ledger-checked; `paper/results_tables.md` + `paper/figures/` generated.
+- **`paper/exact-relation-coding.pdf`** — the finished manuscript (14 pp, A4).
+  Source: `paper/exact-relation-coding.md`; rebuild with
+  `python scripts/make_figures.py && python scripts/build_pdf.py` (headless
+  Chromium). Every inline number carries a marker verified against
+  `results/ledger.json` by `scripts/check_paper_numbers.py`;
+  `paper/results_tables.md` and `paper/figures/*.svg` are generated.
 
 **Whole natural files done (8/12 Silesia):** 3 find GF(2) relations
 (`dickens` −94 %, `x-ray` −47 %, `xml` −303 %) and 5 fall to passthrough

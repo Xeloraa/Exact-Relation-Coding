@@ -8,7 +8,7 @@ Two checks:
 
 2. Every marker of the form
        <!-- src: <experiment_id> / <field> = <value> -->
-   in paper/deductive-coding.md must resolve: `<experiment_id>` exists in the
+   in paper/exact-relation-coding.md must resolve: `<experiment_id>` exists in the
    ledger and `ledger[experiment_id][field] == <value>` (string-compared after
    normalising ints/floats). This is how inline prose numbers stay honest.
 
@@ -26,7 +26,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LEDGER = ROOT / "results" / "ledger.json"
 TABLES = ROOT / "paper" / "results_tables.md"
-PAPER = ROOT / "paper" / "deductive-coding.md"
+PAPER = ROOT / "paper" / "exact-relation-coding.md"
 
 MARKER = re.compile(r"<!--\s*src:\s*([A-Za-z0-9_][A-Za-z0-9_./-]*)\s*/\s*([A-Za-z0-9_]+)\s*=\s*(.+?)\s*-->")
 # the literal token 'id/field' is used in prose to describe the marker syntax; skip it

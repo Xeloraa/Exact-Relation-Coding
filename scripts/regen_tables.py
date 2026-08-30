@@ -115,8 +115,10 @@ def section_natural(rows):
     if whole:
         out.append("### Whole-file (pre-registered answer)\n")
         out.append(tbl(hdr, [rowfmt(r) for r in sorted(whole, key=lambda r: r["dataset_id"])]))
-        out.append(f"\nWhole-file experiments run: {len(whole)} of the pre-registered corpus list. "
-                   "Remaining rows PENDING a >=32 GiB machine (docs/environment_constraints.md).")
+        out.append(f"\nWhole-file experiments run: {len(whole)} of 12 Silesia members (the largest "
+                   "an 8 GiB machine completes in budget). The 4 remaining members and whole "
+                   "enwik8 / SDRBench / UCI need > 8 GiB and are reported only as >=256 KiB "
+                   "prefixes below (docs/environment_constraints.md).")
     if sl:
         out.append("\n### Dev-machine feasibility slices (provenance only, NOT the pre-registered answer)\n")
         out.append(tbl(hdr, [rowfmt(r) for r in sorted(sl, key=lambda r: r["dataset_id"])]))
@@ -143,8 +145,8 @@ def section_offset(rows):
         helped = "yes" if (g_off is not None and g_p0 is not None and g_off > g_p0 + 64) else "no"
         crosses = "yes" if ((r.get("composition_gap_pct") or -1) >= 0.05
                             and (g_off or -1) >= 1024 and r["codec_kind"] != "PASSTHROUGH") else "no"
-        body.append([r["dataset_id"], _g(r, "dataset_bytes"), r["codec_kind"], _g(r, "n_relations"),
-                     g_off, g_p0, helped, crosses, _g(r, "roundtrip_ok")])
+        body.append([r["dataset_id"], scope, _g(r, "dataset_bytes"), r["codec_kind"],
+                     _g(r, "n_relations"), g_off, g_p0, helped, crosses, _g(r, "roundtrip_ok")])
     out.append(tbl(hdr, body))
     n_cross = sum(1 for r in body if r[7] == "yes")
     n_help = sum(1 for r in body if r[6] == "yes")

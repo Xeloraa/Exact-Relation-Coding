@@ -41,24 +41,24 @@ def fig_natural(rows):
     if not seen:
         return
     bases = sorted(seen)
-    fig, ax = plt.subplots(figsize=(8, max(3, 0.34 * len(bases))))
+    fig, ax = plt.subplots(figsize=(6.6, max(3, 0.30 * len(bases))))
     y = range(len(bases))
-    for tag, color, dx in (("whole", "#1f77b4", 0.0), ("slice", "#9ecae1", 0.0), ("offset", "#d62728", 0.0)):
-        xs = [seen[b].get(tag) for b in bases]
-        pts = [(i, v) for i, v in zip(y, xs) if v is not None]
+    for tag, color in (("whole", "#1f77b4"), ("slice", "#9ecae1"), ("offset", "#d62728")):
+        pts = [(i, seen[b].get(tag)) for i, b in enumerate(bases) if seen[b].get(tag) is not None]
         if pts:
-            ax.scatter([v for _, v in pts], [i for i, _ in pts], s=26, label=tag, color=color, zorder=3)
+            ax.scatter([v for _, v in pts], [i for i, _ in pts], s=24, label=tag, color=color, zorder=3)
     ax.axvline(0, color="k", lw=0.8)
-    ax.axvline(THRESH, color="green", ls="--", lw=1, label=f"pre-registered +{THRESH:.0%}")
+    ax.axvline(THRESH, color="green", ls="--", lw=1, label=f"threshold +{THRESH:.0%}")
     ax.set_yticks(list(y))
-    ax.set_yticklabels(bases, fontsize=7)
-    ax.set_xlabel("composed gain  G_pct  =  (raw_best − composed_best) / raw_best")
-    ax.set_title("Natural corpus: composed gain per file (whole / 256 KiB slice / bit-offset extension)")
-    ax.legend(fontsize=8, loc="lower left")
+    ax.set_yticklabels(bases, fontsize=6.5)
+    ax.set_xlabel("composed gain  G_pct", fontsize=8)
+    ax.tick_params(axis="x", labelsize=7)
+    ax.set_title("Natural corpus: composed gain per file", fontsize=9)
+    ax.legend(fontsize=7, loc="lower left", framealpha=0.9)
     ax.grid(axis="x", alpha=0.3)
     fig.tight_layout()
     OUTDIR.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUTDIR / "fig_natural_gpct.svg")
+    fig.savefig(OUTDIR / "fig_natural_gpct.svg", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -78,15 +78,16 @@ def fig_planted(rows):
     if len(pts) < 2:
         return
     pts.sort()
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(5.6, 3.6))
     ax.loglog([b for b, _ in pts], [g for _, g in pts], "o-", color="#1f77b4")
-    ax.set_xlabel("input size (bytes)")
-    ax.set_ylabel("composed gain  G_abs (bytes)")
-    ax.set_title("Planted GF(2) codes: composed gain scales ~linearly with rows")
+    ax.set_xlabel("input size (bytes)", fontsize=8)
+    ax.set_ylabel("composed gain  G  (bytes)", fontsize=8)
+    ax.tick_params(labelsize=7)
+    ax.set_title("Planted GF(2): composed gain vs input size", fontsize=9)
     ax.grid(True, which="both", alpha=0.3)
     fig.tight_layout()
     OUTDIR.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUTDIR / "fig_planted_scaling.svg")
+    fig.savefig(OUTDIR / "fig_planted_scaling.svg", bbox_inches="tight")
     plt.close(fig)
 
 

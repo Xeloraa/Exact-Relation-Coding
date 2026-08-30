@@ -67,7 +67,7 @@ Values as recorded in each `results/phase4_paq/*.json` `config` block (paq run e
 | silesia_x-ray | 8474240 | 7de9fce1405d | GF2 | 58 | 6555798 | 4051112 | 5958859 | -1907747 | -47.09% | 1 | 0 | 0 | True | True | True |
 | silesia_xml | 5345280 | 0e82e54e695c | GF2 | 21 | 4907484 | 430390 | 1729428 | -1299038 | -301.83% | 1 | 0 | 0 | True | True | True |
 
-Whole-file experiments run: 8 of the pre-registered corpus list. Remaining rows PENDING a >=32 GiB machine (docs/environment_constraints.md).
+Whole-file experiments run: 8 of 12 Silesia members (the largest an 8 GiB machine completes in budget). The 4 remaining members and whole enwik8 / SDRBench / UCI need > 8 GiB and are reported only as >=256 KiB prefixes below (docs/environment_constraints.md).
 
 ### Dev-machine feasibility slices (provenance only, NOT the pre-registered answer)
 
@@ -100,26 +100,26 @@ For each file: offset-search `G_abs` vs the phase-0 value; whether any bit phase
 
 | dataset_id | scope | bytes | kind | rels | G_abs (offset) | G_abs (phase0) | offset helped? | crosses 0.05? | round-trip |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| enwik8@slice262144 | 262144 | PASSTHROUGH | 0 | -39 | -39 | no | no | True |
-| sdrbench_exaalt2869440_vx.f32@slice262144 | 262144 | GF2 | 3 | -10819 | -10819 | no | no | True |
-| sdrbench_exaalt2869440_vy.f32@slice262144 | 262144 | GF2 | 3 | -10816 | -10816 | no | no | True |
-| sdrbench_exaalt2869440_vz.f32@slice262144 | 262144 | GF2 | 3 | -10969 | -10969 | no | no | True |
-| sdrbench_exaalt2869440_xx.f32@slice262144 | 262144 | GF2 | 3 | -11576 | -11576 | no | no | True |
-| sdrbench_exaalt2869440_yy.f32@slice262144 | 262144 | GF2 | 29 | -44290 | -44290 | no | no | True |
-| sdrbench_exaalt2869440_zz.f32@slice262144 | 262144 | GF2 | 3 | -22336 | -22336 | no | no | True |
-| silesia_dickens@slice262144 | 262144 | GF2 | 31 | -47827 | -47827 | no | no | True |
-| silesia_mozilla@slice262144 | 262144 | PASSTHROUGH | 0 | -54 | -54 | no | no | True |
-| silesia_mr@slice262144 | 262144 | PASSTHROUGH | 0 | -119 | -119 | no | no | True |
-| silesia_nci@slice262144 | 262144 | GF2 | 1 | -11065 | -11065 | no | no | True |
-| silesia_ooffice@slice262144 | 262144 | PASSTHROUGH | 0 | -16 | -16 | no | no | True |
-| silesia_osdb@slice262144 | 262144 | PASSTHROUGH | 0 | -19 | -19 | no | no | True |
-| silesia_reymont@slice262144 | 262144 | GF2 | 1 | -24988 | -24988 | no | no | True |
-| silesia_samba@slice262144 | 262144 | PASSTHROUGH | 0 | -45 | -45 | no | no | True |
-| silesia_sao@slice262144 | 262144 | PASSTHROUGH | 0 | 148 | 148 | no | no | True |
-| silesia_webster@slice262144 | 262144 | GF2 | 1 | -37157 | -37157 | no | no | True |
-| silesia_x-ray@slice262144 | 262144 | GF2 | 58 | -57729 | -57729 | no | no | True |
-| silesia_xml@slice262144 | 262144 | GF2 | 1 | -17365 | -17365 | no | no | True |
-| uci_household_power_text@slice262144 | 262144 | GF2 | 60 | -29828 | -29828 | no | no | True |
+| enwik8@slice262144 | slice | 262144 | PASSTHROUGH | 0 | -39 | -39 | no | no | True |
+| sdrbench_exaalt2869440_vx.f32@slice262144 | slice | 262144 | GF2 | 3 | -10819 | -10819 | no | no | True |
+| sdrbench_exaalt2869440_vy.f32@slice262144 | slice | 262144 | GF2 | 3 | -10816 | -10816 | no | no | True |
+| sdrbench_exaalt2869440_vz.f32@slice262144 | slice | 262144 | GF2 | 3 | -10969 | -10969 | no | no | True |
+| sdrbench_exaalt2869440_xx.f32@slice262144 | slice | 262144 | GF2 | 3 | -11576 | -11576 | no | no | True |
+| sdrbench_exaalt2869440_yy.f32@slice262144 | slice | 262144 | GF2 | 29 | -44290 | -44290 | no | no | True |
+| sdrbench_exaalt2869440_zz.f32@slice262144 | slice | 262144 | GF2 | 3 | -22336 | -22336 | no | no | True |
+| silesia_dickens@slice262144 | slice | 262144 | GF2 | 31 | -47827 | -47827 | no | no | True |
+| silesia_mozilla@slice262144 | slice | 262144 | PASSTHROUGH | 0 | -54 | -54 | no | no | True |
+| silesia_mr@slice262144 | slice | 262144 | PASSTHROUGH | 0 | -119 | -119 | no | no | True |
+| silesia_nci@slice262144 | slice | 262144 | GF2 | 1 | -11065 | -11065 | no | no | True |
+| silesia_ooffice@slice262144 | slice | 262144 | PASSTHROUGH | 0 | -16 | -16 | no | no | True |
+| silesia_osdb@slice262144 | slice | 262144 | PASSTHROUGH | 0 | -19 | -19 | no | no | True |
+| silesia_reymont@slice262144 | slice | 262144 | GF2 | 1 | -24988 | -24988 | no | no | True |
+| silesia_samba@slice262144 | slice | 262144 | PASSTHROUGH | 0 | -45 | -45 | no | no | True |
+| silesia_sao@slice262144 | slice | 262144 | PASSTHROUGH | 0 | 148 | 148 | no | no | True |
+| silesia_webster@slice262144 | slice | 262144 | GF2 | 1 | -37157 | -37157 | no | no | True |
+| silesia_x-ray@slice262144 | slice | 262144 | GF2 | 58 | -57729 | -57729 | no | no | True |
+| silesia_xml@slice262144 | slice | 262144 | GF2 | 1 | -17365 | -17365 | no | no | True |
+| uci_household_power_text@slice262144 | slice | 262144 | GF2 | 60 | -29828 | -29828 | no | no | True |
 
 **0 of 20 files cross the threshold; 0 improve on phase-0 by > header noise.** The axis-aligned negative is robust to bit phase.
 
