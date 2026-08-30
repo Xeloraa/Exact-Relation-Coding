@@ -1,11 +1,18 @@
-# Exact-Relation Coding: A Preregistered Test of Whether Discovered Algebraic Structure Yields a Composed Lossless-Compression Advantage
+# Exact-Relation Coding: A Preregistered Test of Whether Discovered Fixed-Width GF(2)/Affine Structure Yields a Composed Lossless-Compression Advantage
 
 **Author(s):** withheld for review — repository: `https://github.com/Xeloraa/deductive-coding`
-**Version:** experiment state tagged `v0.3-submission`.
-**Artifact:** all numbers in this paper are generated from `results/ledger.json`
-(122 experiment records) by `scripts/regen_tables.py`; every inline figure
-carries a source marker naming the experiment record and field it comes from,
-verified against the ledger by `scripts/check_paper_numbers.py`.
+**Frozen experiment state:** git tag `v1.1-final` (this PDF was generated from
+exactly that commit).
+**Numerical provenance:** every quantity in this paper is generated from
+`results/ledger.json` (122 experiment records) by `scripts/regen_tables.py`;
+every inline figure additionally carries a source marker naming the experiment
+record and field it is drawn from, verified against the ledger by
+`scripts/check_paper_numbers.py`.
+
+**Scope in one sentence.** The negative result concerns *fixed-width,
+axis-aligned, GF(2) linear* relations (plus an integer-affine variant used only
+for tabular controls, and one bounded bit-phase extension); it is **not** a
+test of "algebraic redundancy" in general.
 
 ## Abstract
 
@@ -13,33 +20,47 @@ Lossless compressors model a probability for the next symbol and code a
 residual. We investigate an alternative pre-pass: automatically *discover* an
 exact algebraic relation the data satisfies, transmit a fully counted
 description of that relation together with the independent symbols, and let the
-decoder reconstruct the determined symbols. We formalise the pre-pass as a
-GF(2) column-basis codec (with an integer-affine variant for tables), define a
-*composed deduction gain* `G = min_c |c(x)| - min_c |c(D(x))|` over a fixed set
-of stock compressors `c` and the accounted container `D(x)`, and preregister a
-per-file success threshold before running any natural-corpus experiment. On
-data engineered to contain an exact GF(2) linear code the pre-pass removes about
-half of the size the six stock baselines achieve
-(1 MiB code: `G` <!-- src: phase1_gf2_n65536_k64_p64_s14 / composition_gap_bytes = 523726 --> bytes,
-`G_pct` <!-- src: phase1_gf2_n65536_k64_p64_s14 / composition_gap_pct = 0.4994616534154252 -->),
+decoder reconstruct the determined symbols. We instantiate the pre-pass as a
+fixed-width GF(2) column-basis codec (with an integer-affine variant used only
+for tabular controls), define a *composed deduction gain*
+`G = min_c |c(x)| − min_c |c(D(x))|` over a fixed set of stock compressors `c`
+and the accounted container `D(x)`, and preregister a per-file success threshold
+before running any natural-corpus experiment. On data engineered to contain an
+exact GF(2) linear code the pre-pass removes about half of the size the six
+stock baselines achieve (1 MiB code: `G` =
+<!-- src: phase1_gf2_n65536_k64_p64_s14 / composition_gap_bytes = 523726 --> bytes,
+`G_pct` =
+<!-- src: phase1_gf2_n65536_k64_p64_s14 / composition_gap_pct = 0.4994616534154252 -->);
 the gain scales with the number of rows while relation description stays
 near-constant, and two context-mixing compressors (paq8l, paq8px v216) do not
-close it. We then test whether comparable exploitable structure transfers to
-public natural corpora: 8 of 12 whole Silesia members (the largest an 8 GiB
-machine completes), all 12 Silesia members plus an enwik8 prefix plus six
-scientific `float32` fields plus a telemetry text file at 256 KiB, and a bounded
-bit-phase-offset extension of the detector. Under the preregistered protocol,
-**no natural file produces a composed gain meeting the threshold**; the maximum
-observed `G_pct` over 122 records is `+0.0009` (a passthrough header artifact),
-and the offset extension reproduces the phase-0 composed gain to the byte on
-every file. Functional-dependency and per-record-CRC32 cases reproduce known
-techniques and are labelled as such. The mechanism is not novel (grammar
-compression; syndrome coding; recent program-synthesis compression). Our
-contribution is the accounting-complete codec with an independent verifier, the
-composed-gain evaluation discipline, and the preregistered empirical finding
-that blind axis-aligned exact-relation discovery does not yield a composed
-advantage on the corpora and detectors tested. We do **not** claim natural data
-contains no algebraic redundancy, nor that the approach can never help.
+close it. We then test whether comparable exploitable *exact GF(2)* structure
+transfers to public natural corpora.
+
+The preregistered natural corpus is the 12 Silesia members (whole),
+enwik8, one SDRBench scientific `float32` field, and one telemetry text file.
+On the available 8 GiB machine we ran **8 of the 12 Silesia members whole**
+(≤ 10.2 MB); the other four members and whole enwik8 / SDRBench / UCI exceed
+memory and were run only at 256 KiB. **Strictly by the preregistration the
+hypothesis outcome is therefore inconclusive with respect to the complete
+corpus** (the whole-file list is not finished). *Within the achieved coverage*
+— 8 whole Silesia members, all 12 members plus enwik8 plus six `float32` fields
+plus the telemetry file at 256 KiB, and a bounded bit-phase-offset extension —
+the result is a **clean layered negative**: no non-prior-art file produces a
+composed gain meeting the threshold; the largest `G_pct` on any natural file is
+**+0.09 % (`G_pct` = 0.0009)**, on a passthrough container — a sub-0.1 %
+downstream-compressor sensitivity to an 18-byte header, not deduction — and the
+offset extension reproduces the phase-0 composed gain to the byte on every file.
+Functional-dependency and per-record-CRC32 cases reproduce known techniques and
+are labelled as such.
+
+The mechanism is not novel (syndrome source coding; grammar compression; recent
+program-synthesis compression). Our contribution is the accounting-complete
+codec with an independent shared-nothing verifier, the composed-gain evaluation
+discipline with a preregistered threshold, and the empirical finding that blind
+fixed-width axis-aligned GF(2) relation discovery does not yield a composed
+advantage on the natural corpora and detectors tested. We do **not** claim
+natural data contains no exact algebraic redundancy, nor that the general
+approach can never help.
 
 **Keywords:** lossless compression, algebraic redundancy, GF(2) linear codes,
 functional dependencies, preregistration, negative result, reproducibility.
@@ -99,8 +120,9 @@ aggregate.
    composition-order check, and a non-aligned-period scope control (§6).
 5. A preregistered empirical finding: on 8 whole Silesia members, 20 further
    files at 256 KiB, and a bounded bit-phase-offset extension, blind
-   axis-aligned exact-relation discovery yields **no** composed advantage
-   meeting the threshold, robustly to bit phase (§5).
+   fixed-width axis-aligned GF(2) relation discovery yields **no** composed
+   advantage meeting the threshold, robustly to bit phase (§8) — with the
+   whole-file list for the full preregistered corpus not yet complete (§8.4).
 
 The mechanism itself is not claimed as novel; see §7.
 
@@ -108,16 +130,16 @@ The mechanism itself is not claimed as novel; see §7.
 
 Let `x` be the input byte string and `B` a fixed set of lossless stock
 compressors (§5.2). Let `E` be a lossless deductive encoder with
-`E^{-1}(E(x)) = x`, and write `D(x) = E(x)` for the *container*. `E` emits the
+`E⁻¹(E(x)) = x`, and write `D(x) = E(x)` for the *container*. `E` emits the
 byte-smaller of a relation container (§3) and *passthrough*
 (`magic · version · kind · len64 · crc32 · x`, all whole-byte fields, so
 `|passthrough(x)| = |x| + 18`), hence `|D(x)| ≤ |x| + 18` always.
 
 ```
-raw_best(x)      = min_{c ∈ B, c ran}  |c(x)|
-composed_best(x) = min_{c ∈ B, c ran}  |c(D(x))|
-G(x)             = raw_best(x) − composed_best(x)          (signed bytes)
-G_pct(x)         = G(x) / raw_best(x)
+  raw_best(x)      =  min over c in B, c ran  of  |c(x)|
+  composed_best(x) =  min over c in B, c ran  of  |c(D(x))|
+  G(x)             =  raw_best(x) - composed_best(x)          (signed bytes)
+  G_pct(x)         =  G(x) / raw_best(x)
 ```
 
 `G(x) > 0` is the event the hypothesis needs. A companion *raw gain*
@@ -282,28 +304,33 @@ the art".
 
 ### 5.3 Independent verification
 
-`verification/independent_verify.py` shares no code with the encoder or the main
-decoder: its own bit reader, its own container parse, a plain-Python XOR / integer
-reconstruction, and an independent re-derivation of the accounting from parsed
-field sizes. For every reported result it checks the full chain
-`raw → encode → container → compress → decompress → independent-decode → raw`
-and asserts SHA-256 equality and the accounting invariant. It reconstructs all
-four container kinds in a self-test, runs in CI over 21 parametrised cases, and
-was run on the 10 MB `silesia_dickens` container. The primary decoder's own
-composed round-trip is also checked for every stock compressor.
+`verification/independent_verify.py` shares no code with the encoder or the
+main decoder: its own bit reader, its own container parse, a plain-Python XOR /
+integer reconstruction, and an independent re-derivation of the accounting from
+parsed field sizes. It checks the full chain
+`raw → encode → container → compress → decompress → independent-decode → raw`,
+asserting SHA-256 equality and the `8·|D| = Σ categories` invariant on the
+independently parsed field sizes. It reconstructs all four container kinds in a
+self-test; the CI suite exercises it over 21 parametrised cases (offsets 0–31,
+all container kinds, the composed compress/decompress chain, and a
+phase-shifted planted code it must recover); and it was run once on the whole
+10 MB `silesia_dickens` container. Separately, the *primary* decoder's composed
+round-trip `E⁻¹(c⁻¹(c(D(x)))) = x` is checked for every stock compressor on
+every one of the 122 ledger records — 0 failures.
 
 ### 5.4 Reproducibility harness
 
-`scripts/reproduce.py` runs, in order: `pytest` (630 tests: equivalence,
-randomised property tests, independent verifier), the verifier self-test, the
-controls, the natural-corpus slice sweep, the offset-extension sweep, the legacy
-phase experiments, then `build_ledger.py → regen_tables.py → make_figures.py →
-check_paper_numbers.py → independent_verify.py --ledger`. All ten steps return 0
-on the reported state. Every experiment JSON records dataset SHA-256, seeds,
-config, the seven accounting categories, container size, round-trip and composed
-round-trip status, every baseline `(name, bytes, seconds, available)`, every
-composition size, `G`, `G_pct`, the raw gain, a UTC timestamp, the git commit
-(with a `-dirty` marker if the tree was not clean), and machine info.
+`scripts/reproduce.py` runs, in order: `pytest` (636 tests on the frozen state:
+byte-equivalence, randomised property tests, independent verifier), the verifier
+self-test, the controls, the natural-corpus slice sweep, the offset-extension
+sweep, the legacy phase experiments, then `build_ledger.py` → `regen_tables.py`
+→ `make_figures.py` → `check_paper_numbers.py` → `independent_verify.py
+--ledger`. Every step returns 0 on the reported state. Every experiment JSON
+records dataset SHA-256, seeds, config, the seven accounting categories,
+container size, round-trip and composed round-trip status, every baseline
+`(name, bytes, seconds, available)`, every composition size, `G`, `G_pct`, the
+raw gain, a UTC timestamp, the git commit (with a `-dirty` marker if the tree
+was not clean), and machine info.
 
 ## 6. Controls
 
@@ -329,49 +356,56 @@ widths (visible once the width is added).
 ## 7. Related work and novelty
 
 The general idea — discover exact structure, transmit a reconstruction recipe,
-and beat a general-purpose compressor after counting the recipe — is not new.
+and beat a general-purpose compressor after counting the recipe — is not new,
+and we claim no novelty for it. Bracketed keys refer to §14.
 
-* **Syndrome source coding** (Ancheta, 1976; and its universal generalisation).
-  Treat the source as an error pattern and transmit its syndrome `Hx` under a
-  linear code; a coset-leader source decompresses exactly. "In the absence of
-  side information a Slepian–Wolf coder is an entropy coder." Compressing a
-  single source by exploiting linear-code membership is classical; what is not
-  classical is *discovering* the code from one input with description cost
-  charged on the same channel — a thin distinction.
-* **Grammar-based compression** (Kieffer–Yang; SEQUITUR; Re-Pair). The string is
-  the unique yield of a grammar whose description cost is counted; structure is
-  concatenative rather than linear-algebraic.
-* **Functional-dependency / derived-column elimination.** US 8,150,888; Corra
-  (2024); Wolpe (2026); TICC (2017); anisotropic columnar compression
-  (US 11,562,085); Infobright-style inexact-FD-with-stored-exceptions. This
-  space is thoroughly occupied for relational tables. Our affine-FD and CRC
-  results are labelled as reproductions of it and are excluded from RQ-E.
-* **Format-aware recompression.** Precomp, preflate, packJPG invert known
-  codecs and drop reconstructible checksums; our PNG/ZIP/SQLite behaviour is the
-  predicted format-awareness trap, not a counterexample.
-* **Program-synthesis compression.** Brevis (2026) synthesises a self-contained
-  DSL program that reconstructs a tensor bit-exactly and reports a real composed
-  win on model checkpoints — a favourable domain dense with repeats, low rank
-  and quantisation grids, searched with a rich language guided by a learned
-  prior. This is a strong recent instance of the general idea; it does not
-  occupy blind GF(2)/affine discovery on arbitrary bytes.
-* **Low GF(2)-rank / Boolean matrix factorisation** (Fomin et al.; F_p-matrix
-  factorisation). A change of basis to expose binary rank deficiency; NP-hard in
-  general, and the exact case is the special case our column basis computes at a
-  fixed width.
-* **Invariant mining** (Daikon and successors). Templated discovery of
-  equalities and affine relations among program variables; not a compressor and
-  false-positive-prone.
+* **Syndrome source coding** [Ancheta 1976]. Treat the source as an error
+  pattern and transmit its syndrome `Hx` under a linear code; a coset-leader
+  source decompresses exactly, and with no side information the coder is an
+  entropy coder. Compressing a single source by exploiting linear-code
+  membership is classical. What is not standard is *discovering* the code from
+  one input with its description cost charged on the same channel — a thin
+  distinction, and the axis on which our codec differs from classical syndrome
+  coding.
+* **Grammar-based compression** [Nevill-Manning & Witten 1997; Larsson & Moffat
+  2000; Kieffer & Yang 2000]. The string is the unique yield of a grammar whose
+  description cost is counted; structure is concatenative rather than
+  linear-algebraic.
+* **Functional-dependency / derived-column elimination** [US 8,150,888;
+  US 8,700,579; Liu et al. 2017 (TICC); Liu et al. 2024 (Corra);
+  US 11,562,085]. Detect that a column is an exact function of others, drop it,
+  and store the function; extensions store exceptions for inexact dependencies.
+  This space is thoroughly occupied for relational tables. Our affine-FD and
+  per-record-CRC32 results are labelled as reproductions of it and are excluded
+  from RQ-E.
+* **Format-aware recompression** [Schnaader, *Precomp*; preflate; packJPG].
+  Invert a known embedded codec and drop reconstructible checksums; our
+  PNG/ZIP/SQLite behaviour is the predicted format-awareness trap, not a
+  counterexample.
+* **Program-synthesis compression** [Shi et al. 2026 (Brevis)]. Synthesise a
+  self-contained DSL program that reconstructs a tensor bit-exactly; reports a
+  real composed win on neural-network checkpoints — a favourable domain dense
+  with repeats, low rank and quantisation grids, searched with a rich language
+  guided by a learned prior. A strong recent instance of the general idea; it
+  does not address blind fixed-width GF(2) discovery on arbitrary bytes.
+* **Low GF(2)-rank / binary matrix factorisation** [Fomin et al. 2018]. A change
+  of basis to expose binary rank deficiency; NP-hard in general, and the *exact*
+  case is the special case our column basis computes at a fixed width.
+* **Invariant mining** [Ernst et al. 2007 (Daikon)]. Templated dynamic discovery
+  of equalities and affine relations among program variables; not a compressor,
+  and it reports *likely* invariants (false positives expected), whereas we
+  accept a relation only after verifying it on every row.
 
 **Our contribution, stated narrowly.** (i) An accounting-complete, never-worse
-GF(2)/affine relation codec with an independent shared-nothing verifier;
-(ii) the composed deduction-gain metric with a preregistered per-file threshold
-as an evaluation discipline for pre-pass compression claims; (iii) a
-preregistered empirical measurement — with a bounded phase-offset extension — of
-whether blind axis-aligned exact-relation discovery produces a composed
-advantage on public natural corpora, finding that it does not, on the corpora
-and detectors tested. We do not claim any of (i)–(iii) is "first" in a stronger
-sense than this.
+fixed-width GF(2) (plus tabular-affine) relation codec whose emitted bits are
+exhaustively categorised, with an independent shared-nothing verifier and
+end-to-end composed round-trip checks; (ii) the composed deduction-gain metric
+with a git-locked preregistered per-file threshold, offered as an evaluation
+discipline for pre-pass compression claims; (iii) a preregistered empirical
+measurement — with a bounded bit-phase-offset extension — of whether blind
+fixed-width axis-aligned GF(2) relation discovery produces a composed advantage
+on public natural corpora, finding that it does not, within the coverage tested.
+We do not claim any of (i)–(iii) is "first" in a stronger sense than this.
 
 ## 8. Results
 
@@ -379,10 +413,12 @@ sense than this.
 
 On random GF(2) linear codes — `k` information columns and `k` exact parity
 columns — the pre-pass behaves exactly as designed. The relation description is
-a constant of the code (1 088 bits for `k = 32`,
+a constant of the code (1,088 bits for `k = 32`;
 <!-- src: phase1_gf2_n65536_k64_p64_s14 / relation_description_bits = 4224 --> bits for
 `k = 64`), independent of the number of rows, so the composed gain grows with
-`n_rows`: `G_pct` rises from `+32.3 %` at 256 bytes to
+the row count: `G_pct` rises from
+<!-- src: phase0_gf2_tiny / composition_gap_pct = 0.3230769230769231 --> at 256 bytes
+to
 <!-- src: phase1_gf2_n65536_k64_p64_s14 / composition_gap_pct = 0.4994616534154252 -->
 at 1 MiB (Fig. 1; Table B.2). Every case round-trips, and the independent
 verifier agrees.
@@ -406,9 +442,9 @@ fails; composition then makes it worse:
 
 | member | bytes | kind | rels | `raw_best` | `G` (bytes) | `G_pct` |
 | --- | ---: | --- | ---: | ---: | ---: | ---: |
-| `dickens` | <!-- src: nat_silesia_dickens / dataset_bytes = 10192446 --> | GF2 | <!-- src: nat_silesia_dickens / n_relations = 25 --> | <!-- src: nat_silesia_dickens / raw_best_bytes = 2799520 --> | <!-- src: nat_silesia_dickens / composition_gap_bytes = -2645016 --> | −94.5 % |
-| `x-ray` | <!-- src: nat_silesia_x-ray / dataset_bytes = 8474240 --> | GF2 | <!-- src: nat_silesia_x-ray / n_relations = 58 --> | <!-- src: nat_silesia_x-ray / raw_best_bytes = 4051112 --> | <!-- src: nat_silesia_x-ray / composition_gap_bytes = -1907747 --> | −47.1 % |
-| `xml` | <!-- src: nat_silesia_xml / dataset_bytes = 5345280 --> | GF2 | <!-- src: nat_silesia_xml / n_relations = 21 --> | <!-- src: nat_silesia_xml / raw_best_bytes = 430390 --> | <!-- src: nat_silesia_xml / composition_gap_bytes = -1299038 --> | −301.8 % |
+| `dickens` | <!-- src: nat_silesia_dickens / dataset_bytes = 10192446 --> | GF2 | <!-- src: nat_silesia_dickens / n_relations = 25 --> | <!-- src: nat_silesia_dickens / raw_best_bytes = 2799520 --> | <!-- src: nat_silesia_dickens / composition_gap_bytes = -2645016 --> | −94.48 % |
+| `x-ray` | <!-- src: nat_silesia_x-ray / dataset_bytes = 8474240 --> | GF2 | <!-- src: nat_silesia_x-ray / n_relations = 58 --> | <!-- src: nat_silesia_x-ray / raw_best_bytes = 4051112 --> | <!-- src: nat_silesia_x-ray / composition_gap_bytes = -1907747 --> | −47.09 % |
+| `xml` | <!-- src: nat_silesia_xml / dataset_bytes = 5345280 --> | GF2 | <!-- src: nat_silesia_xml / n_relations = 21 --> | <!-- src: nat_silesia_xml / raw_best_bytes = 430390 --> | <!-- src: nat_silesia_xml / composition_gap_bytes = -1299038 --> | −301.83 % |
 
 The relations found on text/XML are the "high bit of a mostly-ASCII byte is
 zero" bit-plane and similar; brotli and bzip2 already exploit this from the raw
@@ -418,10 +454,16 @@ downstream-compressor sensitivity to an 18-byte header, not deduction.
 
 **256 KiB files (20).** Same pattern: 0 meaningful positives (Table B.4). Where
 GF(2) finds relations (`float32` fields, XML, text, telemetry) the composed gain
-is large-negative (`−4.8 %` to `−302 %`); where it does not, `|G_pct| < 0.3 %`.
-Across all 122 records the maximum `G_pct` is `+0.09 %`
-(`silesia_sao` at 256 KiB, a passthrough container), far below the 5 % floor and
-excluded anyway as passthrough.
+is large-negative (−4.8 % to −302 %); where it does not, `|G_pct| < 0.3 %`. The
+single largest positive `G_pct` on any natural-corpus record — whole files, 256
+KiB files, and the offset extension together — is
+**<!-- src: nat_silesia_sao_slice / composition_gap_pct = 0.0008833922261484099 -->**
+(`G_pct` = 0.0009), on the 256 KiB prefix of `silesia_sao`, whose container is *passthrough*
+(`n_relations = 0`). This is downstream-compressor sensitivity to the 18-byte
+passthrough header, not deduction; it is two orders of magnitude below the 5 %
+floor and is excluded from the hypothesis in any case because it is not a real
+deduction. (The `+49.95 %` maximum over all 122 records is the planted
+positive control, §8.1.)
 
 **Bit-phase-offset extension (20 files).** For every file the offset-search
 composed gain equals the phase-0 value **to the byte** (Table B.5); no bit phase
@@ -440,18 +482,32 @@ functional-dependency elimination and checksum inversion respectively and are
 
 ### 8.4 Verdict under the preregistered protocol
 
-* Positive, null, prior-art, and scope controls all behave as designed.
-* No non-prior-art natural file meets the per-file threshold, on 8 whole
-  Silesia members, 20 files at 256 KiB, and the phase-offset extension.
-* Four of the twelve Silesia members, and the whole enwik8 / SDRBench / UCI
-  files, could not be run whole on the available 8 GiB machine (§9).
+**Coverage against the full preregistered corpus.**
 
-By the letter of the preregistration this is **inconclusive for the full corpus
-list** (the four large members are not yet run whole). For the coverage
-achieved it is a **clean, layered negative**: on natural data, exact structure
-is often present (RQ-A) and discoverable (RQ-B), and on no tested file does it
-reduce the representation (RQ-C) or survive composition (RQ-D), robustly to bit
-phase.
+| preregistered item | preregistered "run as" | actually run |
+| --- | --- | --- |
+| Silesia — 12 members | whole files | 8 whole (`dickens, xml, ooffice, reymont, sao, x-ray, mr, osdb`, ≤ 10.2 MB); 4 (`samba, nci, webster, mozilla`, 21–51 MB) at 256 KiB only |
+| enwik8 | first 10⁸ bytes | 256 KiB prefix only |
+| ≥ 1 SDRBench `float32` field | whole field | six EXAALT fields at 256 KiB only |
+| UCI household-power text | whole file | 256 KiB prefix only |
+| bit-phase-offset extension | — | all 20 files at 256 KiB |
+
+* The positive, null, prior-art, and scope controls all behave as designed.
+* No non-prior-art natural file meets the per-file threshold, on the 8 whole
+  Silesia members, the 20 files at 256 KiB, or the phase-offset extension.
+* The whole-file runs for four Silesia members and for whole enwik8 / SDRBench /
+  UCI exceed the 8 GiB development machine and were **not executed** (§9, §11).
+
+**Verdict: inconclusive with respect to the complete preregistered corpus; a
+clean negative within the achieved coverage.** Strictly, the preregistration's
+"negative" outcome requires the full whole-file list, which was not completed,
+so the formal hypothesis outcome is *inconclusive*. Within what was run, the
+result is an unambiguous **layered negative**: on natural data, exact GF(2)
+structure is often present (RQ-A) and discoverable (RQ-B), and on **no** tested
+file — at 256 KiB or whole, at any bit phase — does it reduce the representation
+(RQ-C) or survive composition (RQ-D). Every 256 KiB result and every whole-file
+result that could be run agree, so the four missing whole-file runs are the only
+gap between "inconclusive" and "negative".
 
 ## 9. Discussion
 
@@ -466,11 +522,12 @@ phase.
   is fully counted (null overhead is exactly the 18-byte passthrough header),
   and that the pipeline degrades gracefully as structure is corrupted.
 * On the natural corpora *actually measured* — 8 whole Silesia members plus 20
-  files at 256 KiB plus the phase-offset extension — the composed deduction gain
-  is at most `+0.09 %` and is negative on every file where a real relation is
-  found. The redundancy the detector locates in natural data is real but
-  trivial (constant bit-planes, ASCII structure) and is already captured by
-  stock compressors from the raw byte order.
+  files at 256 KiB plus the phase-offset extension — the largest positive
+  composed gain on any file is +0.09 % (on a passthrough container, i.e. header
+  perturbation), and `G_pct` is strongly negative on every file where a real
+  GF(2) relation is found. The redundancy the detector locates in natural data
+  is real but trivial (a constant high bit-plane, ASCII structure) and is
+  already captured by the stock compressors from the raw byte order.
 
 ### 9.2 What is not established
 
@@ -511,7 +568,7 @@ the one the preregistered kill criterion names.
 | vectorised primitives are wrong | 400 randomised bit-I/O trials vs a per-bit reference; 60 `reconstruct` trials vs a per-column XOR reference; 18 byte-frozen container cases |
 | a container has unaccounted bits | finaliser refuses to emit it; independently re-derived by the second decoder |
 | the downstream comparison is unfair (a codec fails on one side) | matched-codec gain over the intersection; both available-codec sets recorded; a reportable positive needs matched sets |
-| the compressed container does not decode back | `raw → encode → compress → decompress → decode → raw` checked with both the primary and the independent decoder for every codec; 0 failures over 122 records |
+| the compressed container does not decode back | the *primary* decoder's `raw → encode → compress → decompress → decode → raw` is checked for every stock codec on all 122 records (0 failures); the *independent* shared-nothing decoder runs the same chain on the 21 CI cases and on the whole 10 MB `dickens` container |
 | the width × variant `min` inflates results | representation-change null: 0 spurious gains on 40 i.i.d. inputs; never-worse guard caps the downside at passthrough |
 | the negative is a framing / bit-phase artifact | bounded phase-offset extension on all 20 files: `G` equals the phase-0 value to the byte |
 | a prefix is passed off as a whole file | separate result phase, separate manifest keys, `prefix` reason on every row |
@@ -520,15 +577,23 @@ the one the preregistered kill criterion names.
 
 ## 11. Limitations
 
-* **Detector scope.** Axis-aligned fixed-width GF(2) plus integer affine,
-  extended once to every bit phase. A negative is scoped to these families; the
+* **Detector scope.** Fixed-width, axis-aligned GF(2) linear relations (widths
+  8–256), plus an integer-affine variant used only for tabular controls, plus
+  one bounded bit-phase-offset extension. The negative is scoped to these
+  families only; it is not a test of algebraic redundancy in general. The
   non-aligned-period control shows exact structure at a period not among the
-  tried widths is missed by construction.
-* **Whole-file coverage.** 8 of 12 Silesia members run whole (≤ 10.2 MB); the
-  four largest (21–51 MB) and whole enwik8 / SDRBench / UCI need more than 8 GiB
-  RAM than the development machine has. Every 256 KiB slice, every whole file
-  run, and the offset extension agree, so the *conclusion* is consistent, but
-  the pre-registered protocol is *not complete* for the full list.
+  tried widths is missed by construction. Non-axis-aligned linear relations
+  (via a searched or learned column permutation) and low-degree polynomial
+  relations are untested.
+* **Whole-file coverage — the principal limitation.** 8 of the 12 preregistered
+  whole Silesia members were run whole (≤ 10.2 MB). The four largest members
+  (`samba, nci, webster, mozilla`, 21–51 MB) and whole enwik8 / SDRBench / UCI
+  exceed the 8 GiB development machine and were run only at 256 KiB. Every
+  256 KiB result, every whole-file result that could be run, and the offset
+  extension agree, so the *direction* of the finding is consistent — but by the
+  preregistration the whole-file list is **not complete**, so the formal
+  hypothesis outcome is *inconclusive with respect to the full corpus* (§8.4).
+  Completing those runs on a ≈ 32 GiB machine is the one outstanding task.
 * **Baseline ceiling.** cmix and nncp were not run (hardware). The
   planted-GF(2) result with paq8l/paq8px bounds — but does not eliminate — the
   possibility that a stronger mixer would absorb the planted gap; it says
@@ -544,56 +609,126 @@ the one the preregistered kill criterion names.
 
 ## 12. Conclusion
 
-We asked whether automatically discovered exact algebraic relations can provide
-an additional source of lossless compression that survives full description cost
-and composition with a strong downstream compressor. We built an
-accounting-complete GF(2)/affine relation codec, an independent verifier, and a
-composed-gain metric, and we preregistered the evaluation. The mechanism is
-validated on deliberately structured data: it recovers planted GF(2) codes and
-converts them into a composed size reduction of up to `+49.95 %` that scales
-with data size and is not closed by two context-mixing compressors. Under the
-preregistered protocol, the analogous exploitable structure does **not** appear
-on the natural corpora tested — 8 whole Silesia members, 20 further files at
-256 KiB, and a bounded bit-phase-offset extension all yield no composed gain
-meeting the threshold, with a maximum observed `G_pct` of `+0.0009`. The
-functional-dependency and CRC cases reproduce known techniques. The mechanism is
-not novel; the contribution is the accounting discipline, the composed
-evaluation, the controlled validation, and the preregistered empirical finding.
-The result is a scoped negative, not a refutation of the idea: it establishes
-that a blind, prior-free, axis-aligned linear detector does not expose a
-composed advantage on general byte corpora, and it makes explicit what a future
-positive would have to establish.
+We asked whether automatically discovered exact GF(2)/affine relations can
+provide an additional source of lossless compression that survives full
+description cost and composition with a strong downstream compressor. We built a
+fixed-width GF(2) relation codec with exhaustive bit accounting, an independent
+shared-nothing verifier, and a composed-gain metric, and we preregistered the
+evaluation. The mechanism is validated on deliberately structured data: it
+recovers planted GF(2) codes and converts them into a composed size reduction of
+up to +49.95 % that scales with data size and is not closed by two
+context-mixing compressors.
+
+For the natural-corpus test, the available 8 GiB machine could run only 8 of the
+12 preregistered whole Silesia members; the other four members and whole enwik8
+/ SDRBench / UCI were run only at 256 KiB. **Strictly by the preregistration the
+hypothesis outcome is therefore inconclusive with respect to the complete
+corpus; within the achieved coverage the result is a clean layered negative.**
+No non-prior-art file — 8 whole Silesia members, 20 files at 256 KiB, and the
+bit-phase-offset extension — yields a composed gain meeting the threshold; the
+largest positive `G_pct` on any natural file is +0.09 %, on a passthrough
+container. The functional-dependency and CRC cases reproduce known techniques.
+
+The mechanism is not novel; the contribution is the accounting discipline, the
+composed evaluation, the controlled validation, and the scoped empirical
+finding. This is a precise negative, not a refutation of the idea: it
+establishes that a blind, fixed-width, axis-aligned GF(2) detector does not
+expose a composed advantage on the natural corpora tested, it identifies the
+four whole-file runs that separate "inconclusive" from "negative" for the full
+preregistered corpus, and it states what a future positive would need — either a
+corpus with exact cross-field structure that stock compressors miss, or a
+detector family expressive enough to find non-trivial structure at acceptable
+description cost.
 
 ## 13. Reproducibility
 
-Environment: Windows 11 (10.0.22631), 4 logical cores, 8 GiB RAM; Python 3.13.6;
-numpy 2.2.6; zstandard 0.25.0; brotli 1.2.0. Corpora are not committed (licence
-and size); acquisition is scripted and SHA-256-pinned, and a changed hash
-aborts.
+**Frozen state.** Everything in this paper corresponds to git tag `v1.1-final`.
+**Environment used:** Windows 11 (build 10.0.22631), 4 logical cores, 8 GiB RAM;
+Python 3.13.6; numpy 2.2.6, zstandard 0.25.0, brotli 1.2.0 (the rest of `B` is
+the Python standard library). Corpora are not committed (licence and size);
+acquisition is scripted and SHA-256-pinned in `results/corpus_manifest.json`,
+and a changed hash aborts the run.
+
+*Headline reproduction — any 8 GiB machine, ~10 min:*
 
 ```bash
 python -m pip install -e ".[dev]"
-python -m pytest -q                       # 630 tests
-python verification/independent_verify.py --self-test
-
-python experiments/controls/run.py        # exit 0 == all gates pass
-python experiments/natural/run.py  --mode whole        # >= 32 GiB machine: the full answer
-python experiments/natural/run.py  --mode whole --only silesia_xml   # one file at a time (8 GiB ok to ~10 MB)
-python experiments/offset/run.py   --mode slice        # bit-phase-offset extension
-
-python scripts/build_ledger.py && python scripts/regen_tables.py && python scripts/make_figures.py
-python scripts/check_paper_numbers.py
-python verification/independent_verify.py --ledger results/ledger.json
-
-python scripts/reproduce.py --mode whole --offset-whole   # everything, big machine
+python -m pytest -q                                   # 636 tests -> all pass
+                                                     #   (incl. 21 independent-verifier cases +
+                                                     #    randomised property tests + byte-equivalence)
+python verification/independent_verify.py --self-test # -> SELF-TEST: PASS  (all 4 container kinds)
+python experiments/controls/run.py                    # -> CONTROLS: PASS (exit 0)
+python scripts/build_ledger.py                        # -> 122 records, 0 failures
+python scripts/regen_tables.py && python scripts/make_figures.py
+python scripts/check_paper_numbers.py                 # -> PAPER-NUMBER CHECK: PASS (20 markers)
+python scripts/build_pdf.py                           # -> paper/exact-relation-coding.pdf
 ```
 
-On the reported state every step returns 0; a re-run reproduces every size,
-gain, and verdict exactly, with only timings and timestamps differing.
+Expected: controls pass; planted GF(2) shows the +32–50 % composed gains of
+Table B.2; the checker verifies every inline marker against the ledger.
+
+*Natural-corpus reproduction (the headline test) — 8 GiB machine:*
+
+```bash
+python experiments/natural/run.py --mode whole --only silesia_xml   # 8 GiB ok up to ~10 MB
+python experiments/offset/run.py  --mode slice                      # offset extension, ~15 min
+```
+
+These reproduce exactly the 8 whole Silesia members (Table B.3) and the 20-file
+offset extension (Table B.5): **0 files meet the threshold; largest natural
+`G_pct` = +0.09 %.**
+
+*Complete preregistered corpus — needs > 8 GiB (≈ 32 GiB) RAM:*
+
+```bash
+python scripts/reproduce.py --mode whole --offset-whole
+```
+
+This additionally runs `samba, nci, webster, mozilla` whole, whole enwik8,
+whole SDRBench fields, and whole UCI — the whole-file runs the present paper
+could not execute, and that separate its "inconclusive" from a full "negative".
+
+A re-run on the frozen state reproduces every size, gain, and verdict exactly;
+only timings and timestamps differ.
 `docs/preregistration.md` (locked), `docs/audit.md` (implementation audit and
 corrections C1–C2), `docs/prior_art.md`, `docs/statistics.md`,
 `docs/kill_criterion_status.md`, and `docs/venue_assessment.md` accompany the
 manuscript.
+
+## 14. References
+
+1. T. Ancheta. "Syndrome-source-coding and its universal generalization."
+   *IEEE Transactions on Information Theory*, 22(4):432–436, July 1976.
+2. C. G. Nevill-Manning and I. H. Witten. "Identifying hierarchical structure in
+   sequences: A linear-time algorithm." *Journal of Artificial Intelligence
+   Research*, 7:67–82, 1997. (SEQUITUR)
+3. N. J. Larsson and A. Moffat. "Off-line dictionary-based compression."
+   *Proceedings of the IEEE*, 88(11):1722–1732, 2000. (Re-Pair)
+4. J. C. Kieffer and E.-H. Yang. "Grammar-based codes: A new class of universal
+   lossless source codes." *IEEE Transactions on Information Theory*,
+   46(3):737–754, 2000.
+5. J.-P. Dittrich. "Automatic elimination of functional dependencies between
+   columns." US Patent 8,150,888 B2, 2012.
+6. "Method and system for data compression in a relational database."
+   US Patent 8,700,579 B2, 2014.
+7. H. Liu, Y. Ji, J. Xiao, H. Tan, Q. Luo, and L. M. Ni. "TICC: Transparent
+   Inter-Column Compression for Column-Oriented Database Systems."
+   *Proc. ACM CIKM*, 2017. DOI 10.1145/3132847.3133077.
+8. H. Liu, M. Stoian, A. van Renen, and A. Kipf. "Corra: Correlation-Aware
+   Column Compression." *VLDB 2024 Workshop on Cloud Databases (CloudDB)*, 2024.
+   arXiv:2403.17229.
+9. "Anisotropic compression as applied to columnar storage formats."
+   US Patent 11,562,085 B2, 2023.
+10. C. Schnaader. *Precomp* — precompressor for deflate/bzip2/PNG/PDF/GIF/JPEG
+    streams. Software, `https://github.com/schnaader/precomp-cpp`. See also
+    *preflate* (`https://github.com/deus-libri/preflate`) and *packJPG*.
+11. J. Shi et al. "Lossless Tensor Compression as Program Synthesis." arXiv
+    preprint arXiv:2608.02162, 2026. (Brevis)
+12. F. V. Fomin, P. A. Golovach, F. Panolan, and S. Saurabh. "Parameterized
+    Low-Rank Binary Matrix Approximation." arXiv:1803.06102, 2018.
+13. M. D. Ernst, J. H. Perkins, P. J. Guo, S. McCamant, C. Pacheco, M. S.
+    Tschantz, and C. Xiao. "The Daikon system for dynamic detection of likely
+    invariants." *Science of Computer Programming*, 69(1–3):35–45, 2007.
 
 ---
 
@@ -608,45 +743,83 @@ single-flip near-relation control and an affine-parity control.*
 
 FIGURE::fig_natural_gpct
 
-*Figure 2. Natural corpus: per-file `G_pct` for the whole files, the 256 KiB
-slices, and the bit-phase-offset extension, with the zero line and the
-preregistered `+5 %` threshold. Every point is at or below zero.*
+*Figure 2. Natural corpus: per-file composed gain `G_pct` for the whole files
+(blue), the 256 KiB slices (light blue), and the bit-phase-offset extension
+(red), with the zero line and the preregistered `+5 %` threshold (dashed).
+Every point is far below the threshold. Three points sit fractionally to the
+right of zero — `sao` (`G_pct` = +0.0009), `reymont`, `mr` — all with
+passthrough containers (`n_relations = 0`); these are sub-0.1 %
+downstream-compressor reactions to the 18-byte passthrough header, not
+deduction. Points where a real relation was found are all strongly negative.*
 
 ## Appendix B — Key results tables
 
-The complete tables (**B.1** controls, **B.2** planted scaling + context-mixer
-baseline, **B.3** whole natural, **B.4** 256 KiB natural, **B.5** bit-phase
-offset, **B.6** prior art) are auto-generated in `paper/results_tables.md` from
-`results/ledger.json` (122 records; 0 accounting, round-trip, or composed
-round-trip failures). Every row traces to a JSON record under `results/`
-carrying its dataset hash, git commit, configuration, compressor versions, and
-verification status. The three most load-bearing are reproduced here.
+The complete auto-generated tables — **B.1** controls, **B.2** planted scaling +
+context-mixer baseline, **B.3** whole natural, **B.4** 256 KiB natural,
+**B.5** bit-phase offset, **B.6** prior-art sanity — are in
+`paper/results_tables.md`, produced from `results/ledger.json` (122 records;
+0 accounting, round-trip, or composed round-trip failures). Every row traces to
+a JSON record under `results/` carrying its dataset hash, git commit,
+configuration, compressor versions, and verification status. The control numbers
+(B.1) appear in §6 and the prior-art numbers (B.6) in §8.3; the remaining four
+tables are reproduced below.
 
 **B.2 (extract) — planted GF(2): the mechanism scales**
 
 | input bytes | relations | container | `raw_best` | `G` (bytes) | `G_pct` | relation bits |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 256 | 8 | 172 | 260 | +84 | +32.3 % | 80 |
-| 4,096 | 16 | 2,118 | 4,100 | +1,978 | +48.2 % | 288 |
-| 32,768 | 32 | 16,554 | 32,772 | +16,214 | +49.5 % | 1,088 |
-| 102,400 | 32 | 51,371 | 102,405 | +51,030 | +49.8 % | 1,088 |
-| 256,000 | 32 | 128,171 | 256,005 | +127,829 | +49.9 % | 1,088 |
+| 256 | 8 | 172 | 260 | +84 | +32.31 % | 80 |
+| 4,096 | 16 | 2,118 | 4,100 | +1,978 | +48.24 % | 288 |
+| 32,768 | 32 | 16,554 | 32,772 | +16,214 | +49.48 % | 1,088 |
+| 102,400 | 32 | 51,371 | 102,405 | +51,030 | +49.83 % | 1,088 |
+| 256,000 | 32 | 128,171 | 256,005 | +127,829 | +49.93 % | 1,088 |
 | 1,048,576 | 64 | 524,850 | 1,048,581 | +523,726 | +49.95 % | 4,224 |
 
 **B.3 — whole natural files (8 of 12 Silesia members)**
 
 | member | bytes | kind | rels | `raw_best` | container | `G` (bytes) | `G_pct` | round-trip |
-| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| `xml` | 5,345,280 | GF2 | 21 | 430,390 | 4,907,484 | −1,299,038 | −301.8 % | ✓ |
-| `ooffice` | 6,152,192 | passthrough | 0 | 2,426,816 | 6,152,210 | −188 | −0.0 % | ✓ |
-| `reymont` | 6,627,202 | passthrough | 0 | 1,246,230 | 6,627,220 | +217 | +0.0 % | ✓ |
+| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | :---: |
+| `xml` | 5,345,280 | GF2 | 21 | 430,390 | 4,907,484 | −1,299,038 | −301.83 % | ✓ |
+| `ooffice` | 6,152,192 | passthrough | 0 | 2,426,816 | 6,152,210 | −188 | ≈ 0 | ✓ |
+| `reymont` | 6,627,202 | passthrough | 0 | 1,246,230 | 6,627,220 | +217 | ≈ 0 | ✓ |
 | `sao` | 7,251,944 | passthrough | 0 | 4,415,072 | 7,251,962 | −6,408 | −0.15 % | ✓ |
-| `x-ray` | 8,474,240 | GF2 | 58 | 4,051,112 | 6,555,798 | −1,907,747 | −47.1 % | ✓ |
-| `mr` | 9,970,564 | passthrough | 0 | 2,441,280 | 9,970,582 | +857 | +0.0 % | ✓ |
-| `osdb` | 10,085,684 | passthrough | 0 | 2,802,792 | 10,085,702 | −25 | −0.0 % | ✓ |
-| `dickens` | 10,192,446 | GF2 | 25 | 2,799,520 | 9,197,882 | −2,645,016 | −94.5 % | ✓ |
+| `x-ray` | 8,474,240 | GF2 | 58 | 4,051,112 | 6,555,798 | −1,907,747 | −47.09 % | ✓ |
+| `mr` | 9,970,564 | passthrough | 0 | 2,441,280 | 9,970,582 | +857 | ≈ 0 | ✓ |
+| `osdb` | 10,085,684 | passthrough | 0 | 2,802,792 | 10,085,702 | −25 | ≈ 0 | ✓ |
+| `dickens` | 10,192,446 | GF2 | 25 | 2,799,520 | 9,197,882 | −2,645,016 | −94.48 % | ✓ |
+
+**B.4 — 256 KiB natural files (all 20; phase-0 detector).** Every input is
+262,144 bytes. "pass" = passthrough container (`n_relations = 0`).
+
+| file | kind | rels | `raw_best` | `G` (bytes) | `G_pct` |
+| --- | --- | ---: | ---: | ---: | ---: |
+| `exaalt/vx.f32` | GF2 | 3 | 226,805 | −10,819 | −4.8 % |
+| `exaalt/vy.f32` | GF2 | 3 | 226,808 | −10,816 | −4.8 % |
+| `exaalt/vz.f32` | GF2 | 3 | 226,655 | −10,969 | −4.8 % |
+| `exaalt/xx.f32` | GF2 | 3 | 224,585 | −11,576 | −5.2 % |
+| `exaalt/yy.f32` | GF2 | 29 | 187,128 | −44,290 | −23.7 % |
+| `exaalt/zz.f32` | GF2 | 3 | 215,238 | −22,336 | −10.4 % |
+| `silesia_dickens` | GF2 | 31 | 77,252 | −47,827 | −61.9 % |
+| `silesia_nci` | GF2 | 1 | 14,563 | −11,065 | −76.0 % |
+| `silesia_reymont` | GF2 | 1 | 53,158 | −24,988 | −47.0 % |
+| `silesia_webster` | GF2 | 1 | 62,139 | −37,157 | −59.8 % |
+| `silesia_x-ray` | GF2 | 58 | 129,632 | −57,729 | −44.5 % |
+| `silesia_xml` | GF2 | 1 | 11,559 | −17,365 | −150.2 % |
+| `uci_household_power_text` | GF2 | 60 | 28,160 | −29,828 | −105.9 % |
+| `enwik8` | pass | 0 | 73,306 | −39 | ≈ 0 |
+| `silesia_mozilla` | pass | 0 | 111,811 | −54 | ≈ 0 |
+| `silesia_mr` | pass | 0 | 55,898 | −119 | ≈ 0 |
+| `silesia_ooffice` | pass | 0 | 123,528 | −16 | ≈ 0 |
+| `silesia_osdb` | pass | 0 | 82,475 | −19 | ≈ 0 |
+| `silesia_samba` | pass | 0 | 153,153 | −45 | ≈ 0 |
+| `silesia_sao` | pass | 0 | 167,536 | +148 | +0.09 % |
+
+Every GF(2) container is strongly composition-negative; every passthrough
+container is within header noise. Round-trip and composed round-trip hold for
+all 20 (Table in `results_tables.md`).
 
 **B.5 (summary) — bit-phase-offset extension (20 files, 256 KiB).** For every
-file the offset-search `G` equals the phase-0 `G` to the byte; 0 files cross the
-`+5 %` threshold; 0 files improve on phase 0 by more than header perturbation.
-The axis-aligned negative is robust to bit phase.
+file the offset-search `G` equals the corresponding phase-0 `G` in the table
+above **to the byte**; 0 files cross the `+5 %` threshold; 0 files improve on
+phase 0 by more than header perturbation. The fixed-width axis-aligned negative
+is robust to bit phase.

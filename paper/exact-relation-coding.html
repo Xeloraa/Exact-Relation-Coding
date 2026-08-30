@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<title>Exact-Relation Coding: A Preregistered Test of Whether Discovered Algebraic Structure Yields a Composed Lossless-Compression Advantage</title>
+<title>Exact-Relation Coding: A Preregistered Test of Whether Discovered Fixed-Width GF(2)/Affine Structure Yields a Composed Lossless-Compression Advantage</title>
 <style>@page { size: A4; margin: 20mm 18mm 22mm 18mm;
         @bottom-center { content: counter(page) " / " counter(pages); font-size: 9px; color:#666; } }
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -35,50 +35,69 @@ li { margin:.15em 0; }
 .appendix h2 { page-break-before: always; }</style>
 </head><body>
 <div class="title-block">
-  <h1>Exact-Relation Coding: A Preregistered Test of Whether Discovered Algebraic Structure Yields a Composed Lossless-Compression Advantage</h1>
-  <div class="meta">Preregistered empirical study &nbsp;&middot;&nbsp; negative result &nbsp;&middot;&nbsp;
-  experiment state <code>v0.3-submission</code><br>
-  Repository: https://github.com/Xeloraa/deductive-coding &nbsp;&middot;&nbsp;
-  all numbers traceable to <code>results/ledger.json</code></div>
+  <h1>Exact-Relation Coding: A Preregistered Test of Whether Discovered Fixed-Width GF(2)/Affine Structure Yields a Composed Lossless-Compression Advantage</h1>
+  <div class="meta">Preregistered empirical study &nbsp;&middot;&nbsp;
+  inconclusive for the full corpus, clean negative within the achieved coverage<br>
+  frozen experiment state: git tag <code>v1.1-final</code> &nbsp;&middot;&nbsp;
+  repository: https://github.com/Xeloraa/deductive-coding<br>
+  every quantity traceable to <code>results/ledger.json</code></div>
 </div>
 <p><strong>Author(s):</strong> withheld for review — repository: <code>https://github.com/Xeloraa/deductive-coding</code>
-<strong>Version:</strong> experiment state tagged <code>v0.3-submission</code>.
-<strong>Artifact:</strong> all numbers in this paper are generated from <code>results/ledger.json</code>
-(122 experiment records) by <code>scripts/regen_tables.py</code>; every inline figure
-carries a source marker naming the experiment record and field it comes from,
-verified against the ledger by <code>scripts/check_paper_numbers.py</code>.</p>
+<strong>Frozen experiment state:</strong> git tag <code>v1.1-final</code> (this PDF was generated from
+exactly that commit).
+<strong>Numerical provenance:</strong> every quantity in this paper is generated from
+<code>results/ledger.json</code> (122 experiment records) by <code>scripts/regen_tables.py</code>;
+every inline figure additionally carries a source marker naming the experiment
+record and field it is drawn from, verified against the ledger by
+<code>scripts/check_paper_numbers.py</code>.</p>
+<p><strong>Scope in one sentence.</strong> The negative result concerns <em>fixed-width,
+axis-aligned, GF(2) linear</em> relations (plus an integer-affine variant used only
+for tabular controls, and one bounded bit-phase extension); it is <strong>not</strong> a
+test of "algebraic redundancy" in general.</p>
 <h2>Abstract</h2>
 <p>Lossless compressors model a probability for the next symbol and code a
 residual. We investigate an alternative pre-pass: automatically <em>discover</em> an
 exact algebraic relation the data satisfies, transmit a fully counted
 description of that relation together with the independent symbols, and let the
-decoder reconstruct the determined symbols. We formalise the pre-pass as a
-GF(2) column-basis codec (with an integer-affine variant for tables), define a
-<em>composed deduction gain</em> <code>G = min_c |c(x)| - min_c |c(D(x))|</code> over a fixed set
-of stock compressors <code>c</code> and the accounted container <code>D(x)</code>, and preregister a
-per-file success threshold before running any natural-corpus experiment. On
-data engineered to contain an exact GF(2) linear code the pre-pass removes about
-half of the size the six stock baselines achieve
-(1 MiB code: <code>G</code> 523,726<!-- phase1_gf2_n65536_k64_p64_s14/composition_gap_bytes --> bytes,
-<code>G_pct</code> +49.95 %<!-- phase1_gf2_n65536_k64_p64_s14/composition_gap_pct -->),
+decoder reconstruct the determined symbols. We instantiate the pre-pass as a
+fixed-width GF(2) column-basis codec (with an integer-affine variant used only
+for tabular controls), define a <em>composed deduction gain</em>
+<code>G = min_c |c(x)| − min_c |c(D(x))|</code> over a fixed set of stock compressors <code>c</code>
+and the accounted container <code>D(x)</code>, and preregister a per-file success threshold
+before running any natural-corpus experiment. On data engineered to contain an
+exact GF(2) linear code the pre-pass removes about half of the size the six
+stock baselines achieve (1 MiB code: <code>G</code> =
+523,726<!-- phase1_gf2_n65536_k64_p64_s14/composition_gap_bytes --> bytes,
+<code>G_pct</code> =
++49.95 %<!-- phase1_gf2_n65536_k64_p64_s14/composition_gap_pct -->);
 the gain scales with the number of rows while relation description stays
 near-constant, and two context-mixing compressors (paq8l, paq8px v216) do not
-close it. We then test whether comparable exploitable structure transfers to
-public natural corpora: 8 of 12 whole Silesia members (the largest an 8 GiB
-machine completes), all 12 Silesia members plus an enwik8 prefix plus six
-scientific <code>float32</code> fields plus a telemetry text file at 256 KiB, and a bounded
-bit-phase-offset extension of the detector. Under the preregistered protocol,
-<strong>no natural file produces a composed gain meeting the threshold</strong>; the maximum
-observed <code>G_pct</code> over 122 records is <code>+0.0009</code> (a passthrough header artifact),
-and the offset extension reproduces the phase-0 composed gain to the byte on
-every file. Functional-dependency and per-record-CRC32 cases reproduce known
-techniques and are labelled as such. The mechanism is not novel (grammar
-compression; syndrome coding; recent program-synthesis compression). Our
-contribution is the accounting-complete codec with an independent verifier, the
-composed-gain evaluation discipline, and the preregistered empirical finding
-that blind axis-aligned exact-relation discovery does not yield a composed
-advantage on the corpora and detectors tested. We do <strong>not</strong> claim natural data
-contains no algebraic redundancy, nor that the approach can never help.</p>
+close it. We then test whether comparable exploitable <em>exact GF(2)</em> structure
+transfers to public natural corpora.</p>
+<p>The preregistered natural corpus is the 12 Silesia members (whole),
+enwik8, one SDRBench scientific <code>float32</code> field, and one telemetry text file.
+On the available 8 GiB machine we ran <strong>8 of the 12 Silesia members whole</strong>
+(≤ 10.2 MB); the other four members and whole enwik8 / SDRBench / UCI exceed
+memory and were run only at 256 KiB. <strong>Strictly by the preregistration the
+hypothesis outcome is therefore inconclusive with respect to the complete
+corpus</strong> (the whole-file list is not finished). <em>Within the achieved coverage</em>
+— 8 whole Silesia members, all 12 members plus enwik8 plus six <code>float32</code> fields
+plus the telemetry file at 256 KiB, and a bounded bit-phase-offset extension —
+the result is a <strong>clean layered negative</strong>: no non-prior-art file produces a
+composed gain meeting the threshold; the largest <code>G_pct</code> on any natural file is
+<strong>+0.09 % (<code>G_pct</code> = 0.0009)</strong>, on a passthrough container — a sub-0.1 %
+downstream-compressor sensitivity to an 18-byte header, not deduction — and the
+offset extension reproduces the phase-0 composed gain to the byte on every file.
+Functional-dependency and per-record-CRC32 cases reproduce known techniques and
+are labelled as such.</p>
+<p>The mechanism is not novel (syndrome source coding; grammar compression; recent
+program-synthesis compression). Our contribution is the accounting-complete
+codec with an independent shared-nothing verifier, the composed-gain evaluation
+discipline with a preregistered threshold, and the empirical finding that blind
+fixed-width axis-aligned GF(2) relation discovery does not yield a composed
+advantage on the natural corpora and detectors tested. We do <strong>not</strong> claim
+natural data contains no exact algebraic redundancy, nor that the general
+approach can never help.</p>
 <p><strong>Keywords:</strong> lossless compression, algebraic redundancy, GF(2) linear codes,
 functional dependencies, preregistration, negative result, reproducibility.</p>
 <h2>1. Introduction</h2>
@@ -131,21 +150,22 @@ aggregate.</p>
    composition-order check, and a non-aligned-period scope control (§6).</li>
 <li>A preregistered empirical finding: on 8 whole Silesia members, 20 further
    files at 256 KiB, and a bounded bit-phase-offset extension, blind
-   axis-aligned exact-relation discovery yields <strong>no</strong> composed advantage
-   meeting the threshold, robustly to bit phase (§5).</li>
+   fixed-width axis-aligned GF(2) relation discovery yields <strong>no</strong> composed
+   advantage meeting the threshold, robustly to bit phase (§8) — with the
+   whole-file list for the full preregistered corpus not yet complete (§8.4).</li>
 </ol>
 <p>The mechanism itself is not claimed as novel; see §7.</p>
 <h2>2. Problem definition and the composed metric</h2>
 <p>Let <code>x</code> be the input byte string and <code>B</code> a fixed set of lossless stock
 compressors (§5.2). Let <code>E</code> be a lossless deductive encoder with
-<code>E^{-1}(E(x)) = x</code>, and write <code>D(x) = E(x)</code> for the <em>container</em>. <code>E</code> emits the
+<code>E⁻¹(E(x)) = x</code>, and write <code>D(x) = E(x)</code> for the <em>container</em>. <code>E</code> emits the
 byte-smaller of a relation container (§3) and <em>passthrough</em>
 (<code>magic · version · kind · len64 · crc32 · x</code>, all whole-byte fields, so
 <code>|passthrough(x)| = |x| + 18</code>), hence <code>|D(x)| ≤ |x| + 18</code> always.</p>
-<pre><code>raw_best(x)      = min_{c ∈ B, c ran}  |c(x)|
-composed_best(x) = min_{c ∈ B, c ran}  |c(D(x))|
-G(x)             = raw_best(x) − composed_best(x)          (signed bytes)
-G_pct(x)         = G(x) / raw_best(x)
+<pre><code>  raw_best(x)      =  min over c in B, c ran  of  |c(x)|
+  composed_best(x) =  min over c in B, c ran  of  |c(D(x))|
+  G(x)             =  raw_best(x) - composed_best(x)          (signed bytes)
+  G_pct(x)         =  G(x) / raw_best(x)
 </code></pre>
 <p><code>G(x) &gt; 0</code> is the event the hypothesis needs. A companion <em>raw gain</em>
 <code>raw_best(x) − |D(x)|</code> (no downstream compressor) is reported to expose the case
@@ -314,26 +334,31 @@ and nncp (needs a GPU) could not be run on the available hardware; the paper
 writes "the strongest context-mixing compressors we could run", never "state of
 the art".</p>
 <h3>5.3 Independent verification</h3>
-<p><code>verification/independent_verify.py</code> shares no code with the encoder or the main
-decoder: its own bit reader, its own container parse, a plain-Python XOR / integer
-reconstruction, and an independent re-derivation of the accounting from parsed
-field sizes. For every reported result it checks the full chain
-<code>raw → encode → container → compress → decompress → independent-decode → raw</code>
-and asserts SHA-256 equality and the accounting invariant. It reconstructs all
-four container kinds in a self-test, runs in CI over 21 parametrised cases, and
-was run on the 10 MB <code>silesia_dickens</code> container. The primary decoder's own
-composed round-trip is also checked for every stock compressor.</p>
+<p><code>verification/independent_verify.py</code> shares no code with the encoder or the
+main decoder: its own bit reader, its own container parse, a plain-Python XOR /
+integer reconstruction, and an independent re-derivation of the accounting from
+parsed field sizes. It checks the full chain
+<code>raw → encode → container → compress → decompress → independent-decode → raw</code>,
+asserting SHA-256 equality and the <code>8·|D| = Σ categories</code> invariant on the
+independently parsed field sizes. It reconstructs all four container kinds in a
+self-test; the CI suite exercises it over 21 parametrised cases (offsets 0–31,
+all container kinds, the composed compress/decompress chain, and a
+phase-shifted planted code it must recover); and it was run once on the whole
+10 MB <code>silesia_dickens</code> container. Separately, the <em>primary</em> decoder's composed
+round-trip <code>E⁻¹(c⁻¹(c(D(x)))) = x</code> is checked for every stock compressor on
+every one of the 122 ledger records — 0 failures.</p>
 <h3>5.4 Reproducibility harness</h3>
-<p><code>scripts/reproduce.py</code> runs, in order: <code>pytest</code> (630 tests: equivalence,
-randomised property tests, independent verifier), the verifier self-test, the
-controls, the natural-corpus slice sweep, the offset-extension sweep, the legacy
-phase experiments, then <code>build_ledger.py → regen_tables.py → make_figures.py →
-check_paper_numbers.py → independent_verify.py --ledger</code>. All ten steps return 0
-on the reported state. Every experiment JSON records dataset SHA-256, seeds,
-config, the seven accounting categories, container size, round-trip and composed
-round-trip status, every baseline <code>(name, bytes, seconds, available)</code>, every
-composition size, <code>G</code>, <code>G_pct</code>, the raw gain, a UTC timestamp, the git commit
-(with a <code>-dirty</code> marker if the tree was not clean), and machine info.</p>
+<p><code>scripts/reproduce.py</code> runs, in order: <code>pytest</code> (636 tests on the frozen state:
+byte-equivalence, randomised property tests, independent verifier), the verifier
+self-test, the controls, the natural-corpus slice sweep, the offset-extension
+sweep, the legacy phase experiments, then <code>build_ledger.py</code> → <code>regen_tables.py</code>
+→ <code>make_figures.py</code> → <code>check_paper_numbers.py</code> → <code>independent_verify.py
+--ledger</code>. Every step returns 0 on the reported state. Every experiment JSON
+records dataset SHA-256, seeds, config, the seven accounting categories,
+container size, round-trip and composed round-trip status, every baseline
+<code>(name, bytes, seconds, available)</code>, every composition size, <code>G</code>, <code>G_pct</code>, the
+raw gain, a UTC timestamp, the git commit (with a <code>-dirty</code> marker if the tree
+was not clean), and machine info.</p>
 <h2>6. Controls</h2>
 <p>All gate assertions pass (<code>experiments/controls/run.py</code>; full numbers in
 <code>paper/results_tables.md</code>).</p>
@@ -379,7 +404,7 @@ composition size, <code>G</code>, <code>G_pct</code>, the raw gain, a UTC timest
 <tr>
 <td>non-aligned period, <code>w = 48</code></td>
 <td>exact 48-bit-period linear code</td>
-<td>default widths → passthrough (<code>G</code> -18<!-- control_nonaligned_period_w48/composition_gap_bytes -->); adding width 48 → 24 relations, round-trip exact</td>
+<td>default widths → passthrough (<code>G</code> −18<!-- control_nonaligned_period_w48/composition_gap_bytes -->); adding width 48 → 24 relations, round-trip exact</td>
 </tr>
 <tr>
 <td>prior art: affine FD / per-record CRC32</td>
@@ -394,57 +419,66 @@ broken, and it is blind to exact structure whose period is not among the tried
 widths (visible once the width is added).</p>
 <h2>7. Related work and novelty</h2>
 <p>The general idea — discover exact structure, transmit a reconstruction recipe,
-and beat a general-purpose compressor after counting the recipe — is not new.</p>
+and beat a general-purpose compressor after counting the recipe — is not new,
+and we claim no novelty for it. Bracketed keys refer to §14.</p>
 <ul>
-<li><strong>Syndrome source coding</strong> (Ancheta, 1976; and its universal generalisation).
-  Treat the source as an error pattern and transmit its syndrome <code>Hx</code> under a
-  linear code; a coset-leader source decompresses exactly. "In the absence of
-  side information a Slepian–Wolf coder is an entropy coder." Compressing a
-  single source by exploiting linear-code membership is classical; what is not
-  classical is <em>discovering</em> the code from one input with description cost
-  charged on the same channel — a thin distinction.</li>
-<li><strong>Grammar-based compression</strong> (Kieffer–Yang; SEQUITUR; Re-Pair). The string is
-  the unique yield of a grammar whose description cost is counted; structure is
-  concatenative rather than linear-algebraic.</li>
-<li><strong>Functional-dependency / derived-column elimination.</strong> US 8,150,888; Corra
-  (2024); Wolpe (2026); TICC (2017); anisotropic columnar compression
-  (US 11,562,085); Infobright-style inexact-FD-with-stored-exceptions. This
-  space is thoroughly occupied for relational tables. Our affine-FD and CRC
-  results are labelled as reproductions of it and are excluded from RQ-E.</li>
-<li><strong>Format-aware recompression.</strong> Precomp, preflate, packJPG invert known
-  codecs and drop reconstructible checksums; our PNG/ZIP/SQLite behaviour is the
-  predicted format-awareness trap, not a counterexample.</li>
-<li><strong>Program-synthesis compression.</strong> Brevis (2026) synthesises a self-contained
-  DSL program that reconstructs a tensor bit-exactly and reports a real composed
-  win on model checkpoints — a favourable domain dense with repeats, low rank
-  and quantisation grids, searched with a rich language guided by a learned
-  prior. This is a strong recent instance of the general idea; it does not
-  occupy blind GF(2)/affine discovery on arbitrary bytes.</li>
-<li><strong>Low GF(2)-rank / Boolean matrix factorisation</strong> (Fomin et al.; F_p-matrix
-  factorisation). A change of basis to expose binary rank deficiency; NP-hard in
-  general, and the exact case is the special case our column basis computes at a
-  fixed width.</li>
-<li><strong>Invariant mining</strong> (Daikon and successors). Templated discovery of
-  equalities and affine relations among program variables; not a compressor and
-  false-positive-prone.</li>
+<li><strong>Syndrome source coding</strong> [Ancheta 1976]. Treat the source as an error
+  pattern and transmit its syndrome <code>Hx</code> under a linear code; a coset-leader
+  source decompresses exactly, and with no side information the coder is an
+  entropy coder. Compressing a single source by exploiting linear-code
+  membership is classical. What is not standard is <em>discovering</em> the code from
+  one input with its description cost charged on the same channel — a thin
+  distinction, and the axis on which our codec differs from classical syndrome
+  coding.</li>
+<li><strong>Grammar-based compression</strong> [Nevill-Manning &amp; Witten 1997; Larsson &amp; Moffat
+  2000; Kieffer &amp; Yang 2000]. The string is the unique yield of a grammar whose
+  description cost is counted; structure is concatenative rather than
+  linear-algebraic.</li>
+<li><strong>Functional-dependency / derived-column elimination</strong> [US 8,150,888;
+  US 8,700,579; Liu et al. 2017 (TICC); Liu et al. 2024 (Corra);
+  US 11,562,085]. Detect that a column is an exact function of others, drop it,
+  and store the function; extensions store exceptions for inexact dependencies.
+  This space is thoroughly occupied for relational tables. Our affine-FD and
+  per-record-CRC32 results are labelled as reproductions of it and are excluded
+  from RQ-E.</li>
+<li><strong>Format-aware recompression</strong> [Schnaader, <em>Precomp</em>; preflate; packJPG].
+  Invert a known embedded codec and drop reconstructible checksums; our
+  PNG/ZIP/SQLite behaviour is the predicted format-awareness trap, not a
+  counterexample.</li>
+<li><strong>Program-synthesis compression</strong> [Shi et al. 2026 (Brevis)]. Synthesise a
+  self-contained DSL program that reconstructs a tensor bit-exactly; reports a
+  real composed win on neural-network checkpoints — a favourable domain dense
+  with repeats, low rank and quantisation grids, searched with a rich language
+  guided by a learned prior. A strong recent instance of the general idea; it
+  does not address blind fixed-width GF(2) discovery on arbitrary bytes.</li>
+<li><strong>Low GF(2)-rank / binary matrix factorisation</strong> [Fomin et al. 2018]. A change
+  of basis to expose binary rank deficiency; NP-hard in general, and the <em>exact</em>
+  case is the special case our column basis computes at a fixed width.</li>
+<li><strong>Invariant mining</strong> [Ernst et al. 2007 (Daikon)]. Templated dynamic discovery
+  of equalities and affine relations among program variables; not a compressor,
+  and it reports <em>likely</em> invariants (false positives expected), whereas we
+  accept a relation only after verifying it on every row.</li>
 </ul>
 <p><strong>Our contribution, stated narrowly.</strong> (i) An accounting-complete, never-worse
-GF(2)/affine relation codec with an independent shared-nothing verifier;
-(ii) the composed deduction-gain metric with a preregistered per-file threshold
-as an evaluation discipline for pre-pass compression claims; (iii) a
-preregistered empirical measurement — with a bounded phase-offset extension — of
-whether blind axis-aligned exact-relation discovery produces a composed
-advantage on public natural corpora, finding that it does not, on the corpora
-and detectors tested. We do not claim any of (i)–(iii) is "first" in a stronger
-sense than this.</p>
+fixed-width GF(2) (plus tabular-affine) relation codec whose emitted bits are
+exhaustively categorised, with an independent shared-nothing verifier and
+end-to-end composed round-trip checks; (ii) the composed deduction-gain metric
+with a git-locked preregistered per-file threshold, offered as an evaluation
+discipline for pre-pass compression claims; (iii) a preregistered empirical
+measurement — with a bounded bit-phase-offset extension — of whether blind
+fixed-width axis-aligned GF(2) relation discovery produces a composed advantage
+on public natural corpora, finding that it does not, within the coverage tested.
+We do not claim any of (i)–(iii) is "first" in a stronger sense than this.</p>
 <h2>8. Results</h2>
 <h3>8.1 Mechanism validation (planted GF(2))</h3>
 <p>On random GF(2) linear codes — <code>k</code> information columns and <code>k</code> exact parity
 columns — the pre-pass behaves exactly as designed. The relation description is
-a constant of the code (1 088 bits for <code>k = 32</code>,
+a constant of the code (1,088 bits for <code>k = 32</code>;
 4,224<!-- phase1_gf2_n65536_k64_p64_s14/relation_description_bits --> bits for
 <code>k = 64</code>), independent of the number of rows, so the composed gain grows with
-<code>n_rows</code>: <code>G_pct</code> rises from <code>+32.3 %</code> at 256 bytes to
+the row count: <code>G_pct</code> rises from
++32.31 %<!-- phase0_gf2_tiny/composition_gap_pct --> at 256 bytes
+to
 +49.95 %<!-- phase1_gf2_n65536_k64_p64_s14/composition_gap_pct -->
 at 1 MiB (Fig. 1; Table B.2). Every case round-trips, and the independent
 verifier agrees.</p>
@@ -481,8 +515,8 @@ fails; composition then makes it worse:</p>
 <td>GF2</td>
 <td style="text-align: right;">25<!-- nat_silesia_dickens/n_relations --></td>
 <td style="text-align: right;">2,799,520<!-- nat_silesia_dickens/raw_best_bytes --></td>
-<td style="text-align: right;">-2,645,016<!-- nat_silesia_dickens/composition_gap_bytes --></td>
-<td style="text-align: right;">−94.5 %</td>
+<td style="text-align: right;">−2,645,016<!-- nat_silesia_dickens/composition_gap_bytes --></td>
+<td style="text-align: right;">−94.48 %</td>
 </tr>
 <tr>
 <td><code>x-ray</code></td>
@@ -490,8 +524,8 @@ fails; composition then makes it worse:</p>
 <td>GF2</td>
 <td style="text-align: right;">58<!-- nat_silesia_x-ray/n_relations --></td>
 <td style="text-align: right;">4,051,112<!-- nat_silesia_x-ray/raw_best_bytes --></td>
-<td style="text-align: right;">-1,907,747<!-- nat_silesia_x-ray/composition_gap_bytes --></td>
-<td style="text-align: right;">−47.1 %</td>
+<td style="text-align: right;">−1,907,747<!-- nat_silesia_x-ray/composition_gap_bytes --></td>
+<td style="text-align: right;">−47.09 %</td>
 </tr>
 <tr>
 <td><code>xml</code></td>
@@ -499,8 +533,8 @@ fails; composition then makes it worse:</p>
 <td>GF2</td>
 <td style="text-align: right;">21<!-- nat_silesia_xml/n_relations --></td>
 <td style="text-align: right;">430,390<!-- nat_silesia_xml/raw_best_bytes --></td>
-<td style="text-align: right;">-1,299,038<!-- nat_silesia_xml/composition_gap_bytes --></td>
-<td style="text-align: right;">−301.8 %</td>
+<td style="text-align: right;">−1,299,038<!-- nat_silesia_xml/composition_gap_bytes --></td>
+<td style="text-align: right;">−301.83 %</td>
 </tr>
 </tbody>
 </table>
@@ -511,10 +545,16 @@ and fall to passthrough, with <code>|G| ≤ 6 408</code> bytes (<code>|G_pct| �
 downstream-compressor sensitivity to an 18-byte header, not deduction.</p>
 <p><strong>256 KiB files (20).</strong> Same pattern: 0 meaningful positives (Table B.4). Where
 GF(2) finds relations (<code>float32</code> fields, XML, text, telemetry) the composed gain
-is large-negative (<code>−4.8 %</code> to <code>−302 %</code>); where it does not, <code>|G_pct| &lt; 0.3 %</code>.
-Across all 122 records the maximum <code>G_pct</code> is <code>+0.09 %</code>
-(<code>silesia_sao</code> at 256 KiB, a passthrough container), far below the 5 % floor and
-excluded anyway as passthrough.</p>
+is large-negative (−4.8 % to −302 %); where it does not, <code>|G_pct| &lt; 0.3 %</code>. The
+single largest positive <code>G_pct</code> on any natural-corpus record — whole files, 256
+KiB files, and the offset extension together — is
+<strong>+0.09 %<!-- nat_silesia_sao_slice/composition_gap_pct --></strong>
+(<code>G_pct</code> = 0.0009), on the 256 KiB prefix of <code>silesia_sao</code>, whose container is <em>passthrough</em>
+(<code>n_relations = 0</code>). This is downstream-compressor sensitivity to the 18-byte
+passthrough header, not deduction; it is two orders of magnitude below the 5 %
+floor and is excluded from the hypothesis in any case because it is not a real
+deduction. (The <code>+49.95 %</code> maximum over all 122 records is the planted
+positive control, §8.1.)</p>
 <p><strong>Bit-phase-offset extension (20 files).</strong> For every file the offset-search
 composed gain equals the phase-0 value <strong>to the byte</strong> (Table B.5); no bit phase
 improves on phase 0 by more than header perturbation, and 0 files cross the
@@ -528,19 +568,60 @@ attempt the kill criterion requires, and it does not rescue the hypothesis.</p>
 functional-dependency elimination and checksum inversion respectively and are
 <strong>not</strong> counted toward RQ-E.</p>
 <h3>8.4 Verdict under the preregistered protocol</h3>
+<p><strong>Coverage against the full preregistered corpus.</strong></p>
+<table>
+<thead>
+<tr>
+<th>preregistered item</th>
+<th>preregistered "run as"</th>
+<th>actually run</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Silesia — 12 members</td>
+<td>whole files</td>
+<td>8 whole (<code>dickens, xml, ooffice, reymont, sao, x-ray, mr, osdb</code>, ≤ 10.2 MB); 4 (<code>samba, nci, webster, mozilla</code>, 21–51 MB) at 256 KiB only</td>
+</tr>
+<tr>
+<td>enwik8</td>
+<td>first 10⁸ bytes</td>
+<td>256 KiB prefix only</td>
+</tr>
+<tr>
+<td>≥ 1 SDRBench <code>float32</code> field</td>
+<td>whole field</td>
+<td>six EXAALT fields at 256 KiB only</td>
+</tr>
+<tr>
+<td>UCI household-power text</td>
+<td>whole file</td>
+<td>256 KiB prefix only</td>
+</tr>
+<tr>
+<td>bit-phase-offset extension</td>
+<td>—</td>
+<td>all 20 files at 256 KiB</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li>Positive, null, prior-art, and scope controls all behave as designed.</li>
-<li>No non-prior-art natural file meets the per-file threshold, on 8 whole
-  Silesia members, 20 files at 256 KiB, and the phase-offset extension.</li>
-<li>Four of the twelve Silesia members, and the whole enwik8 / SDRBench / UCI
-  files, could not be run whole on the available 8 GiB machine (§9).</li>
+<li>The positive, null, prior-art, and scope controls all behave as designed.</li>
+<li>No non-prior-art natural file meets the per-file threshold, on the 8 whole
+  Silesia members, the 20 files at 256 KiB, or the phase-offset extension.</li>
+<li>The whole-file runs for four Silesia members and for whole enwik8 / SDRBench /
+  UCI exceed the 8 GiB development machine and were <strong>not executed</strong> (§9, §11).</li>
 </ul>
-<p>By the letter of the preregistration this is <strong>inconclusive for the full corpus
-list</strong> (the four large members are not yet run whole). For the coverage
-achieved it is a <strong>clean, layered negative</strong>: on natural data, exact structure
-is often present (RQ-A) and discoverable (RQ-B), and on no tested file does it
-reduce the representation (RQ-C) or survive composition (RQ-D), robustly to bit
-phase.</p>
+<p><strong>Verdict: inconclusive with respect to the complete preregistered corpus; a
+clean negative within the achieved coverage.</strong> Strictly, the preregistration's
+"negative" outcome requires the full whole-file list, which was not completed,
+so the formal hypothesis outcome is <em>inconclusive</em>. Within what was run, the
+result is an unambiguous <strong>layered negative</strong>: on natural data, exact GF(2)
+structure is often present (RQ-A) and discoverable (RQ-B), and on <strong>no</strong> tested
+file — at 256 KiB or whole, at any bit phase — does it reduce the representation
+(RQ-C) or survive composition (RQ-D). Every 256 KiB result and every whole-file
+result that could be run agree, so the four missing whole-file runs are the only
+gap between "inconclusive" and "negative".</p>
 <h2>9. Discussion</h2>
 <h3>9.1 What is established</h3>
 <ul>
@@ -553,11 +634,12 @@ phase.</p>
   is fully counted (null overhead is exactly the 18-byte passthrough header),
   and that the pipeline degrades gracefully as structure is corrupted.</li>
 <li>On the natural corpora <em>actually measured</em> — 8 whole Silesia members plus 20
-  files at 256 KiB plus the phase-offset extension — the composed deduction gain
-  is at most <code>+0.09 %</code> and is negative on every file where a real relation is
-  found. The redundancy the detector locates in natural data is real but
-  trivial (constant bit-planes, ASCII structure) and is already captured by
-  stock compressors from the raw byte order.</li>
+  files at 256 KiB plus the phase-offset extension — the largest positive
+  composed gain on any file is +0.09 % (on a passthrough container, i.e. header
+  perturbation), and <code>G_pct</code> is strongly negative on every file where a real
+  GF(2) relation is found. The redundancy the detector locates in natural data
+  is real but trivial (a constant high bit-plane, ASCII structure) and is
+  already captured by the stock compressors from the raw byte order.</li>
 </ul>
 <h3>9.2 What is not established</h3>
 <ul>
@@ -615,7 +697,7 @@ the one the preregistered kill criterion names.</p>
 </tr>
 <tr>
 <td>the compressed container does not decode back</td>
-<td><code>raw → encode → compress → decompress → decode → raw</code> checked with both the primary and the independent decoder for every codec; 0 failures over 122 records</td>
+<td>the <em>primary</em> decoder's <code>raw → encode → compress → decompress → decode → raw</code> is checked for every stock codec on all 122 records (0 failures); the <em>independent</em> shared-nothing decoder runs the same chain on the 21 CI cases and on the whole 10 MB <code>dickens</code> container</td>
 </tr>
 <tr>
 <td>the width × variant <code>min</code> inflates results</td>
@@ -641,15 +723,23 @@ the one the preregistered kill criterion names.</p>
 </table>
 <h2>11. Limitations</h2>
 <ul>
-<li><strong>Detector scope.</strong> Axis-aligned fixed-width GF(2) plus integer affine,
-  extended once to every bit phase. A negative is scoped to these families; the
+<li><strong>Detector scope.</strong> Fixed-width, axis-aligned GF(2) linear relations (widths
+  8–256), plus an integer-affine variant used only for tabular controls, plus
+  one bounded bit-phase-offset extension. The negative is scoped to these
+  families only; it is not a test of algebraic redundancy in general. The
   non-aligned-period control shows exact structure at a period not among the
-  tried widths is missed by construction.</li>
-<li><strong>Whole-file coverage.</strong> 8 of 12 Silesia members run whole (≤ 10.2 MB); the
-  four largest (21–51 MB) and whole enwik8 / SDRBench / UCI need more than 8 GiB
-  RAM than the development machine has. Every 256 KiB slice, every whole file
-  run, and the offset extension agree, so the <em>conclusion</em> is consistent, but
-  the pre-registered protocol is <em>not complete</em> for the full list.</li>
+  tried widths is missed by construction. Non-axis-aligned linear relations
+  (via a searched or learned column permutation) and low-degree polynomial
+  relations are untested.</li>
+<li><strong>Whole-file coverage — the principal limitation.</strong> 8 of the 12 preregistered
+  whole Silesia members were run whole (≤ 10.2 MB). The four largest members
+  (<code>samba, nci, webster, mozilla</code>, 21–51 MB) and whole enwik8 / SDRBench / UCI
+  exceed the 8 GiB development machine and were run only at 256 KiB. Every
+  256 KiB result, every whole-file result that could be run, and the offset
+  extension agree, so the <em>direction</em> of the finding is consistent — but by the
+  preregistration the whole-file list is <strong>not complete</strong>, so the formal
+  hypothesis outcome is <em>inconclusive with respect to the full corpus</em> (§8.4).
+  Completing those runs on a ≈ 32 GiB machine is the one outstanding task.</li>
 <li><strong>Baseline ceiling.</strong> cmix and nncp were not run (hardware). The
   planted-GF(2) result with paq8l/paq8px bounds — but does not eliminate — the
   possibility that a stronger mixer would absorb the planted gap; it says
@@ -664,51 +754,109 @@ the one the preregistered kill criterion names.</p>
   per-file maximum <code>G_pct</code> against the fixed threshold.</li>
 </ul>
 <h2>12. Conclusion</h2>
-<p>We asked whether automatically discovered exact algebraic relations can provide
-an additional source of lossless compression that survives full description cost
-and composition with a strong downstream compressor. We built an
-accounting-complete GF(2)/affine relation codec, an independent verifier, and a
-composed-gain metric, and we preregistered the evaluation. The mechanism is
-validated on deliberately structured data: it recovers planted GF(2) codes and
-converts them into a composed size reduction of up to <code>+49.95 %</code> that scales
-with data size and is not closed by two context-mixing compressors. Under the
-preregistered protocol, the analogous exploitable structure does <strong>not</strong> appear
-on the natural corpora tested — 8 whole Silesia members, 20 further files at
-256 KiB, and a bounded bit-phase-offset extension all yield no composed gain
-meeting the threshold, with a maximum observed <code>G_pct</code> of <code>+0.0009</code>. The
-functional-dependency and CRC cases reproduce known techniques. The mechanism is
-not novel; the contribution is the accounting discipline, the composed
-evaluation, the controlled validation, and the preregistered empirical finding.
-The result is a scoped negative, not a refutation of the idea: it establishes
-that a blind, prior-free, axis-aligned linear detector does not expose a
-composed advantage on general byte corpora, and it makes explicit what a future
-positive would have to establish.</p>
+<p>We asked whether automatically discovered exact GF(2)/affine relations can
+provide an additional source of lossless compression that survives full
+description cost and composition with a strong downstream compressor. We built a
+fixed-width GF(2) relation codec with exhaustive bit accounting, an independent
+shared-nothing verifier, and a composed-gain metric, and we preregistered the
+evaluation. The mechanism is validated on deliberately structured data: it
+recovers planted GF(2) codes and converts them into a composed size reduction of
+up to +49.95 % that scales with data size and is not closed by two
+context-mixing compressors.</p>
+<p>For the natural-corpus test, the available 8 GiB machine could run only 8 of the
+12 preregistered whole Silesia members; the other four members and whole enwik8
+/ SDRBench / UCI were run only at 256 KiB. <strong>Strictly by the preregistration the
+hypothesis outcome is therefore inconclusive with respect to the complete
+corpus; within the achieved coverage the result is a clean layered negative.</strong>
+No non-prior-art file — 8 whole Silesia members, 20 files at 256 KiB, and the
+bit-phase-offset extension — yields a composed gain meeting the threshold; the
+largest positive <code>G_pct</code> on any natural file is +0.09 %, on a passthrough
+container. The functional-dependency and CRC cases reproduce known techniques.</p>
+<p>The mechanism is not novel; the contribution is the accounting discipline, the
+composed evaluation, the controlled validation, and the scoped empirical
+finding. This is a precise negative, not a refutation of the idea: it
+establishes that a blind, fixed-width, axis-aligned GF(2) detector does not
+expose a composed advantage on the natural corpora tested, it identifies the
+four whole-file runs that separate "inconclusive" from "negative" for the full
+preregistered corpus, and it states what a future positive would need — either a
+corpus with exact cross-field structure that stock compressors miss, or a
+detector family expressive enough to find non-trivial structure at acceptable
+description cost.</p>
 <h2>13. Reproducibility</h2>
-<p>Environment: Windows 11 (10.0.22631), 4 logical cores, 8 GiB RAM; Python 3.13.6;
-numpy 2.2.6; zstandard 0.25.0; brotli 1.2.0. Corpora are not committed (licence
-and size); acquisition is scripted and SHA-256-pinned, and a changed hash
-aborts.</p>
+<p><strong>Frozen state.</strong> Everything in this paper corresponds to git tag <code>v1.1-final</code>.
+<strong>Environment used:</strong> Windows 11 (build 10.0.22631), 4 logical cores, 8 GiB RAM;
+Python 3.13.6; numpy 2.2.6, zstandard 0.25.0, brotli 1.2.0 (the rest of <code>B</code> is
+the Python standard library). Corpora are not committed (licence and size);
+acquisition is scripted and SHA-256-pinned in <code>results/corpus_manifest.json</code>,
+and a changed hash aborts the run.</p>
+<p><em>Headline reproduction — any 8 GiB machine, ~10 min:</em></p>
 <pre><code class="language-bash">python -m pip install -e &quot;.[dev]&quot;
-python -m pytest -q                       # 630 tests
-python verification/independent_verify.py --self-test
-
-python experiments/controls/run.py        # exit 0 == all gates pass
-python experiments/natural/run.py  --mode whole        # &gt;= 32 GiB machine: the full answer
-python experiments/natural/run.py  --mode whole --only silesia_xml   # one file at a time (8 GiB ok to ~10 MB)
-python experiments/offset/run.py   --mode slice        # bit-phase-offset extension
-
-python scripts/build_ledger.py &amp;&amp; python scripts/regen_tables.py &amp;&amp; python scripts/make_figures.py
-python scripts/check_paper_numbers.py
-python verification/independent_verify.py --ledger results/ledger.json
-
-python scripts/reproduce.py --mode whole --offset-whole   # everything, big machine
+python -m pytest -q                                   # 636 tests -&gt; all pass
+                                                     #   (incl. 21 independent-verifier cases +
+                                                     #    randomised property tests + byte-equivalence)
+python verification/independent_verify.py --self-test # -&gt; SELF-TEST: PASS  (all 4 container kinds)
+python experiments/controls/run.py                    # -&gt; CONTROLS: PASS (exit 0)
+python scripts/build_ledger.py                        # -&gt; 122 records, 0 failures
+python scripts/regen_tables.py &amp;&amp; python scripts/make_figures.py
+python scripts/check_paper_numbers.py                 # -&gt; PAPER-NUMBER CHECK: PASS (20 markers)
+python scripts/build_pdf.py                           # -&gt; paper/exact-relation-coding.pdf
 </code></pre>
-<p>On the reported state every step returns 0; a re-run reproduces every size,
-gain, and verdict exactly, with only timings and timestamps differing.
+<p>Expected: controls pass; planted GF(2) shows the +32–50 % composed gains of
+Table B.2; the checker verifies every inline marker against the ledger.</p>
+<p><em>Natural-corpus reproduction (the headline test) — 8 GiB machine:</em></p>
+<pre><code class="language-bash">python experiments/natural/run.py --mode whole --only silesia_xml   # 8 GiB ok up to ~10 MB
+python experiments/offset/run.py  --mode slice                      # offset extension, ~15 min
+</code></pre>
+<p>These reproduce exactly the 8 whole Silesia members (Table B.3) and the 20-file
+offset extension (Table B.5): <strong>0 files meet the threshold; largest natural
+<code>G_pct</code> = +0.09 %.</strong></p>
+<p><em>Complete preregistered corpus — needs &gt; 8 GiB (≈ 32 GiB) RAM:</em></p>
+<pre><code class="language-bash">python scripts/reproduce.py --mode whole --offset-whole
+</code></pre>
+<p>This additionally runs <code>samba, nci, webster, mozilla</code> whole, whole enwik8,
+whole SDRBench fields, and whole UCI — the whole-file runs the present paper
+could not execute, and that separate its "inconclusive" from a full "negative".</p>
+<p>A re-run on the frozen state reproduces every size, gain, and verdict exactly;
+only timings and timestamps differ.
 <code>docs/preregistration.md</code> (locked), <code>docs/audit.md</code> (implementation audit and
 corrections C1–C2), <code>docs/prior_art.md</code>, <code>docs/statistics.md</code>,
 <code>docs/kill_criterion_status.md</code>, and <code>docs/venue_assessment.md</code> accompany the
 manuscript.</p>
+<h2>14. References</h2>
+<ol>
+<li>T. Ancheta. "Syndrome-source-coding and its universal generalization."
+   <em>IEEE Transactions on Information Theory</em>, 22(4):432–436, July 1976.</li>
+<li>C. G. Nevill-Manning and I. H. Witten. "Identifying hierarchical structure in
+   sequences: A linear-time algorithm." <em>Journal of Artificial Intelligence
+   Research</em>, 7:67–82, 1997. (SEQUITUR)</li>
+<li>N. J. Larsson and A. Moffat. "Off-line dictionary-based compression."
+   <em>Proceedings of the IEEE</em>, 88(11):1722–1732, 2000. (Re-Pair)</li>
+<li>J. C. Kieffer and E.-H. Yang. "Grammar-based codes: A new class of universal
+   lossless source codes." <em>IEEE Transactions on Information Theory</em>,
+   46(3):737–754, 2000.</li>
+<li>J.-P. Dittrich. "Automatic elimination of functional dependencies between
+   columns." US Patent 8,150,888 B2, 2012.</li>
+<li>"Method and system for data compression in a relational database."
+   US Patent 8,700,579 B2, 2014.</li>
+<li>H. Liu, Y. Ji, J. Xiao, H. Tan, Q. Luo, and L. M. Ni. "TICC: Transparent
+   Inter-Column Compression for Column-Oriented Database Systems."
+   <em>Proc. ACM CIKM</em>, 2017. DOI 10.1145/3132847.3133077.</li>
+<li>H. Liu, M. Stoian, A. van Renen, and A. Kipf. "Corra: Correlation-Aware
+   Column Compression." <em>VLDB 2024 Workshop on Cloud Databases (CloudDB)</em>, 2024.
+   arXiv:2403.17229.</li>
+<li>"Anisotropic compression as applied to columnar storage formats."
+   US Patent 11,562,085 B2, 2023.</li>
+<li>C. Schnaader. <em>Precomp</em> — precompressor for deflate/bzip2/PNG/PDF/GIF/JPEG
+    streams. Software, <code>https://github.com/schnaader/precomp-cpp</code>. See also
+    <em>preflate</em> (<code>https://github.com/deus-libri/preflate</code>) and <em>packJPG</em>.</li>
+<li>J. Shi et al. "Lossless Tensor Compression as Program Synthesis." arXiv
+    preprint arXiv:2608.02162, 2026. (Brevis)</li>
+<li>F. V. Fomin, P. A. Golovach, F. Panolan, and S. Saurabh. "Parameterized
+    Low-Rank Binary Matrix Approximation." arXiv:1803.06102, 2018.</li>
+<li>M. D. Ernst, J. H. Perkins, P. J. Guo, S. McCamant, C. Pacheco, M. S.
+    Tschantz, and C. Xiao. "The Daikon system for dynamic detection of likely
+    invariants." <em>Science of Computer Programming</em>, 69(1–3):35–45, 2007.</li>
+</ol>
 <hr>
 <h2>Appendix A — Figures</h2>
 <figure>
@@ -718,7 +866,7 @@ manuscript.</p>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-08-30T12:44:36.741583</dc:date>
+    <dc:date>2026-08-30T13:17:47.870128</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -754,16 +902,16 @@ z
      <g id="line2d_1">
       <path d="M 106.312974 216.302594 
 L 106.312974 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_2">
       <defs>
-       <path id="mdc3b906f5b" d="M 0 0 
+       <path id="ma595e87cdd" d="M 0 0 
 L 0 3.5 
 " style="stroke: #000000; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#mdc3b906f5b" x="106.312974" y="216.302594" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma595e87cdd" x="106.312974" y="216.302594" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_1">
@@ -848,11 +996,11 @@ z
      <g id="line2d_3">
       <path d="M 194.418113 216.302594 
 L 194.418113 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_4">
       <g>
-       <use xlink:href="#mdc3b906f5b" x="194.418113" y="216.302594" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma595e87cdd" x="194.418113" y="216.302594" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_2">
@@ -889,11 +1037,11 @@ z
      <g id="line2d_5">
       <path d="M 282.523253 216.302594 
 L 282.523253 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_6">
       <g>
-       <use xlink:href="#mdc3b906f5b" x="282.523253" y="216.302594" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma595e87cdd" x="282.523253" y="216.302594" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_3">
@@ -936,11 +1084,11 @@ z
      <g id="line2d_7">
       <path d="M 370.628392 216.302594 
 L 370.628392 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_8">
       <g>
-       <use xlink:href="#mdc3b906f5b" x="370.628392" y="216.302594" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma595e87cdd" x="370.628392" y="216.302594" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_4">
@@ -988,16 +1136,16 @@ z
      <g id="line2d_9">
       <path d="M 44.730125 216.302594 
 L 44.730125 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_10">
       <defs>
-       <path id="m160debd5e9" d="M 0 0 
+       <path id="m6e754b3d33" d="M 0 0 
 L 0 2 
 " style="stroke: #000000; stroke-width: 0.6"/>
       </defs>
       <g>
-       <use xlink:href="#m160debd5e9" x="44.730125" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="44.730125" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1005,11 +1153,11 @@ L 0 2
      <g id="line2d_11">
       <path d="M 60.244669 216.302594 
 L 60.244669 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_12">
       <g>
-       <use xlink:href="#m160debd5e9" x="60.244669" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="60.244669" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1017,11 +1165,11 @@ L 60.244669 20.038594
      <g id="line2d_13">
       <path d="M 71.252414 216.302594 
 L 71.252414 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_14">
       <g>
-       <use xlink:href="#m160debd5e9" x="71.252414" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="71.252414" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1029,11 +1177,11 @@ L 71.252414 20.038594
      <g id="line2d_15">
       <path d="M 79.790684 216.302594 
 L 79.790684 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_16">
       <g>
-       <use xlink:href="#m160debd5e9" x="79.790684" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="79.790684" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1041,11 +1189,11 @@ L 79.790684 20.038594
      <g id="line2d_17">
       <path d="M 86.766959 216.302594 
 L 86.766959 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_18">
       <g>
-       <use xlink:href="#m160debd5e9" x="86.766959" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="86.766959" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1053,11 +1201,11 @@ L 86.766959 20.038594
      <g id="line2d_19">
       <path d="M 92.665315 216.302594 
 L 92.665315 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_20">
       <g>
-       <use xlink:href="#m160debd5e9" x="92.665315" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="92.665315" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1065,11 +1213,11 @@ L 92.665315 20.038594
      <g id="line2d_21">
       <path d="M 97.774704 216.302594 
 L 97.774704 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_22">
       <g>
-       <use xlink:href="#m160debd5e9" x="97.774704" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="97.774704" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1077,11 +1225,11 @@ L 97.774704 20.038594
      <g id="line2d_23">
       <path d="M 102.281504 216.302594 
 L 102.281504 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_24">
       <g>
-       <use xlink:href="#m160debd5e9" x="102.281504" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="102.281504" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1089,11 +1237,11 @@ L 102.281504 20.038594
      <g id="line2d_25">
       <path d="M 132.835264 216.302594 
 L 132.835264 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_26">
       <g>
-       <use xlink:href="#m160debd5e9" x="132.835264" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="132.835264" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1101,11 +1249,11 @@ L 132.835264 20.038594
      <g id="line2d_27">
       <path d="M 148.349809 216.302594 
 L 148.349809 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_28">
       <g>
-       <use xlink:href="#m160debd5e9" x="148.349809" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="148.349809" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1113,11 +1261,11 @@ L 148.349809 20.038594
      <g id="line2d_29">
       <path d="M 159.357554 216.302594 
 L 159.357554 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_30">
       <g>
-       <use xlink:href="#m160debd5e9" x="159.357554" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="159.357554" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1125,11 +1273,11 @@ L 159.357554 20.038594
      <g id="line2d_31">
       <path d="M 167.895824 216.302594 
 L 167.895824 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_32">
       <g>
-       <use xlink:href="#m160debd5e9" x="167.895824" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="167.895824" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1137,11 +1285,11 @@ L 167.895824 20.038594
      <g id="line2d_33">
       <path d="M 174.872098 216.302594 
 L 174.872098 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_34">
       <g>
-       <use xlink:href="#m160debd5e9" x="174.872098" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="174.872098" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1149,11 +1297,11 @@ L 174.872098 20.038594
      <g id="line2d_35">
       <path d="M 180.770455 216.302594 
 L 180.770455 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_36">
       <g>
-       <use xlink:href="#m160debd5e9" x="180.770455" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="180.770455" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1161,11 +1309,11 @@ L 180.770455 20.038594
      <g id="line2d_37">
       <path d="M 185.879843 216.302594 
 L 185.879843 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_38">
       <g>
-       <use xlink:href="#m160debd5e9" x="185.879843" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="185.879843" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1173,11 +1321,11 @@ L 185.879843 20.038594
      <g id="line2d_39">
       <path d="M 190.386643 216.302594 
 L 190.386643 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_40">
       <g>
-       <use xlink:href="#m160debd5e9" x="190.386643" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="190.386643" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1185,11 +1333,11 @@ L 190.386643 20.038594
      <g id="line2d_41">
       <path d="M 220.940403 216.302594 
 L 220.940403 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_42">
       <g>
-       <use xlink:href="#m160debd5e9" x="220.940403" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="220.940403" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1197,11 +1345,11 @@ L 220.940403 20.038594
      <g id="line2d_43">
       <path d="M 236.454948 216.302594 
 L 236.454948 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_44">
       <g>
-       <use xlink:href="#m160debd5e9" x="236.454948" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="236.454948" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1209,11 +1357,11 @@ L 236.454948 20.038594
      <g id="line2d_45">
       <path d="M 247.462693 216.302594 
 L 247.462693 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_46">
       <g>
-       <use xlink:href="#m160debd5e9" x="247.462693" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="247.462693" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1221,11 +1369,11 @@ L 247.462693 20.038594
      <g id="line2d_47">
       <path d="M 256.000963 216.302594 
 L 256.000963 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_48">
       <g>
-       <use xlink:href="#m160debd5e9" x="256.000963" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="256.000963" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1233,11 +1381,11 @@ L 256.000963 20.038594
      <g id="line2d_49">
       <path d="M 262.977238 216.302594 
 L 262.977238 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_50">
       <g>
-       <use xlink:href="#m160debd5e9" x="262.977238" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="262.977238" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1245,11 +1393,11 @@ L 262.977238 20.038594
      <g id="line2d_51">
       <path d="M 268.875594 216.302594 
 L 268.875594 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_52">
       <g>
-       <use xlink:href="#m160debd5e9" x="268.875594" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="268.875594" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1257,11 +1405,11 @@ L 268.875594 20.038594
      <g id="line2d_53">
       <path d="M 273.984983 216.302594 
 L 273.984983 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_54">
       <g>
-       <use xlink:href="#m160debd5e9" x="273.984983" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="273.984983" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1269,11 +1417,11 @@ L 273.984983 20.038594
      <g id="line2d_55">
       <path d="M 278.491783 216.302594 
 L 278.491783 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_56">
       <g>
-       <use xlink:href="#m160debd5e9" x="278.491783" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="278.491783" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1281,11 +1429,11 @@ L 278.491783 20.038594
      <g id="line2d_57">
       <path d="M 309.045543 216.302594 
 L 309.045543 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_58">
       <g>
-       <use xlink:href="#m160debd5e9" x="309.045543" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="309.045543" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1293,11 +1441,11 @@ L 309.045543 20.038594
      <g id="line2d_59">
       <path d="M 324.560087 216.302594 
 L 324.560087 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_60">
       <g>
-       <use xlink:href="#m160debd5e9" x="324.560087" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="324.560087" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1305,11 +1453,11 @@ L 324.560087 20.038594
      <g id="line2d_61">
       <path d="M 335.567832 216.302594 
 L 335.567832 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_62">
       <g>
-       <use xlink:href="#m160debd5e9" x="335.567832" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="335.567832" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1317,11 +1465,11 @@ L 335.567832 20.038594
      <g id="line2d_63">
       <path d="M 344.106102 216.302594 
 L 344.106102 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_64">
       <g>
-       <use xlink:href="#m160debd5e9" x="344.106102" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="344.106102" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1329,11 +1477,11 @@ L 344.106102 20.038594
      <g id="line2d_65">
       <path d="M 351.082377 216.302594 
 L 351.082377 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_66">
       <g>
-       <use xlink:href="#m160debd5e9" x="351.082377" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="351.082377" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1341,11 +1489,11 @@ L 351.082377 20.038594
      <g id="line2d_67">
       <path d="M 356.980733 216.302594 
 L 356.980733 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_68">
       <g>
-       <use xlink:href="#m160debd5e9" x="356.980733" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="356.980733" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1353,11 +1501,11 @@ L 356.980733 20.038594
      <g id="line2d_69">
       <path d="M 362.090122 216.302594 
 L 362.090122 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_70">
       <g>
-       <use xlink:href="#m160debd5e9" x="362.090122" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="362.090122" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1365,11 +1513,11 @@ L 362.090122 20.038594
      <g id="line2d_71">
       <path d="M 366.596922 216.302594 
 L 366.596922 20.038594 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_72">
       <g>
-       <use xlink:href="#m160debd5e9" x="366.596922" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#m6e754b3d33" x="366.596922" y="216.302594" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1644,16 +1792,16 @@ z
      <g id="line2d_73">
       <path d="M 38.2625 203.821331 
 L 388.356724 203.821331 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_74">
       <defs>
-       <path id="m2049e4a229" d="M 0 0 
+       <path id="md25a1fec6e" d="M 0 0 
 L -3.5 0 
 " style="stroke: #000000; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#m2049e4a229" x="38.2625" y="203.821331" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#md25a1fec6e" x="38.2625" y="203.821331" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_6">
@@ -1695,11 +1843,11 @@ z
      <g id="line2d_75">
       <path d="M 38.2625 156.804189 
 L 388.356724 156.804189 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_76">
       <g>
-       <use xlink:href="#m2049e4a229" x="38.2625" y="156.804189" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#md25a1fec6e" x="38.2625" y="156.804189" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_7">
@@ -1715,11 +1863,11 @@ L 388.356724 156.804189
      <g id="line2d_77">
       <path d="M 38.2625 109.787048 
 L 388.356724 109.787048 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_78">
       <g>
-       <use xlink:href="#m2049e4a229" x="38.2625" y="109.787048" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#md25a1fec6e" x="38.2625" y="109.787048" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_8">
@@ -1735,11 +1883,11 @@ L 388.356724 109.787048
      <g id="line2d_79">
       <path d="M 38.2625 62.769906 
 L 388.356724 62.769906 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_80">
       <g>
-       <use xlink:href="#m2049e4a229" x="38.2625" y="62.769906" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#md25a1fec6e" x="38.2625" y="62.769906" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_9">
@@ -1755,16 +1903,16 @@ L 388.356724 62.769906
      <g id="line2d_81">
       <path d="M 38.2625 214.252025 
 L 388.356724 214.252025 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_82">
       <defs>
-       <path id="m1b96f01677" d="M 0 0 
+       <path id="mf5153b46a4" d="M 0 0 
 L -2 0 
 " style="stroke: #000000; stroke-width: 0.6"/>
       </defs>
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="214.252025" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="214.252025" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1772,11 +1920,11 @@ L -2 0
      <g id="line2d_83">
       <path d="M 38.2625 211.104379 
 L 388.356724 211.104379 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_84">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="211.104379" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="211.104379" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1784,11 +1932,11 @@ L 388.356724 211.104379
      <g id="line2d_85">
       <path d="M 38.2625 208.377763 
 L 388.356724 208.377763 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_86">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="208.377763" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="208.377763" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1796,11 +1944,11 @@ L 388.356724 208.377763
      <g id="line2d_87">
       <path d="M 38.2625 205.972718 
 L 388.356724 205.972718 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_88">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="205.972718" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="205.972718" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1808,11 +1956,11 @@ L 388.356724 205.972718
      <g id="line2d_89">
       <path d="M 38.2625 189.667761 
 L 388.356724 189.667761 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_90">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="189.667761" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="189.667761" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1820,11 +1968,11 @@ L 388.356724 189.667761
      <g id="line2d_91">
       <path d="M 38.2625 181.388454 
 L 388.356724 181.388454 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_92">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="181.388454" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="181.388454" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1832,11 +1980,11 @@ L 388.356724 181.388454
      <g id="line2d_93">
       <path d="M 38.2625 175.514191 
 L 388.356724 175.514191 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_94">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="175.514191" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="175.514191" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1844,11 +1992,11 @@ L 388.356724 175.514191
      <g id="line2d_95">
       <path d="M 38.2625 170.957759 
 L 388.356724 170.957759 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_96">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="170.957759" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="170.957759" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1856,11 +2004,11 @@ L 388.356724 170.957759
      <g id="line2d_97">
       <path d="M 38.2625 167.234884 
 L 388.356724 167.234884 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_98">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="167.234884" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="167.234884" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1868,11 +2016,11 @@ L 388.356724 167.234884
      <g id="line2d_99">
       <path d="M 38.2625 164.087237 
 L 388.356724 164.087237 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_100">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="164.087237" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="164.087237" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1880,11 +2028,11 @@ L 388.356724 164.087237
      <g id="line2d_101">
       <path d="M 38.2625 161.360621 
 L 388.356724 161.360621 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_102">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="161.360621" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="161.360621" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1892,11 +2040,11 @@ L 388.356724 161.360621
      <g id="line2d_103">
       <path d="M 38.2625 158.955576 
 L 388.356724 158.955576 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_104">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="158.955576" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="158.955576" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1904,11 +2052,11 @@ L 388.356724 158.955576
      <g id="line2d_105">
       <path d="M 38.2625 142.650619 
 L 388.356724 142.650619 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_106">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="142.650619" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="142.650619" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1916,11 +2064,11 @@ L 388.356724 142.650619
      <g id="line2d_107">
       <path d="M 38.2625 134.371312 
 L 388.356724 134.371312 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_108">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="134.371312" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="134.371312" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1928,11 +2076,11 @@ L 388.356724 134.371312
      <g id="line2d_109">
       <path d="M 38.2625 128.497049 
 L 388.356724 128.497049 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_110">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="128.497049" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="128.497049" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1940,11 +2088,11 @@ L 388.356724 128.497049
      <g id="line2d_111">
       <path d="M 38.2625 123.940618 
 L 388.356724 123.940618 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_112">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="123.940618" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="123.940618" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1952,11 +2100,11 @@ L 388.356724 123.940618
      <g id="line2d_113">
       <path d="M 38.2625 120.217742 
 L 388.356724 120.217742 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_114">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="120.217742" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="120.217742" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1964,11 +2112,11 @@ L 388.356724 120.217742
      <g id="line2d_115">
       <path d="M 38.2625 117.070095 
 L 388.356724 117.070095 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_116">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="117.070095" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="117.070095" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1976,11 +2124,11 @@ L 388.356724 117.070095
      <g id="line2d_117">
       <path d="M 38.2625 114.343479 
 L 388.356724 114.343479 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_118">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="114.343479" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="114.343479" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -1988,11 +2136,11 @@ L 388.356724 114.343479
      <g id="line2d_119">
       <path d="M 38.2625 111.938434 
 L 388.356724 111.938434 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_120">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="111.938434" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="111.938434" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2000,11 +2148,11 @@ L 388.356724 111.938434
      <g id="line2d_121">
       <path d="M 38.2625 95.633478 
 L 388.356724 95.633478 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_122">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="95.633478" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="95.633478" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2012,11 +2160,11 @@ L 388.356724 95.633478
      <g id="line2d_123">
       <path d="M 38.2625 87.35417 
 L 388.356724 87.35417 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_124">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="87.35417" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="87.35417" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2024,11 +2172,11 @@ L 388.356724 87.35417
      <g id="line2d_125">
       <path d="M 38.2625 81.479908 
 L 388.356724 81.479908 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_126">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="81.479908" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="81.479908" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2036,11 +2184,11 @@ L 388.356724 81.479908
      <g id="line2d_127">
       <path d="M 38.2625 76.923476 
 L 388.356724 76.923476 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_128">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="76.923476" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="76.923476" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2048,11 +2196,11 @@ L 388.356724 76.923476
      <g id="line2d_129">
       <path d="M 38.2625 73.2006 
 L 388.356724 73.2006 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_130">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="73.2006" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="73.2006" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2060,11 +2208,11 @@ L 388.356724 73.2006
      <g id="line2d_131">
       <path d="M 38.2625 70.052953 
 L 388.356724 70.052953 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_132">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="70.052953" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="70.052953" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2072,11 +2220,11 @@ L 388.356724 70.052953
      <g id="line2d_133">
       <path d="M 38.2625 67.326338 
 L 388.356724 67.326338 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_134">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="67.326338" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="67.326338" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2084,11 +2232,11 @@ L 388.356724 67.326338
      <g id="line2d_135">
       <path d="M 38.2625 64.921292 
 L 388.356724 64.921292 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_136">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="64.921292" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="64.921292" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2096,11 +2244,11 @@ L 388.356724 64.921292
      <g id="line2d_137">
       <path d="M 38.2625 48.616336 
 L 388.356724 48.616336 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_138">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="48.616336" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="48.616336" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2108,11 +2256,11 @@ L 388.356724 48.616336
      <g id="line2d_139">
       <path d="M 38.2625 40.337028 
 L 388.356724 40.337028 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_140">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="40.337028" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="40.337028" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2120,11 +2268,11 @@ L 388.356724 40.337028
      <g id="line2d_141">
       <path d="M 38.2625 34.462766 
 L 388.356724 34.462766 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_142">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="34.462766" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="34.462766" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2132,11 +2280,11 @@ L 388.356724 34.462766
      <g id="line2d_143">
       <path d="M 38.2625 29.906334 
 L 388.356724 29.906334 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_144">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="29.906334" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="29.906334" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2144,11 +2292,11 @@ L 388.356724 29.906334
      <g id="line2d_145">
       <path d="M 38.2625 26.183458 
 L 388.356724 26.183458 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_146">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="26.183458" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="26.183458" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2156,11 +2304,11 @@ L 388.356724 26.183458
      <g id="line2d_147">
       <path d="M 38.2625 23.035811 
 L 388.356724 23.035811 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_148">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="23.035811" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="23.035811" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2168,11 +2316,11 @@ L 388.356724 23.035811
      <g id="line2d_149">
       <path d="M 38.2625 20.309196 
 L 388.356724 20.309196 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_150">
       <g>
-       <use xlink:href="#m1b96f01677" x="38.2625" y="20.309196" style="stroke: #000000; stroke-width: 0.6"/>
+       <use xlink:href="#mf5153b46a4" x="38.2625" y="20.309196" style="stroke: #000000; stroke-width: 0.6"/>
       </g>
      </g>
     </g>
@@ -2417,9 +2565,9 @@ L 283.430732 76.507112
 L 292.876481 71.451531 
 L 318.491292 57.756497 
 L 372.44335 28.959685 
-" clip-path="url(#pd619ace3ba)" style="fill: none; stroke: #1f77b4; stroke-width: 1.5; stroke-linecap: square"/>
+" clip-path="url(#p2d036355e7)" style="fill: none; stroke: #1f77b4; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
-     <path id="m65fc31b901" d="M 0 3 
+     <path id="mc5a199b93b" d="M 0 3 
 C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
 C 2.683901 1.55874 3 0.795609 3 0 
 C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
@@ -2431,24 +2579,24 @@ C -1.55874 2.683901 -0.795609 3 0 3
 z
 " style="stroke: #1f77b4"/>
     </defs>
-    <g clip-path="url(#pd619ace3ba)">
-     <use xlink:href="#m65fc31b901" x="54.175874" y="207.381503" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="107.220453" y="178.653332" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="160.265033" y="142.876476" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="195.325593" y="124.149964" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="195.325593" y="124.149964" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="195.325593" y="124.149964" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="239.831902" y="149.904517" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="239.831902" y="104.059308" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="239.831902" y="99.919871" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="239.831902" y="99.919871" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="239.831902" y="99.918612" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="281.868736" y="77.411985" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="283.430732" y="76.507112" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="283.430732" y="76.507112" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="292.876481" y="71.451531" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="318.491292" y="57.756497" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m65fc31b901" x="372.44335" y="28.959685" style="fill: #1f77b4; stroke: #1f77b4"/>
+    <g clip-path="url(#p2d036355e7)">
+     <use xlink:href="#mc5a199b93b" x="54.175874" y="207.381503" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="107.220453" y="178.653332" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="160.265033" y="142.876476" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="195.325593" y="124.149964" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="195.325593" y="124.149964" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="195.325593" y="124.149964" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="239.831902" y="149.904517" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="239.831902" y="104.059308" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="239.831902" y="99.919871" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="239.831902" y="99.919871" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="239.831902" y="99.918612" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="281.868736" y="77.411985" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="283.430732" y="76.507112" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="283.430732" y="76.507112" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="292.876481" y="71.451531" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="318.491292" y="57.756497" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mc5a199b93b" x="372.44335" y="28.959685" style="fill: #1f77b4; stroke: #1f77b4"/>
     </g>
    </g>
    <g id="patch_3">
@@ -2587,7 +2735,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="pd619ace3ba">
+  <clipPath id="p2d036355e7">
    <rect x="38.2625" y="20.038594" width="350.094224" height="196.264"/>
   </clipPath>
  </defs>
@@ -2604,7 +2752,7 @@ single-flip near-relation control and an affine-parity control.</em></p>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-08-30T12:44:35.981837</dc:date>
+    <dc:date>2026-08-30T13:17:47.250461</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -2640,16 +2788,16 @@ z
      <g id="line2d_1">
       <path d="M 137.50159 391.186094 
 L 137.50159 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_2">
       <defs>
-       <path id="mfc9b85f227" d="M 0 0 
+       <path id="m65f6aa49a9" d="M 0 0 
 L 0 3.5 
 " style="stroke: #000000; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#mfc9b85f227" x="137.50159" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m65f6aa49a9" x="137.50159" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_1">
@@ -2735,11 +2883,11 @@ z
      <g id="line2d_3">
       <path d="M 188.777064 391.186094 
 L 188.777064 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_4">
       <g>
-       <use xlink:href="#mfc9b85f227" x="188.777064" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m65f6aa49a9" x="188.777064" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_2">
@@ -2807,11 +2955,11 @@ z
      <g id="line2d_5">
       <path d="M 240.052539 391.186094 
 L 240.052539 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_6">
       <g>
-       <use xlink:href="#mfc9b85f227" x="240.052539" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m65f6aa49a9" x="240.052539" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_3">
@@ -2828,11 +2976,11 @@ L 240.052539 20.038594
      <g id="line2d_7">
       <path d="M 291.328013 391.186094 
 L 291.328013 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_8">
       <g>
-       <use xlink:href="#mfc9b85f227" x="291.328013" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m65f6aa49a9" x="291.328013" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_4">
@@ -2865,11 +3013,11 @@ z
      <g id="line2d_9">
       <path d="M 342.603487 391.186094 
 L 342.603487 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_10">
       <g>
-       <use xlink:href="#mfc9b85f227" x="342.603487" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m65f6aa49a9" x="342.603487" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_5">
@@ -2886,11 +3034,11 @@ L 342.603487 20.038594
      <g id="line2d_11">
       <path d="M 393.878961 391.186094 
 L 393.878961 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_12">
       <g>
-       <use xlink:href="#mfc9b85f227" x="393.878961" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m65f6aa49a9" x="393.878961" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_6">
@@ -2907,11 +3055,11 @@ L 393.878961 20.038594
      <g id="line2d_13">
       <path d="M 445.154436 391.186094 
 L 445.154436 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.3; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_14">
       <g>
-       <use xlink:href="#mfc9b85f227" x="445.154436" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m65f6aa49a9" x="445.154436" y="391.186094" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_7">
@@ -3288,12 +3436,12 @@ z
     <g id="ytick_1">
      <g id="line2d_15">
       <defs>
-       <path id="m588111365d" d="M 0 0 
+       <path id="mca2f09a755" d="M 0 0 
 L -3.5 0 
 " style="stroke: #000000; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="374.315753" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="374.315753" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_9">
@@ -3382,7 +3530,7 @@ z
     <g id="ytick_2">
      <g id="line2d_16">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="356.557499" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="356.557499" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_10">
@@ -3619,7 +3767,7 @@ z
     <g id="ytick_3">
      <g id="line2d_17">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="338.799246" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="338.799246" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_11">
@@ -3679,7 +3827,7 @@ z
     <g id="ytick_4">
      <g id="line2d_18">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="321.040992" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="321.040992" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_12">
@@ -3735,7 +3883,7 @@ z
     <g id="ytick_5">
      <g id="line2d_19">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="303.282738" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="303.282738" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_13">
@@ -3776,7 +3924,7 @@ z
     <g id="ytick_6">
      <g id="line2d_20">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="285.524485" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="285.524485" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_14">
@@ -3817,7 +3965,7 @@ z
     <g id="ytick_7">
      <g id="line2d_21">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="267.766231" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="267.766231" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_15">
@@ -3858,7 +4006,7 @@ z
     <g id="ytick_8">
      <g id="line2d_22">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="250.007978" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="250.007978" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_16">
@@ -3885,7 +4033,7 @@ z
     <g id="ytick_9">
      <g id="line2d_23">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="232.249724" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="232.249724" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_17">
@@ -3912,7 +4060,7 @@ z
     <g id="ytick_10">
      <g id="line2d_24">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="214.491471" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="214.491471" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_18">
@@ -3934,7 +4082,7 @@ z
     <g id="ytick_11">
      <g id="line2d_25">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="196.733217" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="196.733217" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_19">
@@ -3957,7 +4105,7 @@ z
     <g id="ytick_12">
      <g id="line2d_26">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="178.974963" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="178.974963" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_20">
@@ -3984,7 +4132,7 @@ z
     <g id="ytick_13">
      <g id="line2d_27">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="161.21671" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="161.21671" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_21">
@@ -4008,7 +4156,7 @@ z
     <g id="ytick_14">
      <g id="line2d_28">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="143.458456" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="143.458456" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_22">
@@ -4035,7 +4183,7 @@ z
     <g id="ytick_15">
      <g id="line2d_29">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="125.700203" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="125.700203" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_23">
@@ -4060,7 +4208,7 @@ z
     <g id="ytick_16">
      <g id="line2d_30">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="107.941949" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="107.941949" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_24">
@@ -4083,7 +4231,7 @@ z
     <g id="ytick_17">
      <g id="line2d_31">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="90.183695" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="90.183695" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_25">
@@ -4110,7 +4258,7 @@ z
     <g id="ytick_18">
      <g id="line2d_32">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="72.425442" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="72.425442" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_26">
@@ -4144,7 +4292,7 @@ z
     <g id="ytick_19">
      <g id="line2d_33">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="54.667188" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="54.667188" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_27">
@@ -4167,7 +4315,7 @@ z
     <g id="ytick_20">
      <g id="line2d_34">
       <g>
-       <use xlink:href="#m588111365d" x="120.145938" y="36.908935" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mca2f09a755" x="120.145938" y="36.908935" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_28">
@@ -4228,12 +4376,12 @@ z
    <g id="line2d_35">
     <path d="M 445.154436 391.186094 
 L 445.154436 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: square"/>
    </g>
    <g id="line2d_36">
     <path d="M 450.281983 391.186094 
 L 450.281983 20.038594 
-" clip-path="url(#p7ec52662bd)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #008000"/>
+" clip-path="url(#p4da1d74027)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #008000"/>
    </g>
    <g id="patch_3">
     <path d="M 120.145938 391.186094 
@@ -4257,7 +4405,7 @@ L 460.725937 20.038594
    </g>
    <g id="PathCollection_1">
     <defs>
-     <path id="m58bf6bbf69" d="M 0 2.44949 
+     <path id="me67bde8479" d="M 0 2.44949 
 C 0.649612 2.44949 1.272706 2.191396 1.732051 1.732051 
 C 2.191396 1.272706 2.44949 0.649612 2.44949 0 
 C 2.44949 -0.649612 2.191396 -1.272706 1.732051 -1.732051 
@@ -4269,20 +4417,20 @@ C -1.272706 2.191396 -0.649612 2.44949 0 2.44949
 z
 " style="stroke: #1f77b4"/>
     </defs>
-    <g clip-path="url(#p7ec52662bd)">
-     <use xlink:href="#m58bf6bbf69" x="348.263219" y="250.007978" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m58bf6bbf69" x="445.190436" y="214.491471" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m58bf6bbf69" x="445.146491" y="178.974963" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m58bf6bbf69" x="445.153521" y="161.21671" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m58bf6bbf69" x="445.172292" y="143.458456" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m58bf6bbf69" x="445.005594" y="107.941949" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m58bf6bbf69" x="396.86121" y="72.425442" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#m58bf6bbf69" x="135.626847" y="54.667188" style="fill: #1f77b4; stroke: #1f77b4"/>
+    <g clip-path="url(#p4da1d74027)">
+     <use xlink:href="#me67bde8479" x="348.263219" y="250.007978" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#me67bde8479" x="445.190436" y="214.491471" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#me67bde8479" x="445.146491" y="178.974963" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#me67bde8479" x="445.153521" y="161.21671" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#me67bde8479" x="445.172292" y="143.458456" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#me67bde8479" x="445.005594" y="107.941949" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#me67bde8479" x="396.86121" y="72.425442" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#me67bde8479" x="135.626847" y="54.667188" style="fill: #1f77b4; stroke: #1f77b4"/>
     </g>
    </g>
    <g id="PathCollection_2">
     <defs>
-     <path id="ma233f8cd58" d="M 0 2.44949 
+     <path id="m2937b51e7d" d="M 0 2.44949 
 C 0.649612 2.44949 1.272706 2.191396 1.732051 1.732051 
 C 2.191396 1.272706 2.44949 0.649612 2.44949 0 
 C 2.44949 -0.649612 2.191396 -1.272706 1.732051 -1.732051 
@@ -4294,32 +4442,32 @@ C -1.272706 2.191396 -0.649612 2.44949 0 2.44949
 z
 " style="stroke: #9ecae1"/>
     </defs>
-    <g clip-path="url(#p7ec52662bd)">
-     <use xlink:href="#ma233f8cd58" x="445.099877" y="374.315753" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="440.262574" y="356.557499" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="440.263995" y="338.799246" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="440.191468" y="321.040992" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="439.868554" y="303.282738" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="420.882379" y="285.524485" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="434.512365" y="267.766231" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="381.664763" y="250.007978" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="445.104908" y="232.249724" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="444.936117" y="214.491471" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="367.235995" y="196.733217" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="445.141153" y="178.974963" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="445.130811" y="161.21671" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="396.948275" y="143.458456" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="445.124304" y="125.700203" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="445.245028" y="107.941949" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="383.832471" y="90.183695" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="399.485436" y="72.425442" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="291.092906" y="54.667188" style="fill: #9ecae1; stroke: #9ecae1"/>
-     <use xlink:href="#ma233f8cd58" x="336.529091" y="36.908935" style="fill: #9ecae1; stroke: #9ecae1"/>
+    <g clip-path="url(#p4da1d74027)">
+     <use xlink:href="#m2937b51e7d" x="445.099877" y="374.315753" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="440.262574" y="356.557499" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="440.263995" y="338.799246" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="440.191468" y="321.040992" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="439.868554" y="303.282738" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="420.882379" y="285.524485" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="434.512365" y="267.766231" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="381.664763" y="250.007978" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="445.104908" y="232.249724" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="444.936117" y="214.491471" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="367.235995" y="196.733217" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="445.141153" y="178.974963" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="445.130811" y="161.21671" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="396.948275" y="143.458456" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="445.124304" y="125.700203" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="445.245028" y="107.941949" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="383.832471" y="90.183695" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="399.485436" y="72.425442" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="291.092906" y="54.667188" style="fill: #9ecae1; stroke: #9ecae1"/>
+     <use xlink:href="#m2937b51e7d" x="336.529091" y="36.908935" style="fill: #9ecae1; stroke: #9ecae1"/>
     </g>
    </g>
    <g id="PathCollection_3">
     <defs>
-     <path id="mbd4d2de3e0" d="M 0 2.44949 
+     <path id="mea70cd84ea" d="M 0 2.44949 
 C 0.649612 2.44949 1.272706 2.191396 1.732051 1.732051 
 C 2.191396 1.272706 2.44949 0.649612 2.44949 0 
 C 2.44949 -0.649612 2.191396 -1.272706 1.732051 -1.732051 
@@ -4331,27 +4479,27 @@ C -1.272706 2.191396 -0.649612 2.44949 0 2.44949
 z
 " style="stroke: #d62728"/>
     </defs>
-    <g clip-path="url(#p7ec52662bd)">
-     <use xlink:href="#mbd4d2de3e0" x="445.099877" y="374.315753" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="440.262574" y="356.557499" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="440.263995" y="338.799246" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="440.191468" y="321.040992" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="439.868554" y="303.282738" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="420.882379" y="285.524485" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="434.512365" y="267.766231" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="381.664763" y="250.007978" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="445.104908" y="232.249724" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="444.936117" y="214.491471" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="367.235995" y="196.733217" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="445.141153" y="178.974963" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="445.130811" y="161.21671" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="396.948275" y="143.458456" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="445.124304" y="125.700203" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="445.245028" y="107.941949" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="383.832471" y="90.183695" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="399.485436" y="72.425442" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="291.092906" y="54.667188" style="fill: #d62728; stroke: #d62728"/>
-     <use xlink:href="#mbd4d2de3e0" x="336.529091" y="36.908935" style="fill: #d62728; stroke: #d62728"/>
+    <g clip-path="url(#p4da1d74027)">
+     <use xlink:href="#mea70cd84ea" x="445.099877" y="374.315753" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="440.262574" y="356.557499" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="440.263995" y="338.799246" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="440.191468" y="321.040992" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="439.868554" y="303.282738" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="420.882379" y="285.524485" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="434.512365" y="267.766231" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="381.664763" y="250.007978" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="445.104908" y="232.249724" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="444.936117" y="214.491471" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="367.235995" y="196.733217" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="445.141153" y="178.974963" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="445.130811" y="161.21671" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="396.948275" y="143.458456" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="445.124304" y="125.700203" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="445.245028" y="107.941949" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="383.832471" y="90.183695" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="399.485436" y="72.425442" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="291.092906" y="54.667188" style="fill: #d62728; stroke: #d62728"/>
+     <use xlink:href="#mea70cd84ea" x="336.529091" y="36.908935" style="fill: #d62728; stroke: #d62728"/>
     </g>
    </g>
    <g id="text_29">
@@ -4441,7 +4589,7 @@ z
     </g>
     <g id="PathCollection_4">
      <g>
-      <use xlink:href="#m58bf6bbf69" x="133.445938" y="350.76875" style="fill: #1f77b4; stroke: #1f77b4"/>
+      <use xlink:href="#me67bde8479" x="133.445938" y="350.76875" style="fill: #1f77b4; stroke: #1f77b4"/>
      </g>
     </g>
     <g id="text_30">
@@ -4456,7 +4604,7 @@ z
     </g>
     <g id="PathCollection_5">
      <g>
-      <use xlink:href="#ma233f8cd58" x="133.445938" y="361.043437" style="fill: #9ecae1; stroke: #9ecae1"/>
+      <use xlink:href="#m2937b51e7d" x="133.445938" y="361.043437" style="fill: #9ecae1; stroke: #9ecae1"/>
      </g>
     </g>
     <g id="text_31">
@@ -4471,7 +4619,7 @@ z
     </g>
     <g id="PathCollection_6">
      <g>
-      <use xlink:href="#mbd4d2de3e0" x="133.445938" y="371.318125" style="fill: #d62728; stroke: #d62728"/>
+      <use xlink:href="#mea70cd84ea" x="133.445938" y="371.318125" style="fill: #d62728; stroke: #d62728"/>
      </g>
     </g>
     <g id="text_32">
@@ -4577,23 +4725,30 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p7ec52662bd">
+  <clipPath id="p4da1d74027">
    <rect x="120.145938" y="20.038594" width="340.58" height="371.1475"/>
   </clipPath>
  </defs>
 </svg>
 </figure>
-<p><em>Figure 2. Natural corpus: per-file <code>G_pct</code> for the whole files, the 256 KiB
-slices, and the bit-phase-offset extension, with the zero line and the
-preregistered <code>+5 %</code> threshold. Every point is at or below zero.</em></p>
+<p><em>Figure 2. Natural corpus: per-file composed gain <code>G_pct</code> for the whole files
+(blue), the 256 KiB slices (light blue), and the bit-phase-offset extension
+(red), with the zero line and the preregistered <code>+5 %</code> threshold (dashed).
+Every point is far below the threshold. Three points sit fractionally to the
+right of zero — <code>sao</code> (<code>G_pct</code> = +0.0009), <code>reymont</code>, <code>mr</code> — all with
+passthrough containers (<code>n_relations = 0</code>); these are sub-0.1 %
+downstream-compressor reactions to the 18-byte passthrough header, not
+deduction. Points where a real relation was found are all strongly negative.</em></p>
 <h2>Appendix B — Key results tables</h2>
-<p>The complete tables (<strong>B.1</strong> controls, <strong>B.2</strong> planted scaling + context-mixer
-baseline, <strong>B.3</strong> whole natural, <strong>B.4</strong> 256 KiB natural, <strong>B.5</strong> bit-phase
-offset, <strong>B.6</strong> prior art) are auto-generated in <code>paper/results_tables.md</code> from
-<code>results/ledger.json</code> (122 records; 0 accounting, round-trip, or composed
-round-trip failures). Every row traces to a JSON record under <code>results/</code>
-carrying its dataset hash, git commit, configuration, compressor versions, and
-verification status. The three most load-bearing are reproduced here.</p>
+<p>The complete auto-generated tables — <strong>B.1</strong> controls, <strong>B.2</strong> planted scaling +
+context-mixer baseline, <strong>B.3</strong> whole natural, <strong>B.4</strong> 256 KiB natural,
+<strong>B.5</strong> bit-phase offset, <strong>B.6</strong> prior-art sanity — are in
+<code>paper/results_tables.md</code>, produced from <code>results/ledger.json</code> (122 records;
+0 accounting, round-trip, or composed round-trip failures). Every row traces to
+a JSON record under <code>results/</code> carrying its dataset hash, git commit,
+configuration, compressor versions, and verification status. The control numbers
+(B.1) appear in §6 and the prior-art numbers (B.6) in §8.3; the remaining four
+tables are reproduced below.</p>
 <p><strong>B.2 (extract) — planted GF(2): the mechanism scales</strong></p>
 <table>
 <thead>
@@ -4614,7 +4769,7 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">172</td>
 <td style="text-align: right;">260</td>
 <td style="text-align: right;">+84</td>
-<td style="text-align: right;">+32.3 %</td>
+<td style="text-align: right;">+32.31 %</td>
 <td style="text-align: right;">80</td>
 </tr>
 <tr>
@@ -4623,7 +4778,7 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">2,118</td>
 <td style="text-align: right;">4,100</td>
 <td style="text-align: right;">+1,978</td>
-<td style="text-align: right;">+48.2 %</td>
+<td style="text-align: right;">+48.24 %</td>
 <td style="text-align: right;">288</td>
 </tr>
 <tr>
@@ -4632,7 +4787,7 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">16,554</td>
 <td style="text-align: right;">32,772</td>
 <td style="text-align: right;">+16,214</td>
-<td style="text-align: right;">+49.5 %</td>
+<td style="text-align: right;">+49.48 %</td>
 <td style="text-align: right;">1,088</td>
 </tr>
 <tr>
@@ -4641,7 +4796,7 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">51,371</td>
 <td style="text-align: right;">102,405</td>
 <td style="text-align: right;">+51,030</td>
-<td style="text-align: right;">+49.8 %</td>
+<td style="text-align: right;">+49.83 %</td>
 <td style="text-align: right;">1,088</td>
 </tr>
 <tr>
@@ -4650,7 +4805,7 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">128,171</td>
 <td style="text-align: right;">256,005</td>
 <td style="text-align: right;">+127,829</td>
-<td style="text-align: right;">+49.9 %</td>
+<td style="text-align: right;">+49.93 %</td>
 <td style="text-align: right;">1,088</td>
 </tr>
 <tr>
@@ -4676,7 +4831,7 @@ verification status. The three most load-bearing are reproduced here.</p>
 <th style="text-align: right;">container</th>
 <th style="text-align: right;"><code>G</code> (bytes)</th>
 <th style="text-align: right;"><code>G_pct</code></th>
-<th>round-trip</th>
+<th style="text-align: center;">round-trip</th>
 </tr>
 </thead>
 <tbody>
@@ -4688,8 +4843,8 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">430,390</td>
 <td style="text-align: right;">4,907,484</td>
 <td style="text-align: right;">−1,299,038</td>
-<td style="text-align: right;">−301.8 %</td>
-<td>✓</td>
+<td style="text-align: right;">−301.83 %</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
 <td><code>ooffice</code></td>
@@ -4699,8 +4854,8 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">2,426,816</td>
 <td style="text-align: right;">6,152,210</td>
 <td style="text-align: right;">−188</td>
-<td style="text-align: right;">−0.0 %</td>
-<td>✓</td>
+<td style="text-align: right;">≈ 0</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
 <td><code>reymont</code></td>
@@ -4710,8 +4865,8 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">1,246,230</td>
 <td style="text-align: right;">6,627,220</td>
 <td style="text-align: right;">+217</td>
-<td style="text-align: right;">+0.0 %</td>
-<td>✓</td>
+<td style="text-align: right;">≈ 0</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
 <td><code>sao</code></td>
@@ -4722,7 +4877,7 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">7,251,962</td>
 <td style="text-align: right;">−6,408</td>
 <td style="text-align: right;">−0.15 %</td>
-<td>✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
 <td><code>x-ray</code></td>
@@ -4732,8 +4887,8 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">4,051,112</td>
 <td style="text-align: right;">6,555,798</td>
 <td style="text-align: right;">−1,907,747</td>
-<td style="text-align: right;">−47.1 %</td>
-<td>✓</td>
+<td style="text-align: right;">−47.09 %</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
 <td><code>mr</code></td>
@@ -4743,8 +4898,8 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">2,441,280</td>
 <td style="text-align: right;">9,970,582</td>
 <td style="text-align: right;">+857</td>
-<td style="text-align: right;">+0.0 %</td>
-<td>✓</td>
+<td style="text-align: right;">≈ 0</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
 <td><code>osdb</code></td>
@@ -4754,8 +4909,8 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">2,802,792</td>
 <td style="text-align: right;">10,085,702</td>
 <td style="text-align: right;">−25</td>
-<td style="text-align: right;">−0.0 %</td>
-<td>✓</td>
+<td style="text-align: right;">≈ 0</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
 <td><code>dickens</code></td>
@@ -4765,13 +4920,193 @@ verification status. The three most load-bearing are reproduced here.</p>
 <td style="text-align: right;">2,799,520</td>
 <td style="text-align: right;">9,197,882</td>
 <td style="text-align: right;">−2,645,016</td>
-<td style="text-align: right;">−94.5 %</td>
-<td>✓</td>
+<td style="text-align: right;">−94.48 %</td>
+<td style="text-align: center;">✓</td>
 </tr>
 </tbody>
 </table>
+<p><strong>B.4 — 256 KiB natural files (all 20; phase-0 detector).</strong> Every input is
+262,144 bytes. "pass" = passthrough container (<code>n_relations = 0</code>).</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>kind</th>
+<th style="text-align: right;">rels</th>
+<th style="text-align: right;"><code>raw_best</code></th>
+<th style="text-align: right;"><code>G</code> (bytes)</th>
+<th style="text-align: right;"><code>G_pct</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exaalt/vx.f32</code></td>
+<td>GF2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">226,805</td>
+<td style="text-align: right;">−10,819</td>
+<td style="text-align: right;">−4.8 %</td>
+</tr>
+<tr>
+<td><code>exaalt/vy.f32</code></td>
+<td>GF2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">226,808</td>
+<td style="text-align: right;">−10,816</td>
+<td style="text-align: right;">−4.8 %</td>
+</tr>
+<tr>
+<td><code>exaalt/vz.f32</code></td>
+<td>GF2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">226,655</td>
+<td style="text-align: right;">−10,969</td>
+<td style="text-align: right;">−4.8 %</td>
+</tr>
+<tr>
+<td><code>exaalt/xx.f32</code></td>
+<td>GF2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">224,585</td>
+<td style="text-align: right;">−11,576</td>
+<td style="text-align: right;">−5.2 %</td>
+</tr>
+<tr>
+<td><code>exaalt/yy.f32</code></td>
+<td>GF2</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">187,128</td>
+<td style="text-align: right;">−44,290</td>
+<td style="text-align: right;">−23.7 %</td>
+</tr>
+<tr>
+<td><code>exaalt/zz.f32</code></td>
+<td>GF2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">215,238</td>
+<td style="text-align: right;">−22,336</td>
+<td style="text-align: right;">−10.4 %</td>
+</tr>
+<tr>
+<td><code>silesia_dickens</code></td>
+<td>GF2</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">77,252</td>
+<td style="text-align: right;">−47,827</td>
+<td style="text-align: right;">−61.9 %</td>
+</tr>
+<tr>
+<td><code>silesia_nci</code></td>
+<td>GF2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14,563</td>
+<td style="text-align: right;">−11,065</td>
+<td style="text-align: right;">−76.0 %</td>
+</tr>
+<tr>
+<td><code>silesia_reymont</code></td>
+<td>GF2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">53,158</td>
+<td style="text-align: right;">−24,988</td>
+<td style="text-align: right;">−47.0 %</td>
+</tr>
+<tr>
+<td><code>silesia_webster</code></td>
+<td>GF2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">62,139</td>
+<td style="text-align: right;">−37,157</td>
+<td style="text-align: right;">−59.8 %</td>
+</tr>
+<tr>
+<td><code>silesia_x-ray</code></td>
+<td>GF2</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">129,632</td>
+<td style="text-align: right;">−57,729</td>
+<td style="text-align: right;">−44.5 %</td>
+</tr>
+<tr>
+<td><code>silesia_xml</code></td>
+<td>GF2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11,559</td>
+<td style="text-align: right;">−17,365</td>
+<td style="text-align: right;">−150.2 %</td>
+</tr>
+<tr>
+<td><code>uci_household_power_text</code></td>
+<td>GF2</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">28,160</td>
+<td style="text-align: right;">−29,828</td>
+<td style="text-align: right;">−105.9 %</td>
+</tr>
+<tr>
+<td><code>enwik8</code></td>
+<td>pass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">73,306</td>
+<td style="text-align: right;">−39</td>
+<td style="text-align: right;">≈ 0</td>
+</tr>
+<tr>
+<td><code>silesia_mozilla</code></td>
+<td>pass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">111,811</td>
+<td style="text-align: right;">−54</td>
+<td style="text-align: right;">≈ 0</td>
+</tr>
+<tr>
+<td><code>silesia_mr</code></td>
+<td>pass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">55,898</td>
+<td style="text-align: right;">−119</td>
+<td style="text-align: right;">≈ 0</td>
+</tr>
+<tr>
+<td><code>silesia_ooffice</code></td>
+<td>pass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">123,528</td>
+<td style="text-align: right;">−16</td>
+<td style="text-align: right;">≈ 0</td>
+</tr>
+<tr>
+<td><code>silesia_osdb</code></td>
+<td>pass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">82,475</td>
+<td style="text-align: right;">−19</td>
+<td style="text-align: right;">≈ 0</td>
+</tr>
+<tr>
+<td><code>silesia_samba</code></td>
+<td>pass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">153,153</td>
+<td style="text-align: right;">−45</td>
+<td style="text-align: right;">≈ 0</td>
+</tr>
+<tr>
+<td><code>silesia_sao</code></td>
+<td>pass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">167,536</td>
+<td style="text-align: right;">+148</td>
+<td style="text-align: right;">+0.09 %</td>
+</tr>
+</tbody>
+</table>
+<p>Every GF(2) container is strongly composition-negative; every passthrough
+container is within header noise. Round-trip and composed round-trip hold for
+all 20 (Table in <code>results_tables.md</code>).</p>
 <p><strong>B.5 (summary) — bit-phase-offset extension (20 files, 256 KiB).</strong> For every
-file the offset-search <code>G</code> equals the phase-0 <code>G</code> to the byte; 0 files cross the
-<code>+5 %</code> threshold; 0 files improve on phase 0 by more than header perturbation.
-The axis-aligned negative is robust to bit phase.</p>
+file the offset-search <code>G</code> equals the corresponding phase-0 <code>G</code> in the table
+above <strong>to the byte</strong>; 0 files cross the <code>+5 %</code> threshold; 0 files improve on
+phase 0 by more than header perturbation. The fixed-width axis-aligned negative
+is robust to bit phase.</p>
 </body></html>

@@ -40,9 +40,11 @@ def _render_value(field: str, raw: str) -> str:
     except ValueError:
         return raw
     if "pct" in field:
-        return f"{f * 100:+.2f}\u00a0%"
+        s = f"{f * 100:+.2f}\u00a0%"
+        return s.replace("-", "\u2212")
     if f == int(f):
-        return f"{int(f):,}"
+        s = f"{int(f):,}"
+        return s.replace("-", "\u2212")
     return raw
 
 
@@ -126,10 +128,11 @@ def build_html() -> str:
 </head><body>
 <div class="title-block">
   <h1>{h1}</h1>
-  <div class="meta">Preregistered empirical study &nbsp;&middot;&nbsp; negative result &nbsp;&middot;&nbsp;
-  experiment state <code>v0.3-submission</code><br>
-  Repository: https://github.com/Xeloraa/deductive-coding &nbsp;&middot;&nbsp;
-  all numbers traceable to <code>results/ledger.json</code></div>
+  <div class="meta">Preregistered empirical study &nbsp;&middot;&nbsp;
+  inconclusive for the full corpus, clean negative within the achieved coverage<br>
+  frozen experiment state: git tag <code>v1.1-final</code> &nbsp;&middot;&nbsp;
+  repository: https://github.com/Xeloraa/deductive-coding<br>
+  every quantity traceable to <code>results/ledger.json</code></div>
 </div>
 {html_body}
 </body></html>

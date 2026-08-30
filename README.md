@@ -56,12 +56,17 @@ deferred to a higher-memory machine.
   `raw→encode→compress→decompress→decode→raw` chain).
 - `results/ledger.{json,csv}` — one row per experiment; **0** accounting /
   round-trip / composed-round-trip failures.
-- **`paper/exact-relation-coding.pdf`** — the finished manuscript (14 pp, A4).
-  Source: `paper/exact-relation-coding.md`; rebuild with
+- **`paper/exact-relation-coding.pdf`** — the finished manuscript (17 pp, A4),
+  frozen at tag **`v1.1-final`**. Source: `paper/exact-relation-coding.md`
+  (+ `results_tables.md`, `figures/*.svg`, all generated). Rebuild:
   `python scripts/make_figures.py && python scripts/build_pdf.py` (headless
-  Chromium). Every inline number carries a marker verified against
-  `results/ledger.json` by `scripts/check_paper_numbers.py`;
-  `paper/results_tables.md` and `paper/figures/*.svg` are generated.
+  Chromium). Every inline figure carries a source marker verified against
+  `results/ledger.json` by `scripts/check_paper_numbers.py`.
+  Result in one line: **inconclusive w.r.t. the complete preregistered corpus
+  (4 large whole-file runs need > 8 GiB), a clean layered negative within the
+  achieved coverage** (8 whole Silesia members + 20 files at 256 KiB + a
+  bit-phase-offset extension; largest natural `G_pct` = +0.09 %, on a
+  passthrough container).
 
 **Whole natural files done (8/12 Silesia):** 3 find GF(2) relations
 (`dickens` −94 %, `x-ray` −47 %, `xml` −303 %) and 5 fall to passthrough
