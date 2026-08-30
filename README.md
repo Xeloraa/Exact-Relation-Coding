@@ -12,6 +12,12 @@ Research repository for a single question:
 
 This is a research instrument, not a product. Positive results are not the goal. The goal is a result that survives hostile accounting.
 
+**Frozen research artifact:** git tag [`v1.1-final`](https://github.com/Xeloraa/deductive-coding/releases/tag/v1.1-final)
+(commit `1216ef6`). The paper is `paper/exact-relation-coding.pdf`. To create a
+GitHub Release and a Zenodo DOI from this tag, follow `PUBLISHING.md`;
+`CITATION.cff` and `.zenodo.json` hold the archive metadata (author identity is
+a placeholder pending the real name/ORCID). No DOI has been minted yet.
+
 Repository: https://github.com/Xeloraa/deductive-coding
 
 ## Status

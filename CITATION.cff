@@ -1,0 +1,53 @@
+# -----------------------------------------------------------------------------
+# NOTE ON AUTHORSHIP
+# The manuscript is currently anonymised ("withheld for review"). The creator
+# below uses the repository's existing public handle as a PLACEHOLDER. Before
+# minting a DOI or submitting non-anonymously, replace `name: "Xeloraa"` with
+# your real given-names / family-names (and optionally `orcid:`). Do not let an
+# automated tool fill this in for you.
+# -----------------------------------------------------------------------------
+cff-version: 1.2.0
+title: >-
+  Exact-Relation Coding: A Preregistered Test of Whether Discovered Fixed-Width
+  GF(2)/Affine Structure Yields a Composed Lossless-Compression Advantage
+message: >-
+  If you use this software or dataset, please cite it using the metadata below.
+type: software
+authors:
+  - name: "Xeloraa"   # PLACEHOLDER — see note above
+repository-code: "https://github.com/Xeloraa/deductive-coding"
+url: "https://github.com/Xeloraa/deductive-coding/releases/tag/v1.1-final"
+version: "v1.1-final"
+date-released: "2026-08-30"
+license: MIT
+keywords:
+  - lossless compression
+  - algebraic redundancy
+  - GF(2) linear codes
+  - functional dependencies
+  - preregistration
+  - negative result
+  - reproducibility
+abstract: >-
+  A preregistered empirical study of whether automatically discovered exact
+  fixed-width GF(2)/affine relations provide a composed lossless-compression
+  advantage. The pre-pass is a fixed-width GF(2) column-basis codec with a
+  bit-exact accounting ledger, a never-worse passthrough fallback, an
+  independent shared-nothing verifier, and a composed-gain metric with a
+  git-locked per-file success threshold fixed before any natural-corpus
+  experiment. On data engineered to contain an exact GF(2) linear code the
+  pre-pass removes about half of the size the six stock baselines achieve
+  (1 MiB code: G_pct = +49.95 %), the gain scales with input size, and two
+  context-mixing compressors (paq8l, paq8px v216) do not close it. On the
+  natural data actually tested — 8 of 12 whole Silesia members, all 12 members
+  plus enwik8 plus six SDRBench float32 fields plus a UCI telemetry file at
+  256 KiB, and a bounded bit-phase-offset detector extension — no non-prior-art
+  file produces a composed gain meeting the threshold; the largest natural
+  G_pct is +0.09 % (on a passthrough container, i.e. header perturbation, not
+  deduction). Four whole-file runs (the largest Silesia members and whole
+  enwik8 / SDRBench / UCI) exceeded the 8 GiB development machine and were not
+  executed, so by the preregistration the complete-corpus hypothesis outcome is
+  INCONCLUSIVE; within the achieved coverage the result is a clean layered
+  negative (exact structure is often present and discoverable, and on no tested
+  file does it reduce the representation or survive composition). The mechanism
+  is not novel.

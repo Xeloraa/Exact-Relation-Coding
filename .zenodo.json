@@ -1,0 +1,33 @@
+{
+  "//": "PLACEHOLDER creator: uses the repository's existing public handle. Replace 'name' with your real 'Family, Given' and add 'orcid' before minting a DOI. Zenodo's GitHub integration reads this file when it archives a release.",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "title": "Exact-Relation Coding: A Preregistered Test of Whether Discovered Fixed-Width GF(2)/Affine Structure Yields a Composed Lossless-Compression Advantage",
+  "version": "v1.1-final",
+  "language": "eng",
+  "license": "MIT",
+  "access_right": "open",
+  "creators": [
+    { "name": "Xeloraa" }
+  ],
+  "keywords": [
+    "lossless compression",
+    "algebraic redundancy",
+    "GF(2) linear codes",
+    "functional dependencies",
+    "preregistration",
+    "negative result",
+    "reproducibility",
+    "composed compression gain"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Xeloraa/deductive-coding/tree/v1.1-final",
+      "relation": "isSupplementedBy",
+      "resource_type": "software",
+      "scheme": "url"
+    }
+  ],
+  "notes": "Frozen experiment state: git tag v1.1-final. Every quantity in the manuscript is generated from results/ledger.json (122 records) and verified by scripts/check_paper_numbers.py. The complete preregistered whole-file corpus was NOT executed: four of the twelve Silesia members and whole enwik8 / SDRBench / UCI exceeded the 8 GiB development machine and were run only at 256 KiB.",
+  "description": "<p>A preregistered empirical study investigating whether discovered fixed-width GF(2)/affine structure yields a composed lossless-compression advantage. The mechanism produces large gains on deliberately structured data (planted GF(2) linear codes: composed gain up to +49.95&nbsp;%, scaling with input size, not closed by paq8l or paq8px v216), but no non-prior-art natural file in the achieved coverage meets the preregistered per-file threshold (largest natural G_pct = +0.09&nbsp;%, on a passthrough container). The complete preregistered corpus outcome is <strong>inconclusive</strong> because some whole-file runs exceeded available hardware; within the achieved coverage &mdash; 8 of 12 whole Silesia members, all 12 members plus enwik8 plus six SDRBench float32 fields plus a UCI telemetry file at 256&nbsp;KiB, and a bounded bit-phase-offset detector extension &mdash; the result is a <strong>clean layered negative</strong>: exact structure is often present and discoverable, and on no tested file does it reduce the representation or survive composition. The mechanism is not novel (syndrome source coding; grammar-based compression; recent program-synthesis compression). The contribution is the accounting-complete codec with an independent shared-nothing verifier, the composed-gain evaluation discipline with a git-locked preregistered threshold, and the scoped empirical finding.</p><p>Artifact contents: the 17-page manuscript PDF and its Markdown/HTML source, generated results tables and figures, the machine-readable experiment ledger (122 records), the git-locked preregistration, the independent verifier, and one-command reproduction scripts. Canonical code repository and reproduction instructions: https://github.com/Xeloraa/deductive-coding (tag v1.1-final).</p>"
+}
