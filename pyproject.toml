@@ -22,7 +22,7 @@ dev = ["pytest>=8"]
 deductive = "deductive.cli:main"
 
 [project.urls]
-Repository = "https://github.com/Xeloraa/deductive-coding"
+Repository = "https://github.com/Xeloraa/Exact-Relation-Coding"
 
 [tool.setuptools.packages.find]
 where = ["src"]

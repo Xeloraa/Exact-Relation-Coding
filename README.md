@@ -12,7 +12,7 @@ Research repository for a single question:
 
 This is a research instrument, not a product. Positive results are not the goal. The goal is a result that survives hostile accounting.
 
-**Frozen research artifact:** git tag [`v1.1-final`](https://github.com/Xeloraa/deductive-coding/releases/tag/v1.1-final)
+**Frozen research artifact:** git tag [`v1.1-final`](https://github.com/Xeloraa/Exact-Relation-Coding/releases/tag/v1.1-final)
 (commit `1216ef6`), released on GitHub and archived on Zenodo with a DOI:
 
 [![DOI](https://zenodo.org/badge/1350363593.svg)](https://doi.org/10.5281/zenodo.22170592)
@@ -21,7 +21,7 @@ The paper is `paper/exact-relation-coding.pdf`. `CITATION.cff` and `.zenodo.json
 hold the archive metadata. The archived manuscript PDF is anonymised ("withheld
 for review"); the Zenodo record carries the author attribution.
 
-Repository: https://github.com/Xeloraa/deductive-coding
+Repository: https://github.com/Xeloraa/Exact-Relation-Coding
 
 ## Status
 

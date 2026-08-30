@@ -131,7 +131,7 @@ def build_html() -> str:
   <div class="meta">Preregistered empirical study &nbsp;&middot;&nbsp;
   inconclusive for the full corpus, clean negative within the achieved coverage<br>
   frozen experiment state: git tag <code>v1.1-final</code> &nbsp;&middot;&nbsp;
-  repository: https://github.com/Xeloraa/deductive-coding<br>
+  repository: https://github.com/Xeloraa/Exact-Relation-Coding<br>
   every quantity traceable to <code>results/ledger.json</code></div>
 </div>
 {html_body}

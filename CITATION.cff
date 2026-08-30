@@ -9,8 +9,8 @@ message: >-
 type: software
 authors:
   - name: "Htet Eindray"
-repository-code: "https://github.com/Xeloraa/deductive-coding"
-url: "https://github.com/Xeloraa/deductive-coding/releases/tag/v1.1-final"
+repository-code: "https://github.com/Xeloraa/Exact-Relation-Coding"
+url: "https://github.com/Xeloraa/Exact-Relation-Coding/releases/tag/v1.1-final"
 version: "v1.1-final"
 date-released: "2026-08-30"
 license: MIT
