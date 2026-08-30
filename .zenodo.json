@@ -1,5 +1,5 @@
 {
-  "//": "PLACEHOLDER creator: uses the repository's existing public handle. Replace 'name' with your real 'Family, Given' and add 'orcid' before minting a DOI. Zenodo's GitHub integration reads this file when it archives a release.",
+  "//": "Zenodo's GitHub integration reads this file from a release tarball. The archived manuscript PDF is anonymised ('withheld for review'); this record carries the author's chosen public attribution.",
   "upload_type": "publication",
   "publication_type": "preprint",
   "title": "Exact-Relation Coding: A Preregistered Test of Whether Discovered Fixed-Width GF(2)/Affine Structure Yields a Composed Lossless-Compression Advantage",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "access_right": "open",
   "creators": [
-    { "name": "Xeloraa" }
+    { "name": "Htet Eindray" }
   ],
   "keywords": [
     "lossless compression",

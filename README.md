@@ -13,10 +13,13 @@ Research repository for a single question:
 This is a research instrument, not a product. Positive results are not the goal. The goal is a result that survives hostile accounting.
 
 **Frozen research artifact:** git tag [`v1.1-final`](https://github.com/Xeloraa/deductive-coding/releases/tag/v1.1-final)
-(commit `1216ef6`). The paper is `paper/exact-relation-coding.pdf`. To create a
-GitHub Release and a Zenodo DOI from this tag, follow `PUBLISHING.md`;
-`CITATION.cff` and `.zenodo.json` hold the archive metadata (author identity is
-a placeholder pending the real name/ORCID). No DOI has been minted yet.
+(commit `1216ef6`), released on GitHub and archived on Zenodo with a DOI:
+
+[![DOI](https://zenodo.org/badge/1350363593.svg)](https://doi.org/10.5281/zenodo.22170592)
+
+The paper is `paper/exact-relation-coding.pdf`. `CITATION.cff` and `.zenodo.json`
+hold the archive metadata. The archived manuscript PDF is anonymised ("withheld
+for review"); the Zenodo record carries the author attribution.
 
 Repository: https://github.com/Xeloraa/deductive-coding
 
@@ -54,7 +57,6 @@ deferred to a higher-memory machine.
 - `docs/audit.md` — adversarial implementation audit (A1–A9 fixed; correction
   C1). `docs/adversarial_review.md` — every credible reviewer objection + the
   13 canonical ones, each resolved / narrowed / disclosed.
-  `docs/submission_gap_audit.md` — the REQ/REC/OPT/NO checklist.
   `docs/venue_assessment.md` — honest venue call (**B**: workshop /
   negative-results / preprint). `docs/statistics.md` — RQ-A..E layer reporting.
 - `verification/independent_verify.py` — shared-nothing second decoder +

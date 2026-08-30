@@ -1,11 +1,5 @@
-# -----------------------------------------------------------------------------
-# NOTE ON AUTHORSHIP
-# The manuscript is currently anonymised ("withheld for review"). The creator
-# below uses the repository's existing public handle as a PLACEHOLDER. Before
-# minting a DOI or submitting non-anonymously, replace `name: "Xeloraa"` with
-# your real given-names / family-names (and optionally `orcid:`). Do not let an
-# automated tool fill this in for you.
-# -----------------------------------------------------------------------------
+# The archived manuscript PDF is anonymised ("withheld for review"); this
+# citation record carries the author's chosen public attribution.
 cff-version: 1.2.0
 title: >-
   Exact-Relation Coding: A Preregistered Test of Whether Discovered Fixed-Width
@@ -14,7 +8,7 @@ message: >-
   If you use this software or dataset, please cite it using the metadata below.
 type: software
 authors:
-  - name: "Xeloraa"   # PLACEHOLDER — see note above
+  - name: "Htet Eindray"
 repository-code: "https://github.com/Xeloraa/deductive-coding"
 url: "https://github.com/Xeloraa/deductive-coding/releases/tag/v1.1-final"
 version: "v1.1-final"
